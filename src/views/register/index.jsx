@@ -102,13 +102,13 @@ const Register = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item sm={12} md={7}>
           <div className={classes.logo}>
-            <img src='./logo.svg' alt='logo'/>
+            <img src='./logo.svg' width='400px' alt='logo'/>
           </div>
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item sm={12} md={5}>
           <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
               <Typography component="h1" variant="h5">
