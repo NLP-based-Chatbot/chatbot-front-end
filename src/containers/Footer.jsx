@@ -1,4 +1,10 @@
-import { Container, makeStyles, Typography, ThemeProvider, createTheme } from "@material-ui/core";
+import {
+  Container,
+  makeStyles,
+  Typography,
+  ThemeProvider,
+  createTheme,
+} from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -29,15 +35,17 @@ const Footer = (props) => {
 };
 
 const theme = createTheme({
-    typography: {
-      fontFamily: ["Poppins", "sans-serif"].join(","),
-    },
-})
+  typography: {
+    fontFamily: ["Poppins", "sans-serif"].join(","),
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    background: "linear-gradient(45deg, #D3EFF8 , #BBDB9B 90%)",
-    padding: theme.spacing(2, 0),
+    background:`linear-gradient(45deg, ${theme.palette.secondary.light} , ${theme.palette.secondary.main} 90%)`,
+    padding: theme.spacing(2, 2),
+    marginTop:'auto'
+    
   },
 }));
 
