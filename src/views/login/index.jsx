@@ -3,7 +3,6 @@ import {
   Container,
   makeStyles,
   Typography,
-  CssBaseline,
   Grid,
   Button,
 } from "@material-ui/core";
@@ -38,7 +37,6 @@ const Login = () => {
   const classes = useStyles();
   return (
     <LoginLayout>
-      <CssBaseline />
       <Grid container spacing={0}>
         <Grid item sm={12} md={7}>
           <div className={classes.logo}>
