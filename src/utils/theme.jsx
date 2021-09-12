@@ -5,6 +5,7 @@ const theme = createTheme({
       fontFamily: ["Poppins", "sans-serif"].join(","),
     },
     palette: {
+      type:'light',
       primary: {
         light: "#0292BE",
         main: "#3A637E",

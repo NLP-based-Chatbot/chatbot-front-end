@@ -1,7 +1,6 @@
 import {
   Button,
   Container,
-  CssBaseline,
   Grid,
   makeStyles,
   Typography,
@@ -38,7 +37,6 @@ const Register = () => {
   const classes = useStyles();
   return (
     <LoginLayout>
-      <CssBaseline />
       <Grid container spacing={0} className={classes.body}>
         <Grid item sm={12} md={7}>
           <div className={classes.logo}>
