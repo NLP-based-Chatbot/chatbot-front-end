@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Paper, Typography, useMediaQuery } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import React from "react";
 
@@ -35,10 +35,11 @@ const useStyles = makeStyles((theme) => ({
 const SubSection = (props) => {
   const { sectionName, description, imageSrc, align } = props;
   const classes = useStyles();
+  const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down("md"));
   return (
     <Paper className={classes.body}>
       <Grid container justifyContent="center" spacing={2}>
-        {align === "left" ? (
+        {align === "left" || isSmallScreen ? (
           <Grid item md={12} lg={4}>
             <img className={classes.pic} src={imageSrc} alt={sectionName} />
           </Grid>
@@ -50,7 +51,7 @@ const SubSection = (props) => {
           </Typography>
           <Typography className={classes.description}>{description}</Typography>
         </Grid>
-        {align === "right" ? (
+        {align === "right" && !isSmallScreen ? (
           <Grid item md={12} lg={4}>
             <img className={classes.pic} src={imageSrc} alt={sectionName} />
           </Grid>
