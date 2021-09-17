@@ -4,7 +4,12 @@ import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   body: {
-    margin: "40px 80px",
+    [theme.breakpoints.up("md")]: {
+      margin: "40px 80px",
+    },
+    [theme.breakpoints.down("md")]: {
+      margin: "40px 40px",
+    },
     padding: "40px",
   },
   title: {
@@ -14,6 +19,17 @@ const useStyles = makeStyles((theme) => ({
   description: {
     color: theme.palette.primary.light,
   },
+  pic: {
+    [theme.breakpoints.up("md")]: {
+      width: "400px",
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "300px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "200px",
+    },
+  },
 }));
 
 const SubSection = (props) => {
@@ -22,9 +38,9 @@ const SubSection = (props) => {
   return (
     <Paper className={classes.body}>
       <Grid container justifyContent="center" spacing={2}>
-        {align === "left"? (
+        {align === "left" ? (
           <Grid item md={12} lg={4}>
-            <img src={imageSrc} width="400px" alt={sectionName} />
+            <img className={classes.pic} src={imageSrc} alt={sectionName} />
           </Grid>
         ) : null}
 
@@ -36,7 +52,7 @@ const SubSection = (props) => {
         </Grid>
         {align === "right" ? (
           <Grid item md={12} lg={4}>
-            <img src={imageSrc} width="400px" alt={sectionName} />
+            <img className={classes.pic} src={imageSrc} alt={sectionName} />
           </Grid>
         ) : null}
       </Grid>
