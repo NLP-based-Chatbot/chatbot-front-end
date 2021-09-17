@@ -1,6 +1,13 @@
-import { Grid, makeStyles, Paper, Typography, useMediaQuery } from "@material-ui/core";
+import {
+  Grid,
+  makeStyles,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import React from "react";
+import { Parallax } from "react-scroll-parallax";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -15,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: "40px",
     color: theme.palette.primary.main,
+  },
+  parallax: {
+    margin: "0px",
   },
   description: {
     color: theme.palette.primary.light,
@@ -35,29 +45,33 @@ const useStyles = makeStyles((theme) => ({
 const SubSection = (props) => {
   const { sectionName, description, imageSrc, align } = props;
   const classes = useStyles();
-  const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down("md"));
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   return (
-    <Paper className={classes.body}>
-      <Grid container justifyContent="center" spacing={2}>
-        {align === "left" || isSmallScreen ? (
-          <Grid item md={12} lg={4}>
-            <img className={classes.pic} src={imageSrc} alt={sectionName} />
-          </Grid>
-        ) : null}
+    <Parallax className={classes.parallax} y={[-10, 10]} tagOuter="figure">
+      <Paper className={classes.body}>
+        <Grid container justifyContent="center" spacing={2}>
+          {align === "left" || isSmallScreen ? (
+            <Grid item md={12} lg={4}>
+              <img className={classes.pic} src={imageSrc} alt={sectionName} />
+            </Grid>
+          ) : null}
 
-        <Grid item md={12} lg={8}>
-          <Typography className={classes.title} variant="h3">
-            {sectionName}
-          </Typography>
-          <Typography className={classes.description}>{description}</Typography>
-        </Grid>
-        {align === "right" && !isSmallScreen ? (
-          <Grid item md={12} lg={4}>
-            <img className={classes.pic} src={imageSrc} alt={sectionName} />
+          <Grid item md={12} lg={8}>
+            <Typography className={classes.title} variant="h3">
+              {sectionName}
+            </Typography>
+            <Typography className={classes.description}>
+              {description}
+            </Typography>
           </Grid>
-        ) : null}
-      </Grid>
-    </Paper>
+          {align === "right" && !isSmallScreen ? (
+            <Grid item md={12} lg={4}>
+              <img className={classes.pic} src={imageSrc} alt={sectionName} />
+            </Grid>
+          ) : null}
+        </Grid>
+      </Paper>
+    </Parallax>
   );
 };
 
