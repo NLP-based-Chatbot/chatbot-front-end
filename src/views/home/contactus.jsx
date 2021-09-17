@@ -10,12 +10,15 @@ const ContactUs = () => {
       <Parallax className={classes.parallax} y={[-20, 20]} tagOuter="figure">
         <Paper className={classes.body} square elevation={3}>
           <Typography className={classes.name} component="h3" variant="h3">
+            GET IN TOUCH
+          </Typography>
+          <Typography className={classes.subtitle} component="h6" variant="h6">
             We'd love to hear from you
           </Typography>
         </Paper>
       </Parallax>
       <Parallax className={classes.parallax} y={[-5, 5]} tagOuter="figure">
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={12}>
           <Grid container spacing={0}>
             <Grid item xs={12} sm={12} md={6} className={classes.logoSection}>
               <img
@@ -74,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   name: {
+    color: theme.palette.secondary.main,
+  },
+  subtitle: {
     color: theme.palette.secondary.light,
   },
   parallax: {
