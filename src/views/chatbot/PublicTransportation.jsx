@@ -23,6 +23,7 @@ const PublicTransportation = () => {
             src="/Bus.svg"
             height="auto"
             width={bk ? "100%" : "70%"}
+            alt=""
           />
         </Grid>
         <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
