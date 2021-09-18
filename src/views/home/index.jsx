@@ -1,11 +1,10 @@
 import React from "react";
 import HeroSection from "../../components/HeroSection";
 import SubSection from "../../components/SubSection";
-import HomeLayout from "../../layout/HomeLayout";
 
 const Home = () => {
   return (
-    <HomeLayout>
+    <div>
       <HeroSection />
       <SubSection
         sectionName="Public Transportation"
@@ -25,7 +24,7 @@ const Home = () => {
         imageSrc="./Telecommunication.svg"
         align='left'
       />
-    </HomeLayout>
+    </div>
   );
 };
 

@@ -1,9 +1,9 @@
-import Register from '../views/register';
-import Login from './../views/login';
+import Home from '../views/home';
+import Product from '../views/product';
 
 const routes = [
-    { path: '/login', component: Login },
-    { path: '/register', component: Register },
+	{ path: '/home', component: Home },
+	{ path: '/product', component: Product }
 ];
 
 export default routes;

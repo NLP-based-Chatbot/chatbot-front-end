@@ -6,7 +6,6 @@ import {
   Grid,
   Button,
 } from "@material-ui/core";
-import LoginLayout from "../../layout/LoginLayout";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 
@@ -36,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
   return (
-    <LoginLayout>
+    <div>
       <Grid container spacing={0}>
         <Grid item sm={12} md={7}>
           <div className={classes.logo}>
@@ -97,7 +96,7 @@ const Login = () => {
           </Container>
         </Grid>
       </Grid>
-    </LoginLayout>
+    </div>
   );
 };
 

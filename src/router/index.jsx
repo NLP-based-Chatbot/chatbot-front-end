@@ -1,13 +1,15 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
 import routes from './routes'
-import Home from './../views/home/index';
+import HomeLayoutRoute from './../layout/HomeLayout';
+import Login from './../views/login/index';
+import LoginLayoutRoute from './../layout/LoginLayout';
 
 const AppRouter = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
-      {routes.map((route, index) => <Route {...route} key={`${index}`} />)}
+      <LoginLayoutRoute exact path="/" component={Login} />
+      {routes.map((route, index) => <HomeLayoutRoute {...route} key={`${index}`} />)}
     </Switch>
   )
 }
