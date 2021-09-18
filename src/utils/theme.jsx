@@ -43,6 +43,6 @@ theme.typography.h6 = {
   },
 }
 
-theme = responsiveFontSizes(theme)
+// theme = responsiveFontSizes(theme)
 
 export default theme;

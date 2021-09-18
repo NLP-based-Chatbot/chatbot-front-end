@@ -81,7 +81,7 @@ const NavPanel = () => {
               </Link>
             </Grid>
             <Grid item xs={3} md={2}>
-              <Link to="/home" className={classes.link}>
+              <Link to="/contactus" className={classes.link}>
                 <Typography variant="h6" className={classes.title}>
                   Contact
                 </Typography>

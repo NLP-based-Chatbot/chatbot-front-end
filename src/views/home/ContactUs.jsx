@@ -1,12 +1,11 @@
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import React from "react";
-import HomeLayout from "../../layout/HomeLayout";
 import { Parallax } from "react-scroll-parallax";
 
 const ContactUs = () => {
   const classes = useStyles();
   return (
-    <HomeLayout>
+    <div>
       <Parallax className={classes.parallax} y={[-20, 20]} tagOuter="figure">
         <Paper className={classes.body} square elevation={3}>
           <Typography className={classes.name} component="h3" variant="h3">
@@ -65,7 +64,7 @@ const ContactUs = () => {
           </Grid>
         </Paper>
       </Parallax>
-    </HomeLayout>
+    </div>
   );
 };
 
