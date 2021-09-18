@@ -36,14 +36,13 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
   return (
-    <LoginLayout>
-      <Grid container spacing={0} className={classes.body}>
-        <Grid item sm={12} md={7}>
+    <div>
+      <Grid container alignItems="center" justifyContent="space-around">
+        <Grid item sm={12} md={5}>
           <div className={classes.logo}>
             <img src="./logo.svg" width="400px" alt="logo" />
           </div>
         </Grid>
-
         <Grid item sm={12} md={5}>
           <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
@@ -104,7 +103,7 @@ const Register = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   className={classes.submit}
                 >
                   Register
@@ -121,7 +120,7 @@ const Register = () => {
           </Container>
         </Grid>
       </Grid>
-    </LoginLayout>
+    </div>
   );
 };
 

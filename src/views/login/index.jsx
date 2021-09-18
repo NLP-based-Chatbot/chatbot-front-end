@@ -36,8 +36,8 @@ const Login = () => {
   const classes = useStyles();
   return (
     <div>
-      <Grid container spacing={0}>
-        <Grid item sm={12} md={7}>
+      <Grid container alignItems="center" justifyContent="space-around">
+        <Grid item sm={12} md={5}>
           <div className={classes.logo}>
             <img src="./logo.svg" width="400px" alt="logo" />
           </div>

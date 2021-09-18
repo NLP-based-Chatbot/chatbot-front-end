@@ -35,7 +35,7 @@ theme.typography.h6 = {
     fontWeight: 500
   },
   [theme.breakpoints.down('xs')]: {
-    fontSize: "0.5rem",
+    fontSize: "0.6rem",
     fontWeight: 500
   },
 }
