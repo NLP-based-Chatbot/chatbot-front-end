@@ -1,3 +1,10 @@
 .App {
-  text-align: center;
+	text-align: center;
+}
+
+textarea {
+	border: none;
+	overflow: auto;
+	outline: none;
+	resize: none;
 }
