@@ -14,7 +14,7 @@ const HomeLayout = props => {
 			className={classes.body}
 		>
 			<NavPanel />
-			<Box pb="50px">{props.children}</Box>
+			<Box pt="50px">{props.children}</Box>
 			<Footer />
 		</Container>
 	);

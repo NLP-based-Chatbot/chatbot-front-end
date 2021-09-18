@@ -111,7 +111,7 @@ const Register = () => {
                 </Button>
                 <Grid container justifyContent="center">
                   <Grid item>
-                    <Link style={{ color: "white" }} to="/login" variant="body2">
+                    <Link style={{ color: "white", textDecoration: "none" }} to="/" variant="body2">
                       Already have an account? Sign in from here
                     </Link>
                   </Grid>

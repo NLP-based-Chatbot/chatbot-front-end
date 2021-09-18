@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     color: theme.palette.primary.contrastText
+  },
+  sideNavLink: {
+    textDecoration: "none",
+    color: theme.palette.secondary.contrastText
   }
 }));
 
@@ -107,25 +111,31 @@ const NavPanel = () => {
       >
         <Link to="/home" className={classes.list}>
           <img
-            src="/Hero Section.svg"
+            src="/Logo-robot-only.svg"
             height="auto"
-            width="100px"
+            width="50px"
             alt=""
           />
         </Link>
         <List className={classes.list}>
-          <ListItem button alignItems="center" className={classes.listItem}>
-            <ListItemIcon><DirectionsBusIcon /></ListItemIcon>
-            <ListItemText>Public Transportation</ListItemText>
-          </ListItem>
-          <ListItem button alignItems="center" className={classes.listItem}>
-            <ListItemIcon><FavoriteBorderIcon /></ListItemIcon>
-            <ListItemText>Health Care</ListItemText>
-          </ListItem>
-          <ListItem button alignItems="center" className={classes.listItem}>
-            <ListItemIcon><PhoneIcon /></ListItemIcon>
-            <ListItemText>Telecommunication</ListItemText>
-          </ListItem>
+          <Link to="/chatbot/public-transportation" className={classes.sideNavLink}>
+            <ListItem button alignItems="center" className={classes.listItem}>
+              <ListItemIcon><DirectionsBusIcon /></ListItemIcon>
+              <ListItemText>Public Transportation</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to="/chatbot/healthcare" className={classes.sideNavLink}>
+            <ListItem button alignItems="center" className={classes.listItem}>
+              <ListItemIcon><FavoriteBorderIcon /></ListItemIcon>
+              <ListItemText>Health Care</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to="/chatbot/telecommunication" className={classes.sideNavLink}>
+            <ListItem button alignItems="center" className={classes.listItem}>
+              <ListItemIcon><PhoneIcon /></ListItemIcon>
+              <ListItemText>Telecommunication</ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <Box component="span" className={classes.row}>
