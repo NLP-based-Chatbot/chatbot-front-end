@@ -8,7 +8,6 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
-import LoginLayout from "../../layout/LoginLayout";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
