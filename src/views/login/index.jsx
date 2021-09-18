@@ -86,7 +86,7 @@ const Login = () => {
                 </Button>
                 <Grid container justifyContent="center">
                   <Grid item>
-                    <Link style={{ color: "white" }} to="/register" variant="body2">
+                    <Link style={{ color: "white", textDecoration: "none" }} to="/register" variant="body2">
                       Not yet registered? Register from here
                     </Link>
                   </Grid>
