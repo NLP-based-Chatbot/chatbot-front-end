@@ -1,11 +1,17 @@
-import { Container } from '@material-ui/core'
 import React from 'react'
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+
+  }
+}))
 
 const Product = () => {
   return (
-    <Container>
+    <div>
 
-    </Container>
+    </div>
   )
 }
 

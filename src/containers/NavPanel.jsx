@@ -110,6 +110,7 @@ const NavPanel = () => {
             src="/Hero Section.svg"
             height="auto"
             width="100px"
+            alt=""
           />
         </Link>
         <List className={classes.list}>

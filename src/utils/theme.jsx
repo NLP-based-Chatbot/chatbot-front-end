@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme, responsiveFontSizes } from '@material-ui/core';
 
 const theme = createTheme({
   typography: {
@@ -11,6 +11,9 @@ const theme = createTheme({
       main: "#3A637E",
       dark: "#1A2C38",
       contrastText: "#fff",
+      // let theme = createTheme({
+      //     typography: {
+      //       fontFamily: ["Poppins", "sans-serif"].join(","),
     },
     secondary: {
       light: "#D3EFF8",
@@ -39,5 +42,7 @@ theme.typography.h6 = {
     fontWeight: 500
   },
 }
+
+theme = responsiveFontSizes(theme)
 
 export default theme;
