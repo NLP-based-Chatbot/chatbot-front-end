@@ -13,14 +13,20 @@ const useStyles = makeStyles((theme) => ({
   body: {
     [theme.breakpoints.up("md")]: {
       margin: "40px 80px",
+      padding: "40px",
     },
     [theme.breakpoints.down("md")]: {
-      margin: "40px 40px",
+      margin: "50px 20px",
+      padding: "20px",
     },
-    padding: "40px",
   },
   title: {
-    marginTop: "40px",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "0px",
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "15px",
+    },
     color: theme.palette.primary.main,
   },
   parallax: {
@@ -30,42 +36,39 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.light,
   },
   pic: {
-    [theme.breakpoints.up("md")]: {
-      width: "400px",
-    },
-    [theme.breakpoints.down("md")]: {
-      width: "300px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "200px",
-    },
+    width: "80%",
+    height: "auto",
   },
 }));
 
 const SubSection = (props) => {
   const { sectionName, description, imageSrc, align } = props;
   const classes = useStyles();
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
     <Parallax className={classes.parallax} y={[-10, 10]} tagOuter="figure">
       <Paper className={classes.body}>
         <Grid container justifyContent="center" spacing={2}>
           {align === "left" || isSmallScreen ? (
-            <Grid item md={12} lg={4}>
+            <Grid item sm={12} md={4}>
               <img className={classes.pic} src={imageSrc} alt={sectionName} />
             </Grid>
           ) : null}
 
-          <Grid item md={12} lg={8}>
-            <Typography className={classes.title} variant="h3">
+          <Grid item sm={12} md={8}>
+            <Typography className={classes.title} component="h3" variant="h3">
               {sectionName}
             </Typography>
-            <Typography className={classes.description}>
+            <Typography
+              className={classes.description}
+              component="body1"
+              variant="body1"
+            >
               {description}
             </Typography>
           </Grid>
           {align === "right" && !isSmallScreen ? (
-            <Grid item md={12} lg={4}>
+            <Grid item sm={12} md={4}>
               <img className={classes.pic} src={imageSrc} alt={sectionName} />
             </Grid>
           ) : null}

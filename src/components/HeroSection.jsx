@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: "40px",
     textAlign: "center",
-    padding: "50px",
+    padding: "10px",
   },
   name: {
     color: theme.palette.primary.light,
@@ -52,15 +52,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.light,
   },
   logo: {
-    [theme.breakpoints.up("md")]: {
-      width: "600px",
-    },
-    [theme.breakpoints.down("md")]: {
-      width: "500px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "300px",
-    },
+    width:'80%',
+    height:'auto'
   },
 }));
 
