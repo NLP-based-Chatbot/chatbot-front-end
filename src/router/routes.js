@@ -11,7 +11,7 @@ const routes = [
 	{ path: '/contactus', component: ContactUs },
 	{ path: '/chatbot/public-transportation', component: PublicTransportation },
 	{ path: '/chatbot/healthcare', component: HealthCare },
-	{ path: '/chatbot/telecommunication', component: Telecommunication }
+	{ path: '/chatbot/telecommunication', component: Telecommunication },
 ];
 
 export default routes;
