@@ -5,7 +5,7 @@ import { Parallax } from "react-scroll-parallax";
 const HeroSection = () => {
   const classes = useStyles();
   return (
-    <Parallax className={classes.parallax} y={[-23, 20]} tagOuter="figure">
+    <Parallax className={classes.parallax} y={[-25, 20]} tagOuter="figure">
       <Paper className={classes.body} square elevation={3}>
         <Grid container spacing={0} justifyContent="center">
           <Grid item md={6}>
@@ -34,7 +34,7 @@ const HeroSection = () => {
 const useStyles = makeStyles((theme) => ({
   body: {
     background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
-    paddingTop: "180px",
+    paddingTop: "120px",
     paddingBottom: "50px",
   },
   paper: {
