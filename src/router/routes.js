@@ -1,6 +1,6 @@
 import Home from '../views/home';
 import Product from '../views/product';
-import ContactUs from './../views/home/ContactUs';
+import ContactUs from '../views/home/ContactUs';
 
 const routes = [
 	{ path: '/home', component: Home },
