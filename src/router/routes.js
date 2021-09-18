@@ -11,7 +11,7 @@ const routes = [
 	{ path: '/product', component: Product },
 	{ path: '/contactus', component: ContactUs },
 	{ path: '/chatbot/public-transportation', component: PublicTransportation },
-	{ path: '/admin/dashboard', component: Dashboard }
+	{ path: '/admin/dashboard', component: Dashboard },
 	{ path: '/chatbot/healthcare', component: HealthCare },
 	{ path: '/chatbot/telecommunication', component: Telecommunication }
 ];
