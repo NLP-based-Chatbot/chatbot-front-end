@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  inputtext:{
-    color:'white'
+  inputtext: {
+    color: 'white'
   },
   error: {
     color: "#EDC3C0"
@@ -87,7 +87,7 @@ const Login = () => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
-                      inputProps={{className: classes.inputtext}}
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email && <div className={classes.error}>{formik.errors.email}</div>}
@@ -102,7 +102,7 @@ const Login = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
-                      inputProps={{className: classes.inputtext}}
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('password')}
                     />
                     {formik.touched.password && formik.errors.password && <div className={classes.error}>{formik.errors.password}</div>}
