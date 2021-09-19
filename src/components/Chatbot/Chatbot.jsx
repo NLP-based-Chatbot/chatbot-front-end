@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3),
     backgroundColor: theme.palette.primary.light,
     height: "70vh",
-    width: "60%",
+    width: "70%",
   },
   body: {
     backgroundColor: theme.palette.secondary.light,
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   textArea: {
     marginTop: theme.spacing(5),
-    height: "8%"
+    height: "8%",
   }
 }))
 

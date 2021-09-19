@@ -10,6 +10,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import * as Yup from 'yup'
+// import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  inputtext:{
-    color:'white'
+  inputtext: {
+    color: 'white'
   },
   error: {
     color: "#EDC3C0"
@@ -61,11 +62,28 @@ const Register = () => {
         .min(6, 'Minimum of 6 Characters Needed')
         .required('Required Field'),
       repassword: Yup.string()
-        .required('Required Field')
-        .oneOf([Yup.ref('password')], "Passwords doesn't match")
+        .min(6, 'Minimum of 6 Characters Needed')
+        .required('Required Field'),
     }),
-    onSubmit: async (username, email, password) => console.log(username, email, password)
+    onSubmit: async (username, email, password, repassword) => console.log(username, email, password, repassword)
   })
+
+  // const submit = async (username, email, password, repassword) => {
+  //   const config = {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }
+
+  //   const body = JSON.stringify({ username, email, password, repassword })
+
+  //   try {
+  //     const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}auth/users/`, body, config)
+  //     console.log("data added")
+  //   } catch (err) {
+  //     console.log(err.message)
+  //   }
+  // }
 
   return (
     <div>
@@ -92,8 +110,9 @@ const Register = () => {
                       fullWidth
                       id="firstName"
                       label="First Name"
-                      inputProps={{className: classes.inputtext}}
+                      inputProps={{ className: classes.inputtext }}
                       autoFocus
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('username')}
                     />
                     {formik.touched.username && formik.errors.username && <div className={classes.error}>{formik.errors.username}</div>}
@@ -107,7 +126,7 @@ const Register = () => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
-                      inputProps={{className: classes.inputtext}}
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email && <div className={classes.error}>{formik.errors.email}</div>}
@@ -122,7 +141,7 @@ const Register = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
-                      inputProps={{className: classes.inputtext}}
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('password')}
                     />
                     {formik.touched.password && formik.errors.password && <div className={classes.error}>{formik.errors.password}</div>}
@@ -137,7 +156,7 @@ const Register = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
-                      inputProps={{className: classes.inputtext}}
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('repassword')}
                     />
                     {formik.touched.repassword && formik.errors.repassword && <div className={classes.error}>{formik.errors.repassword}</div>}
