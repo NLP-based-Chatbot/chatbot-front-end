@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  inputtext: {
+    color: 'white'
+  },
   error: {
     color: "#EDC3C0"
   }
@@ -108,6 +111,7 @@ const Register = () => {
                       id="userName"
                       label="Full Name"
                       autoFocus
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('username')}
                     />
                     {formik.touched.username && formik.errors.username && <div className={classes.error}>{formik.errors.username}</div>}
@@ -121,6 +125,7 @@ const Register = () => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email && <div className={classes.error}>{formik.errors.email}</div>}
@@ -135,6 +140,7 @@ const Register = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('password')}
                     />
                     {formik.touched.password && formik.errors.password && <div className={classes.error}>{formik.errors.password}</div>}
@@ -149,6 +155,7 @@ const Register = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('repassword')}
                     />
                     {formik.touched.repassword && formik.errors.repassword && <div className={classes.error}>{formik.errors.repassword}</div>}
