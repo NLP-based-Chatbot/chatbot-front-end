@@ -2,6 +2,7 @@ import { Card } from '@material-ui/core';
 import React from 'react'
 import { CartesianGrid, Legend, LineChart, Tooltip, XAxis, YAxis, Line } from 'recharts';
 import { makeStyles } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 
 const useStyle = makeStyles(theme => ({
   root: {
