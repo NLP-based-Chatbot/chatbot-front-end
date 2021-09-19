@@ -8,6 +8,8 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
+import { useFormik } from "formik";
+import * as Yup from 'yup'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,11 +34,33 @@ const useStyles = makeStyles((theme) => ({
   },
   inputtext:{
     color:'white'
+  },
+  error: {
+    color: "#EDC3C0"
   }
 }));
 
 const Login = () => {
   const classes = useStyles();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string()
+        .email('Invalid Type')
+        .required('Required Field'),
+      password: Yup.string()
+        .min(6, 'Minimum of 6 Characters Needed')
+        .required('Required Field')
+    }),
+    onSubmit: async (email, password) => {
+      console.log(email, password)
+    }
+  })
+
   return (
     <div>
       <Grid container alignItems="center" justifyContent="space-around">
@@ -52,7 +76,7 @@ const Login = () => {
               <Typography component="h1" variant="h5">
                 User Login
               </Typography>
-              <form className={classes.form} noValidate>
+              <form className={classes.form} onSubmit={formik.handleSubmit} noValidate>
                 <Grid container spacing={4}>
                   <Grid item xs={12}>
                     <CustomTextField
@@ -64,7 +88,9 @@ const Login = () => {
                       name="email"
                       autoComplete="email"
                       inputProps={{className: classes.inputtext}}
+                      {...formik.getFieldProps('email')}
                     />
+                    {formik.touched.email && formik.errors.email && <div className={classes.error}>{formik.errors.email}</div>}
                   </Grid>
                   <Grid item xs={12}>
                     <CustomTextField
@@ -77,7 +103,9 @@ const Login = () => {
                       id="password"
                       autoComplete="current-password"
                       inputProps={{className: classes.inputtext}}
+                      {...formik.getFieldProps('password')}
                     />
+                    {formik.touched.password && formik.errors.password && <div className={classes.error}>{formik.errors.password}</div>}
                   </Grid>
                 </Grid>
                 <Button
@@ -87,7 +115,7 @@ const Login = () => {
                   color="secondary"
                   className={classes.submit}
                 >
-                  Register
+                  Login
                 </Button>
                 <Grid container justifyContent="center">
                   <Grid item>

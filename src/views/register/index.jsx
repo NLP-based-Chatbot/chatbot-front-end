@@ -5,9 +5,11 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import { useFormik } from "formik";
 import React from "react";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
+import * as Yup from 'yup'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,11 +34,39 @@ const useStyles = makeStyles((theme) => ({
   },
   inputtext:{
     color:'white'
+  },
+  error: {
+    color: "#EDC3C0"
   }
 }));
 
 const Register = () => {
   const classes = useStyles();
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      repassword: ""
+    },
+    validationSchema: Yup.object().shape({
+      username: Yup.string()
+        .min(4, 'Enter a longer username')
+        .required('Required Field'),
+      email: Yup.string()
+        .email('Invalid Type')
+        .required('Required Field'),
+      password: Yup.string()
+        .min(6, 'Minimum of 6 Characters Needed')
+        .required('Required Field'),
+      repassword: Yup.string()
+        .required('Required Field')
+        .oneOf([Yup.ref('password')], "Passwords doesn't match")
+    }),
+    onSubmit: async (username, email, password) => console.log(username, email, password)
+  })
+
   return (
     <div>
       <Grid container alignItems="center" justifyContent="space-around">
@@ -51,12 +81,12 @@ const Register = () => {
               <Typography component="h1" variant="h5">
                 Registration
               </Typography>
-              <form className={classes.form} noValidate>
+              <form className={classes.form} onSubmit={formik.handleSubmit} noValidate>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <CustomTextField
-                      autoComplete="fname"
-                      name="Username"
+                      autoComplete="name"
+                      name="username"
                       variant="outlined"
                       required
                       fullWidth
@@ -64,7 +94,9 @@ const Register = () => {
                       label="First Name"
                       inputProps={{className: classes.inputtext}}
                       autoFocus
+                      {...formik.getFieldProps('username')}
                     />
+                    {formik.touched.username && formik.errors.username && <div className={classes.error}>{formik.errors.username}</div>}
                   </Grid>
                   <Grid item xs={12}>
                     <CustomTextField
@@ -76,7 +108,9 @@ const Register = () => {
                       name="email"
                       autoComplete="email"
                       inputProps={{className: classes.inputtext}}
+                      {...formik.getFieldProps('email')}
                     />
+                    {formik.touched.email && formik.errors.email && <div className={classes.error}>{formik.errors.email}</div>}
                   </Grid>
                   <Grid item xs={12}>
                     <CustomTextField
@@ -89,7 +123,9 @@ const Register = () => {
                       id="password"
                       autoComplete="current-password"
                       inputProps={{className: classes.inputtext}}
+                      {...formik.getFieldProps('password')}
                     />
+                    {formik.touched.password && formik.errors.password && <div className={classes.error}>{formik.errors.password}</div>}
                   </Grid>
                   <Grid item xs={12}>
                     <CustomTextField
@@ -102,7 +138,9 @@ const Register = () => {
                       id="password"
                       autoComplete="current-password"
                       inputProps={{className: classes.inputtext}}
+                      {...formik.getFieldProps('repassword')}
                     />
+                    {formik.touched.repassword && formik.errors.repassword && <div className={classes.error}>{formik.errors.repassword}</div>}
                   </Grid>
                 </Grid>
                 <Button

@@ -11,6 +11,9 @@ const AppRouter = () => {
     <Switch>
       <LoginLayoutRoute exact path="/" component={Login} />
       <LoginLayoutRoute path="/register" component={Register} />
+      <LoginLayoutRoute path="/reset_password" component={Register} />
+      <LoginLayoutRoute path="/password/reset/confirm/:uid/:token" component={Register} />
+      <LoginLayoutRoute path="/activate/:uid/:token" component={Register} />
       {routes.map((route, index) => <HomeLayoutRoute {...route} key={`${index}`} />)}
     </Switch>
   )
