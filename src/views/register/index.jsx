@@ -112,7 +112,6 @@ const Register = () => {
                       label="First Name"
                       inputProps={{ className: classes.inputtext }}
                       autoFocus
-                      inputProps={{ className: classes.inputtext }}
                       {...formik.getFieldProps('username')}
                     />
                     {formik.touched.username && formik.errors.username && <div className={classes.error}>{formik.errors.username}</div>}
