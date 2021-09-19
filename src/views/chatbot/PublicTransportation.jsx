@@ -28,9 +28,9 @@ const PublicTransportation = () => {
       <Grid container alignItems="center" justifyContent="space-around" className={classes.container}>
         <Grid item alignItems="center" sm={12} md={3}>
           <img
-            src="/Bus.svg"
+            src="/Bus_1.svg"
             height="auto"
-            width={bk ? "100%" : "70%"}
+            width={bk ? "80%" : "60%"}
             alt=""
           />
           <Typography variant="h2" className={clsx(classes.row, classes.title)}>Public Transportation</Typography>
