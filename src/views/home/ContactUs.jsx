@@ -40,16 +40,13 @@ const ContactUs = () => {
               >
                 Developers
               </Typography>
-              <Typography component="h6" variant="h6">
+              <Typography component="body1" variant="body1">
                 Kavindu - kavindu.18@cse.mrt.ac.lk
-              </Typography>
-              <Typography component="h6" variant="h6">
+                <br/>
                 Chandima - chandimaamarasena.18@cse.mrt.ac.lk
-              </Typography>
-              <Typography component="h6" variant="h6">
+                <br/>
                 Yasith - yasith.18@cse.mrt.ac.lk
               </Typography>
-
               <Typography
                 component="h4"
                 variant="h4"
@@ -57,7 +54,7 @@ const ContactUs = () => {
               >
                 Social Media
               </Typography>
-              <Typography component="h6" variant="h6">
+              <Typography component="body1" variant="body1">
                 Youtube - www.youtube.com/wingman
               </Typography>
             </Grid>
