@@ -10,6 +10,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import * as Yup from 'yup'
+// import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,11 +59,28 @@ const Register = () => {
         .min(6, 'Minimum of 6 Characters Needed')
         .required('Required Field'),
       repassword: Yup.string()
-        .required('Required Field')
-        .oneOf([Yup.ref('password')], "Passwords doesn't match")
+        .min(6, 'Minimum of 6 Characters Needed')
+        .required('Required Field'),
     }),
-    onSubmit: async (username, email, password) => console.log(username, email, password)
+    onSubmit: async (username, email, password, repassword) => console.log(username, email, password, repassword)
   })
+
+  // const submit = async (username, email, password, repassword) => {
+  //   const config = {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }
+
+  //   const body = JSON.stringify({ username, email, password, repassword })
+
+  //   try {
+  //     const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}auth/users/`, body, config)
+  //     console.log("data added")
+  //   } catch (err) {
+  //     console.log(err.message)
+  //   }
+  // }
 
   return (
     <div>

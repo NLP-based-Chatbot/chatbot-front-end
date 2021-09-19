@@ -4,10 +4,10 @@ import {
   Typography,
   ThemeProvider,
   createTheme,
+  Link,
 } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import React from "react";
-import { Link } from "react-router-dom";
 
 const Footer = (props) => {
   const classes = useStyles();
@@ -42,10 +42,9 @@ const theme = createTheme({
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    background:`linear-gradient(45deg, ${theme.palette.secondary.light} , ${theme.palette.secondary.main} 90%)`,
+    background: `linear-gradient(45deg, ${theme.palette.secondary.light} , ${theme.palette.secondary.main} 90%)`,
     padding: theme.spacing(2, 2),
-    marginTop:'auto'
-    
+    marginTop: 'auto'
   },
 }));
 
@@ -53,7 +52,7 @@ const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://wingman.com/">
+      <Link color="inherit" href="#">
         Wingman Inc.
       </Link>{" "}
       {new Date().getFullYear()}
