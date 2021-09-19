@@ -42,10 +42,9 @@ const theme = createTheme({
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    background:`linear-gradient(45deg, ${theme.palette.secondary.light} , ${theme.palette.secondary.main} 90%)`,
+    background: `linear-gradient(45deg, ${theme.palette.secondary.light} , ${theme.palette.secondary.main} 90%)`,
     padding: theme.spacing(2, 2),
-    marginTop:'auto'
-    
+    marginTop: 'auto'
   },
 }));
 
