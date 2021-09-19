@@ -23,7 +23,7 @@ const theme = createTheme({
 
 theme.typography.h6 = {
   [theme.breakpoints.up('md')]: {
-    fontSize: "1.5rem",
+    fontSize: "1.3rem",
     fontWeight: 500
   },
   [theme.breakpoints.down('md')]: {
