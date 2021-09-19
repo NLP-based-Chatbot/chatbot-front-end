@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  inputtext:{
+    color:'white'
+  }
 }));
 
 const Login = () => {
@@ -60,6 +63,7 @@ const Login = () => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      inputProps={{className: classes.inputtext}}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -72,6 +76,7 @@ const Login = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      inputProps={{className: classes.inputtext}}
                     />
                   </Grid>
                 </Grid>

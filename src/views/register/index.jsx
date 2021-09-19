@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  inputtext:{
+    color:'white'
+  }
 }));
 
 const Register = () => {
@@ -59,6 +62,7 @@ const Register = () => {
                       fullWidth
                       id="firstName"
                       label="First Name"
+                      inputProps={{className: classes.inputtext}}
                       autoFocus
                     />
                   </Grid>
@@ -71,6 +75,7 @@ const Register = () => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      inputProps={{className: classes.inputtext}}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -83,6 +88,7 @@ const Register = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      inputProps={{className: classes.inputtext}}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -95,6 +101,7 @@ const Register = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      inputProps={{className: classes.inputtext}}
                     />
                   </Grid>
                 </Grid>
