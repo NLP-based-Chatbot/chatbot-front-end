@@ -56,7 +56,7 @@ const NavPanel = () => {
   const [open, toggleOpen] = useState(false)
 
   return (
-    <div>
+    <>
       <AppBar position="fixed">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => toggleOpen(!open)}>
@@ -145,7 +145,7 @@ const NavPanel = () => {
           </IconButton>
         </Box>
       </Drawer>
-    </div>
+    </>
   );
 };
 

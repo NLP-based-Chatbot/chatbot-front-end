@@ -6,7 +6,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles(theme => ({
   root: {
     background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
-    height: "calc(100vh - 110px)"
+    minHeight: "calc(100vh - 115px)"
   },
   container: {
     height: "100%"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { makeStyles, IconButton } from '@material-ui/core'
+import { makeStyles, IconButton, ButtonGroup } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send';
+import MicIcon from '@material-ui/icons/Mic';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,12 +23,20 @@ const CustomTextArea = ({ sendMessage }) => {
   return (
     <div className={classes.root}>
       <textarea rows="1" className={classes.text} value={message} onChange={e => updateMessage(e.target.value)} />
-      <IconButton onClick={() => {
-        sendMessage(message)
-        updateMessage("")
-      }}>
-        <SendIcon />
-      </IconButton>
+      <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+        <IconButton onClick={() => {
+          sendMessage(message)
+          updateMessage("")
+        }}>
+          <MicIcon />
+        </IconButton>
+        <IconButton onClick={() => {
+          sendMessage(message)
+          updateMessage("")
+        }}>
+          <SendIcon />
+        </IconButton>
+      </ButtonGroup>
     </div>
   )
 }

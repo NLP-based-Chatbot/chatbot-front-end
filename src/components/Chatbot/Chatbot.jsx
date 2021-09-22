@@ -31,6 +31,7 @@ const Chatbot = () => {
   ])
 
   const updateChatBox = (message) => {
+    if (!message) return
     updateChatMessages([...chatMessages, { sender: "Yasith", message: message }, { sender: "bot", message: "Test Message" }])
   }
 

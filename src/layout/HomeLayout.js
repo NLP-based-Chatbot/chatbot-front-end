@@ -9,12 +9,12 @@ const HomeLayout = props => {
 	return (
 		<Container
 			{...props}
-			maxWidth="false"
+			maxWidth='false'
 			disableGutters
-			className={classes.body}
+			className={classes.root}
 		>
 			<NavPanel />
-			<Box pt="50px">{props.children}</Box>
+			<Box className={classes.body}>{props.children}</Box>
 			<Footer />
 		</Container>
 	);
@@ -34,10 +34,13 @@ const HomeLayoutRoute = ({ component: Component, ...rest }) => {
 };
 
 const useStyles = makeStyles(theme => ({
-	body: {
+	root: {
 		minHeight: '100vh',
 		display: 'flex',
 		flexDirection: 'column'
+	},
+	body: {
+		paddingTop: theme.spacing(7)
 	}
 }));
 export default HomeLayoutRoute;
