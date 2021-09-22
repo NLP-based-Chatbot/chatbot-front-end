@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { makeStyles, IconButton, ButtonGroup } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
+import { useSpeechRecognition } from 'react-speech-recognition';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,18 +18,20 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const CustomTextArea = ({ sendMessage }) => {
+const CustomTextArea = ({ sendMessage, toggleRecord }) => {
   const classes = useStyles()
   const [message, updateMessage] = useState("")
+
+  const { listening } = useSpeechRecognition()
+
   return (
     <div className={classes.root}>
       <textarea rows="1" className={classes.text} value={message} onChange={e => updateMessage(e.target.value)} />
       <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
         <IconButton onClick={() => {
-          sendMessage(message)
-          updateMessage("")
+          toggleRecord()
         }}>
-          <MicIcon />
+          {listening ? <MicIcon color="error" /> : <MicIcon />}
         </IconButton>
         <IconButton onClick={() => {
           sendMessage(message)

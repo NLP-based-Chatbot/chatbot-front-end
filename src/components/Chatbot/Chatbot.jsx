@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core';
 import ChatMessage from './ChatMessage';
 import CustomTextArea from './CustomTextArea';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,9 +31,26 @@ const Chatbot = () => {
     { sender: "bot", message: "Hi, Yasith" },
   ])
 
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+  } = useSpeechRecognition()
+
   const updateChatBox = (message) => {
     if (!message) return
     updateChatMessages([...chatMessages, { sender: "Yasith", message: message }, { sender: "bot", message: "Test Message" }])
+  }
+
+  const toggleRecord = () => {
+    if (!listening) {
+      SpeechRecognition.startListening()
+    }
+    else {
+      SpeechRecognition.stopListening()
+      resetTranscript()
+      updateChatBox(transcript)
+    }
   }
 
   useEffect(() => {
@@ -45,7 +63,7 @@ const Chatbot = () => {
         {chatMessages.map((message, index) => <ChatMessage {...message} key={`${index}`} />)}
       </Card>
       <Card className={classes.textArea}>
-        <CustomTextArea sendMessage={updateChatBox} />
+        <CustomTextArea sendMessage={updateChatBox} toggleRecord={() => toggleRecord()} />
       </Card>
     </Card>
   )
