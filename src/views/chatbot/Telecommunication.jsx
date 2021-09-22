@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
 const Telecommunication = () => {
   const classes = useStyles()
   const bk = useMediaQuery(theme => theme.breakpoints.up('md'))
+
   return (
     <div className={classes.root}>
       <Grid container alignItems="center" justifyContent="space-around" className={classes.container}>
