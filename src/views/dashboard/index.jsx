@@ -54,7 +54,7 @@ const Dashboard = () => {
             <CountBox title="Chat Sessions" subtitle="(last month)" count={60} />
           </Grid>
           <Grid item xs={12} md={6} className={classes.box}>
-            <CountBox title="Feedbacks" subtitle="(last month)" count={40} x />
+            <CountBox title="Feedbacks" subtitle="(last month)" count={40} />
           </Grid>
         </Grid>
         <Grid container sm={12} md={8} xl={6}>

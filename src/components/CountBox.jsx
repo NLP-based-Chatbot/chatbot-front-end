@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const CountBox = ({ title, subtitle, count, click }) => {
+const CountBox = ({ title, subtitle, count }) => {
   const classes = useStyles()
   return (
     <Card className={classes.box}>
@@ -31,7 +31,7 @@ const CountBox = ({ title, subtitle, count, click }) => {
         {count}
       </Typography>
       <Box className={classes.row}>
-        <Button variant="outlined" color="secondary" className={classes.weighted} onClick={() => click()}>
+        <Button variant="outlined" color="secondary" className={classes.weighted}>
           View Graph
         </Button>
       </Box>
