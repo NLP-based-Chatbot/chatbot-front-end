@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
   box: {
     display: "flex",
     justifyContent: "center"
+  },
+  graph: {
+    height: "100%"
   }
 }))
 
@@ -57,7 +60,7 @@ const Dashboard = () => {
             <CountBox title="Feedbacks" subtitle="(last month)" count={40} />
           </Grid>
         </Grid>
-        <Grid container sm={12} md={8} xl={6}>
+        <Grid container sm={12} md={8} xl={6} className={classes.graph}>
           <Graph data={active_user_data} />
         </Grid>
       </Grid>

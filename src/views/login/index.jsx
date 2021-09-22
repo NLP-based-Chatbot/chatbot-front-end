@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   inputtext: {
-    color: "white"
+    color: 'white'
   },
   error: {
     color: "#EDC3C0"
