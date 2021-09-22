@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     padding: theme.spacing(4),
-    marginBottom: theme.spacing(5) 
+    marginBottom: theme.spacing(5)
   },
   title: {
-    color:theme.palette.primary.main
+    color: theme.palette.primary.main
   },
   parallax: {
     margin: "0px",
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     textJustify: "inter-word",
     paddingTop: theme.spacing(3),
   },
-  img:{
+  img: {
     marginTop: theme.spacing(4)
   }
 }));

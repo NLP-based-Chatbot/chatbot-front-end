@@ -31,7 +31,8 @@ const Chatbot = () => {
   ])
 
   const updateChatBox = (message) => {
-    updateChatMessages([...chatMessages, { sender: "Yasith", message: message }, { sender: "bot", message: "Hi, Yasith" }])
+    if (!message) return
+    updateChatMessages([...chatMessages, { sender: "Yasith", message: message }, { sender: "bot", message: "Test Message" }])
   }
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import Graph from '../../components/Graph';
 const useStyles = makeStyles(theme => ({
   root: {
     background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
+    minHeight: "calc(100vh - 115px)",
     display: "flex",
     alignItems: "center"
   },
@@ -56,7 +57,7 @@ const Dashboard = () => {
             <CountBox title="Chat Sessions" subtitle="(last month)" count={60} />
           </Grid>
           <Grid item xs={12} md={6} className={classes.box}>
-            <CountBox title="Feedbacks" subtitle="(last month)" count={40} x />
+            <CountBox title="Feedbacks" subtitle="(last month)" count={40} />
           </Grid>
         </Grid>
         <Grid container sm={12} md={8} xl={6} className={classes.graph}>
