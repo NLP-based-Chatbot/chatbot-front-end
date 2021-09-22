@@ -1,6 +1,8 @@
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import { Parallax } from "react-scroll-parallax";
+import YouTubeIcon from "@material-ui/icons/YouTube";
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 const ContactUs = () => {
   const classes = useStyles();
@@ -40,16 +42,13 @@ const ContactUs = () => {
               >
                 Developers
               </Typography>
-              <Typography component="h6" variant="h6">
+              <Typography component="body1" variant="body1">
                 Kavindu - kavindu.18@cse.mrt.ac.lk
-              </Typography>
-              <Typography component="h6" variant="h6">
+                <br />
                 Chandima - chandimaamarasena.18@cse.mrt.ac.lk
-              </Typography>
-              <Typography component="h6" variant="h6">
+                <br />
                 Yasith - yasith.18@cse.mrt.ac.lk
               </Typography>
-
               <Typography
                 component="h4"
                 variant="h4"
@@ -57,9 +56,18 @@ const ContactUs = () => {
               >
                 Social Media
               </Typography>
-              <Typography component="h6" variant="h6">
-                Youtube - www.youtube.com/wingman
-              </Typography>
+              <div className={classes.socialMedia}>
+                <YouTubeIcon fontSize="large" />
+                <Typography component="body1" variant="body1">
+                  Youtube - www.youtube.com/wingman
+                </Typography>
+              </div>
+              <div className={classes.socialMedia}>
+                <FacebookIcon fontSize="large" />
+                <Typography component="body1" variant="body1">
+                  Facebook - www.facebook.com/wingman
+                </Typography>
+              </div>
             </Grid>
           </Grid>
         </Paper>
@@ -112,6 +120,11 @@ const useStyles = makeStyles((theme) => ({
     padding: "40px",
     background: `linear-gradient(45deg, ${theme.palette.secondary.main} 30%, ${theme.palette.secondary.light} 100%)`,
   },
+  socialMedia:{
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+  }
 }));
 
 export default ContactUs;
