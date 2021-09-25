@@ -23,21 +23,24 @@ const useStyles = makeStyles(theme => ({
 // Dummy Data
 const active_user_data = [
   {
-    "name": `${moment().format("L")}`,
-    "users": 20
+    "name": `${moment().add(-4, 'day').format("Do")}`,
+    "users": 15
   },
   {
-    "name": `${moment().add(-1, 'day').format("L")}`,
-    "users": 25
-  }, {
-    "name": `${moment().add(-2, 'day').format("L")}`,
-    "users": 30
-  }, {
-    "name": `${moment().add(-3, 'day').format("L")}`,
+    "name": `${moment().add(-3, 'day').format("Do")}`,
     "users": 10
-  }, {
-    "name": `${moment().add(-4, 'day').format("L")}`,
+  },
+  {
+    "name": `${moment().add(-2, 'day').format("Do")}`,
+    "users": 30
+  },
+  {
+    "name": `${moment().add(-1, 'day').format("Do")}`,
     "users": 15
+  },
+  {
+    "name": `${moment().format("Do")}`,
+    "users": 20
   },
 ]
 
