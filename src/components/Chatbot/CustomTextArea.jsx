@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { makeStyles, IconButton, ButtonGroup } from '@material-ui/core'
+import { makeStyles, IconButton, ButtonGroup, TextField } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 import { useSpeechRecognition } from 'react-speech-recognition';
@@ -8,13 +8,12 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.secondary.light,
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    width: "100%"
   },
   text: {
     width: "90%",
-    padding: theme.spacing(2),
-    fontSize: "1rem",
-    backgroundColor: theme.palette.secondary.light,
+    padding: theme.spacing(0, 3)
   }
 }))
 
@@ -26,7 +25,14 @@ const CustomTextArea = ({ sendMessage, toggleRecord }) => {
 
   return (
     <div className={classes.root}>
-      <textarea rows="1" className={classes.text} value={message} onChange={e => updateMessage(e.target.value)} />
+      <TextField
+        className={classes.text}
+        multiline={true}
+        maxRows={1}
+        value={message}
+        onChange={e => updateMessage(e.target.value)}
+        InputProps={{ disableUnderline: true }}
+      />
       <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
         <IconButton onClick={() => {
           toggleRecord()

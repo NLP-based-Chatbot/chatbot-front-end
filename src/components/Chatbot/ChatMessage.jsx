@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, Box, Avatar, Grid } from '@material-ui/core';
+import { makeStyles, Box, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -7,27 +7,25 @@ const useStyles = makeStyles(theme => ({
     height: "fit-content",
     marginTop: theme.spacing(3),
   },
-  row: {
+  container_bot: {
     maxWidth: "70%",
+    borderRadius: "1.2rem 1.2rem 1.2rem 0",
     width: "fit-content",
-    height: "fit-content",
     backgroundColor: theme.palette.primary.contrastText,
-    borderRadius: "0.5rem"
+    padding: theme.spacing(2, 3),
+    marginLeft: theme.spacing(2)
   },
-  message: {
-
+  container_user: {
+    maxWidth: "70%",
+    borderRadius: "1.2rem 1.2rem 0 1.2rem",
+    width: "fit-content",
+    backgroundColor: theme.palette.secondary.main,
+    padding: theme.spacing(2, 3),
+    marginRight: theme.spacing(2),
+    marginLeft: "auto"
   },
-  botAvatar: {
-    backgroundColor: theme.palette.primary.light,
-    width: theme.spacing(5),
-    height: theme.spacing(5),
-    marginLeft: theme.spacing(1)
-  },
-  avatar: {
-    marginLeft: "auto",
-    marginRight: theme.spacing(1),
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+  font: {
+    fontWeight: "600"
   }
 }))
 
@@ -36,15 +34,14 @@ const ChatMessage = ({ sender, message }) => {
   return (
     <Box className={classes.root}>
       {sender === 'bot' ?
-        <Grid container alignItems="center">
-          <Grid item md={4} lg={3} xl={2}><Avatar alt="chatbot" src="/Logo-robot-only.svg" className={classes.botAvatar} /></Grid>
-          <Grid item md={8} lg={9} xl={10} justifyContent="flex-start"><Box className={classes.row} style={{ marginRight: 'auto' }} py="10px" px="20px">{message}</Box></Grid>
-        </Grid>
+        <Box className={classes.container_bot}>
+          <Typography variant="body1" className={classes.font}>{message}</Typography>
+        </Box>
         :
-        <Grid container alignItems="center">
-          <Grid item md={8} lg={9} xl={10} justifyContent="flex-end"><Box className={classes.row} style={{ marginLeft: 'auto' }} py="10px" px="20px">{message}</Box></Grid>
-          <Grid item md={4} lg={3} xl={2}><Avatar className={classes.avatar}>{sender.substr(0, 1)}</Avatar></Grid>
-        </Grid>}
+        <Box className={classes.container_user}>
+          <Typography variant="body1" className={classes.font}>{message}</Typography>
+        </Box>
+      }
     </Box>
   )
 }

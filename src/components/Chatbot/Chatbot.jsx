@@ -1,26 +1,46 @@
-import { Card } from '@material-ui/core'
+import { Box, Card } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, IconButton } from '@material-ui/core';
 import ChatMessage from './ChatMessage';
 import CustomTextArea from './CustomTextArea';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import clsx from 'clsx';
+import { Typography } from '@material-ui/core';
+import StopIcon from '@material-ui/icons/Stop';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3, 3, 0, 3),
     backgroundColor: theme.palette.primary.light,
     height: "70vh",
-    width: "70%",
+    width: "100%",
   },
   body: {
     backgroundColor: theme.palette.secondary.light,
-    height: "85%",
+    height: "75%",
     overflowY: "auto",
-    paddingTop: theme.spacing(2)
+    padding: theme.spacing(2, 0)
+  },
+  flexRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  flexColumn: {
+    flexDirection: "column"
   },
   textArea: {
-    marginTop: theme.spacing(5),
-    height: "8%",
+    height: "25%",
+    width: "100%",
+  },
+  row: {
+    width: "100%",
+    margin: theme.spacing(1, 0)
+  },
+  buttonGroup: {
+    width: "fit-content",
+    marginLeft: "auto",
+    color: "white"
   }
 }))
 
@@ -62,9 +82,17 @@ const Chatbot = () => {
       <Card className={classes.body}>
         {chatMessages.map((message, index) => <ChatMessage {...message} key={`${index}`} />)}
       </Card>
-      <Card className={classes.textArea}>
+      <div className={clsx(classes.textArea, classes.flexColumn, classes.flexRow)}>
         <CustomTextArea sendMessage={updateChatBox} toggleRecord={() => toggleRecord()} />
-      </Card>
+        <Box className={classes.row}>
+          <Box className={clsx(classes.flexRow, classes.buttonGroup)}>
+            <Typography variant="body1">End Conversation</Typography>
+            <IconButton color="secondary">
+              <StopIcon />
+            </IconButton>
+          </Box>
+        </Box>
+      </div>
     </Card>
   )
 }
