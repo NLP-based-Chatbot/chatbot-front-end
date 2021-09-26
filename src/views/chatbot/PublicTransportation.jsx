@@ -16,13 +16,16 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.primary.contrastText,
-    fontWeight: "600"
+    fontWeight: "600",
+    marginBottom: theme.spacing(2)
   }
 }))
 
 const PublicTransportation = () => {
   const classes = useStyles()
-  const bk = useMediaQuery(theme => theme.breakpoints.up('md'))
+  const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
+  const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
+  const bk_3 = useMediaQuery(theme => theme.breakpoints.up('sm'))
 
   const [displayFeedback, updateDisplayFeedback] = useState(false)
 
@@ -38,14 +41,14 @@ const PublicTransportation = () => {
   return (
     <div className={classes.root}>
       <Container>
-        <Grid container alignItems="center" justifyContent="space-between">
+        <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"}>
           <Grid item alignItems="center" sm={12} md={3}>
-            <img
+            {bk_3 && <img
               src="/Bus_1.svg"
               height="auto"
-              width={bk ? "80%" : "60%"}
+              width={bk_2 ? "80%" : "60%"}
               alt=""
-            />
+            />}
             <Typography variant="h3" className={clsx(classes.row, classes.title)}>Public Transportation</Typography>
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
@@ -55,7 +58,6 @@ const PublicTransportation = () => {
 
         <Modal
           open={displayFeedback}
-          onClose={() => updateDisplayFeedback(false)}
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >

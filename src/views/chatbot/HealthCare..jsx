@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.primary.contrastText,
-    fontWeight: "600"
+    fontWeight: "600",
+    marginBottom: theme.spacing(2)
   }
 }))
 
@@ -41,15 +42,15 @@ const HealthCare = () => {
     <div className={classes.root}>
       <Container>
         <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"}>
-          {bk_3 && <Grid item alignItems="center" sm={12} md={3}>
-            <img
+          <Grid item alignItems="center" sm={12} md={3}>
+            {bk_3 && <img
               src="/HealthCare_1.svg"
               height="auto"
               width={bk_2 ? "80%" : "60%"}
               alt=""
-            />
+            />}
             <Typography variant="h3" className={clsx(classes.row, classes.title)}>Health Care</Typography>
-          </Grid>}
+          </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
             <Chatbot finish={() => updateDisplayFeedback(true)} />
           </Grid>
@@ -57,7 +58,6 @@ const HealthCare = () => {
 
         <Modal
           open={displayFeedback}
-          onClose={() => updateDisplayFeedback(false)}
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
