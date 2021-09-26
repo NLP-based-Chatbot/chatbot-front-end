@@ -9,7 +9,7 @@ const HomeLayout = props => {
 	return (
 		<Container
 			{...props}
-			maxWidth='false'
+			maxWidth={false}
 			disableGutters
 			className={classes.root}
 		>

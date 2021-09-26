@@ -62,7 +62,6 @@ const Login = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
         },
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: "/auth/jwt/create/",
@@ -71,9 +70,9 @@ const Login = () => {
           password: password
         },
       }).then((res) => {
-        console.log("Success", res.toJSON())
+        console.log("Success", res)
       }).catch((err) => {
-        console.log("Failure", err.toJSON())
+        console.log("Failure", err)
       })
     }
   })

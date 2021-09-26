@@ -8,11 +8,11 @@ const LoginLayout = props => {
 	return (
 		<Container
 			{...props}
-			maxWidth="false"
+			maxWidth={false}
 			disableGutters
 			className={classes.body}
 		>
-			<Box pt="50px" pb="50px">
+			<Box pt='50px' pb='50px'>
 				{props.children}
 			</Box>
 			<Footer />
