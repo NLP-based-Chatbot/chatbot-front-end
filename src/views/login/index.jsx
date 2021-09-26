@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -57,7 +58,22 @@ const Login = () => {
         .required('Required Field')
     }),
     onSubmit: async (email, password) => {
-      console.log(email, password)
+      axios({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: "/auth/jwt/create/",
+        data: {
+          email: email,
+          password: password
+        }
+      }).then((res) => {
+        console.log("Success", res.toJSON())
+      }).catch((err) => {
+        console.log("Failure", err.toJSON())
+      })
     }
   })
 
