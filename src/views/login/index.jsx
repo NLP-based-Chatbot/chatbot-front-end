@@ -57,18 +57,19 @@ const Login = () => {
         .min(6, 'Minimum of 6 Characters Needed')
         .required('Required Field')
     }),
-    onSubmit: async (email, password) => {
+    onSubmit: async ({ email, password }) => {
       axios({
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*',
         },
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: "/auth/jwt/create/",
         data: {
           email: email,
           password: password
-        }
+        },
       }).then((res) => {
         console.log("Success", res.toJSON())
       }).catch((err) => {
