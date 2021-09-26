@@ -8,7 +8,7 @@ const ContactUs = () => {
   const classes = useStyles();
   return (
     <div>
-      <Parallax className={classes.parallax} y={[-45, 20]} tagOuter="figure">
+      <Parallax className={classes.parallax} y={[-45, 25]} tagOuter="figure">
         <Paper className={classes.body} square elevation={3}>
           <Typography className={classes.name} component="h3" variant="h3">
             GET IN TOUCH
@@ -18,7 +18,7 @@ const ContactUs = () => {
           </Typography>
         </Paper>
       </Parallax>
-      <Parallax className={classes.parallax} y={[-20, 5]} tagOuter="figure">
+      <Parallax className={classes.parallax} y={[-5, 5]} tagOuter="figure">
         <Paper className={classes.paper} elevation={12}>
           <Grid container spacing={0}>
             <Grid item xs={12} sm={12} md={6} className={classes.logoSection}>
