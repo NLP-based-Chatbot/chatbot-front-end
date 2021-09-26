@@ -18,9 +18,14 @@ const useStyles = makeStyles((theme) => ({
   container: {
     height: "100%",
   },
-  card: {
+  paper: {
     padding: theme.spacing(4),
-    marginBottom: theme.spacing(5)
+    [theme.breakpoints.up("md")]: {
+      margin: "0px",
+    },
+    [theme.breakpoints.down("md")]: {
+      margin: "20px 20px",
+    }
   },
   title: {
     color: theme.palette.primary.main
@@ -81,7 +86,7 @@ const Product = () => {
             />
           </Grid>
           <Grid item sm={12} md={5}>
-            <Card className={classes.card}>
+            <Paper className={classes.paper} elevation={12}>
               <Typography variant="h4" className={classes.title}>
                 Social Inquery Chatbot
               </Typography>
@@ -96,7 +101,7 @@ const Product = () => {
                 to your system, we got you. <Link to="/contactus">Contact</Link>{" "}
                 our developers for future details.
               </Typography>
-            </Card>
+            </Paper>
           </Grid>
         </Grid>
       </Parallax>
