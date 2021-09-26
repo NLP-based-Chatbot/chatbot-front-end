@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Chatbot = () => {
+const Chatbot = ({ finish }) => {
   const classes = useStyles()
   const [chatMessages, updateChatMessages] = useState([
     { sender: "Yasith", message: "Hi" },
@@ -87,7 +87,7 @@ const Chatbot = () => {
         <Box className={classes.row}>
           <Box className={clsx(classes.flexRow, classes.buttonGroup)}>
             <Typography variant="body1">End Conversation</Typography>
-            <IconButton color="secondary">
+            <IconButton color="secondary" onClick={() => finish()}>
               <StopIcon />
             </IconButton>
           </Box>

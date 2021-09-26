@@ -1,7 +1,8 @@
-import React from 'react'
-import { Container, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
+import React, { useState } from 'react'
+import { Container, Grid, makeStyles, Modal, Typography, useMediaQuery } from '@material-ui/core';
 import Chatbot from '../../components/Chatbot/Chatbot';
 import clsx from 'clsx';
+import Feedback from './../../components/Chatbot/Feedback';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,6 +26,17 @@ const HealthCare = () => {
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
   const bk_3 = useMediaQuery(theme => theme.breakpoints.up('sm'))
 
+  const [displayFeedback, updateDisplayFeedback] = useState(false)
+
+  const submit = (feedback) => {
+    updateDisplayFeedback(false)
+    if (feedback) {
+      console.log(feedback)
+    } else {
+      console.log("No feedback provided")
+    }
+  }
+
   return (
     <div className={classes.root}>
       <Container>
@@ -39,9 +51,18 @@ const HealthCare = () => {
             <Typography variant="h3" className={clsx(classes.row, classes.title)}>Health Care</Typography>
           </Grid>}
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
-            <Chatbot />
+            <Chatbot finish={() => updateDisplayFeedback(true)} />
           </Grid>
         </Grid>
+
+        <Modal
+          open={displayFeedback}
+          onClose={() => updateDisplayFeedback(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <Feedback submit={(feedback) => submit(feedback)} />
+        </Modal>
       </Container>
     </div>
   )
