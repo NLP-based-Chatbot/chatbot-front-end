@@ -7,6 +7,10 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import clsx from 'clsx';
 import { Typography } from '@material-ui/core';
 import StopIcon from '@material-ui/icons/Stop';
+import { useSelector } from 'react-redux';
+import { getUser } from '../../store/slices/auth';
+import api from '../../api';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Chatbot = ({ finish }) => {
+const Chatbot = ({ finish, domain }) => {
   const classes = useStyles()
   const [chatMessages, updateChatMessages] = useState([
     { sender: "Yasith", message: "Hi" },
@@ -57,9 +61,19 @@ const Chatbot = ({ finish }) => {
     resetTranscript,
   } = useSpeechRecognition()
 
-  const updateChatBox = (message) => {
+  const displayName = useSelector(getUser)
+
+  const updateChatBox = async (message) => {
     if (!message) return
-    updateChatMessages([...chatMessages, { sender: "Yasith", message: message }, { sender: "bot", message: "Test Message" }])
+    try {
+      updateChatMessages([...chatMessages, { sender: displayName, message: message }])
+      const reply = await api.chatbot.POST.chat(displayName.first_name, message, domain)
+      //console.log(reply.data)
+      updateChatMessages([...chatMessages, { sender: displayName, message: message }, { sender: "bot", message: reply.data[0].text }])
+    } catch (err) {
+      toast.error("Message send failed")
+      return
+    }
   }
 
   const toggleRecord = () => {
