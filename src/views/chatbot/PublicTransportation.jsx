@@ -3,6 +3,9 @@ import { Container, Grid, makeStyles, Modal, Typography, useMediaQuery } from '@
 import Chatbot from '../../components/Chatbot/Chatbot';
 import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
+import { useSelector } from 'react-redux';
+import { getUserSignedIn } from './../../store/slices/auth';
+import { Redirect } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +26,8 @@ const useStyles = makeStyles(theme => ({
 
 const PublicTransportation = () => {
   const classes = useStyles()
+  const signedIn = useSelector(getUserSignedIn)
+
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
   const bk_3 = useMediaQuery(theme => theme.breakpoints.up('sm'))
@@ -37,6 +42,8 @@ const PublicTransportation = () => {
       console.log("No feedback provided")
     }
   }
+
+  if (!signedIn) return <Redirect to="/home" />
 
   return (
     <div className={classes.root}>

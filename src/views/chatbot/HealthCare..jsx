@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
 import { useSelector } from 'react-redux';
 import { getChat } from './../../store/slices/chatbot';
+import { getUserSignedIn } from './../../store/slices/auth';
+import { Redirect } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,6 +28,8 @@ const useStyles = makeStyles(theme => ({
 const HealthCare = () => {
   const classes = useStyles()
   const chat = useSelector(getChat)
+  const signedIn = useSelector(getUserSignedIn)
+
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
   const bk_3 = useMediaQuery(theme => theme.breakpoints.up('sm'))
@@ -41,6 +45,8 @@ const HealthCare = () => {
     }
   }
 
+  if (!signedIn) return <Redirect to="/home" />
+
   return (
     <div className={classes.root}>
       <Container>
@@ -55,7 +61,7 @@ const HealthCare = () => {
             <Typography variant="h3" className={clsx(classes.row, classes.title)}>Health Care</Typography>
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
-            <Chatbot finish={() => updateDisplayFeedback(true)} domain='healthcare'/>
+            <Chatbot finish={() => updateDisplayFeedback(true)} domain='healthcare' />
           </Grid>
         </Grid>
 

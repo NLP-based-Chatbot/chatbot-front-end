@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 import { fonts } from './../../utils/theme';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import api from './../../api/index';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -33,11 +33,15 @@ const useStyles = makeStyles(theme => ({
 const AccountActivation = () => {
   const classes = useStyles()
   const { uid, token } = useParams()
+  const history = useHistory()
 
   const activate = async () => {
     try {
       await api.user.POST.activateUser(uid, token)
       toast.success('User activated')
+      setTimeout(() => {
+        history.push('/')
+      }, 500)
     } catch (err) {
       console.log(err)
       toast.error('Activation failed')
