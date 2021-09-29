@@ -14,7 +14,7 @@ const Home = () => {
       />
       <SubSection
         sectionName="Health Care"
-        description="Let you place appointments with your doctors, get reports and make reservations for tests for you with our partner hospital."
+        description="Let you place appointments with your doctors, channel specialists, shift appointments to another time slot, cancel appointments , get reports and make reservations for conduct tests for you with our partner hospital."
         imageSrc="./Health Care.svg"
         align='right'
       />
