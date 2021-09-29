@@ -8,7 +8,7 @@ const Home = () => {
       <HeroSection />
       <SubSection
         sectionName="Public Transportation"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat pellentesque neque ultricies lectus velit urna etiam. Massa vulputate lacus, pulvinar sed feugiat et dictumst id ultrices. Tristique amet neque, lectus vitae hendrerit magna gravida nunc. Ac netus neque massa vitae purus vel elit eget duis. Tempor enim nibh purus aliquam. Velit quisque odio aenean diam vestibulum sagittis."
+        description="Built with the cutting edge technologies, the Public Transportation Chatbot is what exactly you need to find information related to Public Transportation in Sri Lanka. Users are provided with many functionalities such as Finding Schedules, Booking Seats, Finding Contact Information, and many more. The Complaint Management module which is also integrated with the Chatbot allows you to make complaints easily without bothering anymore. The Chatbot is only limited by evolution of human purpose."
         imageSrc="./Bus.svg"
         align='left'
       />

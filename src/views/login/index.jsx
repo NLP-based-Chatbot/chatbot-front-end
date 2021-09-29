@@ -79,7 +79,7 @@ const Login = () => {
           toast.success("Successful login")
           setTimeout(() => {
             history.push("/home")
-          }, 500)
+          }, 2000)
         } catch (err) {
           dispatch(userRequestFailed())
           toast.error("Login failed")
