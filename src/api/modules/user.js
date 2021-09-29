@@ -30,6 +30,40 @@ const user = {
 					re_password: re_password
 				}
 			});
+		},
+		async forgotPassword(email) {
+			return AxiosInstance({
+				method: 'POST',
+				url: '/auth/users/reset_password/',
+				data: {
+					email: email
+				}
+			});
+		},
+		async resetPassword(uid, token, new_password, re_password) {
+			return AxiosInstance({
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				url: '/auth/users/reset_password_confirm/',
+				data: {
+					uid: uid,
+					token: token,
+					new_password: new_password,
+					re_password: re_password
+				}
+			});
+		},
+		async activateUser(uid, token) {
+			return AxiosInstance({
+				method: 'POST',
+				url: '/auth/users/activation/',
+				data: {
+					uid: uid,
+					token: token
+				}
+			});
 		}
 	},
 	GET: {

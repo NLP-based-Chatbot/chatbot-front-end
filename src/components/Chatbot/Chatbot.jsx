@@ -7,6 +7,8 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import clsx from 'clsx';
 import { Typography } from '@material-ui/core';
 import StopIcon from '@material-ui/icons/Stop';
+import { useDispatch } from 'react-redux';
+import { updateChat } from '../../store/slices/chatbot';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,6 +48,8 @@ const useStyles = makeStyles(theme => ({
 
 const Chatbot = ({ finish }) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+
   const [chatMessages, updateChatMessages] = useState([
     { sender: "Yasith", message: "Hi" },
     { sender: "bot", message: "Hi, Yasith" },
@@ -87,7 +91,12 @@ const Chatbot = ({ finish }) => {
         <Box className={classes.row}>
           <Box className={clsx(classes.flexRow, classes.buttonGroup)}>
             <Typography variant="body1">End Conversation</Typography>
-            <IconButton color="secondary" onClick={() => finish()}>
+            <IconButton
+              color="secondary"
+              onClick={async () => {
+                await dispatch(updateChat(chatMessages))
+                finish()
+              }}>
               <StopIcon />
             </IconButton>
           </Box>
