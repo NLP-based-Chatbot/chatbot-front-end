@@ -77,7 +77,7 @@ const Register = () => {
         toast.success("Registration success, Check your email for activation")
         setTimeout(() => {
           history.push('/')
-        }, 1000)
+        }, 5000)
       } catch (err) {
         toast.error("Registration failed")
         Object.values(err.response.data)[0].map((error) => toast.error(error))
