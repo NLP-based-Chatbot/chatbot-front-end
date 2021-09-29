@@ -55,7 +55,7 @@ const HealthCare = () => {
             <Typography variant="h3" className={clsx(classes.row, classes.title)}>Health Care</Typography>
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
-            <Chatbot finish={() => updateDisplayFeedback(true)} />
+            <Chatbot finish={() => updateDisplayFeedback(true)} domain='healthcare'/>
           </Grid>
         </Grid>
 

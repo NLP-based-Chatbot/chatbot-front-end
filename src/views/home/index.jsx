@@ -14,7 +14,7 @@ const Home = () => {
       />
       <SubSection
         sectionName="Health Care"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat pellentesque neque ultricies lectus velit urna etiam. Massa vulputate lacus, pulvinar sed feugiat et dictumst id ultrices. Tristique amet neque, lectus vitae hendrerit magna gravida nunc. Ac netus neque massa vitae purus vel elit eget duis. Tempor enim nibh purus aliquam. Velit quisque odio aenean diam vestibulum sagittis."
+        description="Let you place appointments with your doctors, get reports and make reservations for tests for you with our partner hospital."
         imageSrc="./Health Care.svg"
         align='right'
       />

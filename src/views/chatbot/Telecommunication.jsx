@@ -52,7 +52,7 @@ const Telecommunication = () => {
             <Typography variant="h3" className={clsx(classes.row, classes.title)}>Telecommunication</Typography>
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
-            <Chatbot finish={() => updateDisplayFeedback(true)} />
+            <Chatbot finish={() => updateDisplayFeedback(true)} domain='telecom' />
           </Grid>
         </Grid>
 
