@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import * as Yup from 'yup'
 import api from './../../api/index';
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
+  const history = useHistory()
 
   const formik = useFormik({
     initialValues: {
@@ -73,7 +74,10 @@ const Register = () => {
     onSubmit: async ({ first_name, last_name, email, password, re_password }) => {
       try {
         await api.user.POST.signUp(first_name, last_name, email, password, re_password)
-        toast.success("Registration success")
+        toast.success("Registration success, Check your email for activation")
+        setTimeout(() => {
+          history.push('/')
+        }, 1000)
       } catch (err) {
         toast.error("Registration failed")
         Object.values(err.response.data)[0].map((error) => toast.error(error))

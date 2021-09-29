@@ -6,7 +6,7 @@ import {
   Grid,
   Button,
 } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
@@ -14,7 +14,7 @@ import api from './../../api/index';
 import { useDispatch } from 'react-redux';
 import { userReceived, userRequested, userRequestFailed, userTokenReceived, userTokenRequested, userTokenRequestFailed } from "../../store/slices/auth";
 import { useSelector } from "react-redux";
-import { getToken } from './../../store/slices/auth';
+import { getToken, getUserSignedIn } from './../../store/slices/auth';
 import { toast, ToastContainer } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const signedIn = useSelector(getUserSignedIn)
   const dispatch = useDispatch()
   const token = useSelector(getToken)
   const history = useHistory()
@@ -90,6 +91,8 @@ const Login = () => {
       }
     }
   })
+
+  if (signedIn) return <Redirect to="/home" />
 
   return (
     <div>
