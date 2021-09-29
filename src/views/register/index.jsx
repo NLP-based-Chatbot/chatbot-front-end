@@ -10,7 +10,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import * as Yup from 'yup'
-// import axios from "axios";
 import api from './../../api/index';
 import { toast, ToastContainer } from "react-toastify";
 
@@ -78,6 +77,7 @@ const Register = () => {
       } catch (err) {
         toast.error("Registration failed")
         Object.values(err.response.data)[0].map((error) => toast.error(error))
+        console.log(err.response.data)
       }
     }
   })
@@ -126,7 +126,6 @@ const Register = () => {
                       id="first_name"
                       label="First Name"
                       inputProps={{ className: classes.inputtext }}
-                      autoFocus
                       {...formik.getFieldProps('first_name')}
                     />
                     {formik.touched.first_name && formik.errors.first_name && <div className={classes.error}>{formik.errors.first_name}</div>}
@@ -141,7 +140,6 @@ const Register = () => {
                       id="last_name"
                       label="Last Name"
                       inputProps={{ className: classes.inputtext }}
-                      autoFocus
                       {...formik.getFieldProps('last_name')}
                     />
                     {formik.touched.last_name && formik.errors.last_name && <div className={classes.error}>{formik.errors.last_name}</div>}

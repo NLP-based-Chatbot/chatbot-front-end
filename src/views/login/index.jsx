@@ -148,7 +148,12 @@ const Login = () => {
                 >
                   Login
                 </Button>
-                <Grid container justifyContent="center">
+                <Grid container justifyContent="center" spacing="2">
+                  <Grid item>
+                    <Link style={{ color: "white", textDecoration: "none" }} to="/forget_password" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
                   <Grid item>
                     <Link style={{ color: "white", textDecoration: "none" }} to="/register" variant="body2">
                       Not yet registered? Register from here

@@ -3,6 +3,8 @@ import { Container, Grid, makeStyles, Modal, Typography, useMediaQuery } from '@
 import Chatbot from '../../components/Chatbot/Chatbot';
 import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
+import { useSelector } from 'react-redux';
+import { getChat } from './../../store/slices/chatbot';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 const HealthCare = () => {
   const classes = useStyles()
+  const chat = useSelector(getChat)
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
   const bk_3 = useMediaQuery(theme => theme.breakpoints.up('sm'))
@@ -32,7 +35,7 @@ const HealthCare = () => {
   const submit = (feedback) => {
     updateDisplayFeedback(false)
     if (feedback) {
-      console.log(feedback)
+      console.log(`Feedback: ${feedback}, Chat: ${chat}`)
     } else {
       console.log("No feedback provided")
     }
