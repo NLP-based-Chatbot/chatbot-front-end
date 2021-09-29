@@ -41,7 +41,7 @@ const AccountActivation = () => {
       toast.success('User activated')
       setTimeout(() => {
         history.push('/')
-      }, 500)
+      }, 4000)
     } catch (err) {
       console.log(err)
       toast.error('Activation failed')
