@@ -10,14 +10,14 @@ const feedback = {
 				},
 				url: `/feedback/`,
 				data: {
-                    user_id : user_id,
-                    rating : rating,
-                    domain : domain,
-                    chatsession : chatsession
+					user_id: user_id,
+					rating: rating,
+					domain: domain,
+					chatsession: chatsession
 				}
 			});
-		},
-    }
+		}
+	}
 };
 
 export default feedback;
