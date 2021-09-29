@@ -8,7 +8,7 @@ const ContactUs = () => {
   const classes = useStyles();
   return (
     <div>
-      <Parallax className={classes.parallax} y={[-45, 25]} tagOuter="figure">
+      <Parallax className={classes.parallax} y={[-55, 25]} tagOuter="figure">
         <Paper className={classes.body} square elevation={3}>
           <Typography className={classes.name} component="h3" variant="h3">
             GET IN TOUCH
@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "40px",
     background: `linear-gradient(45deg, ${theme.palette.secondary.main} 30%, ${theme.palette.secondary.light} 100%)`,
   },
-  socialMedia:{
+  socialMedia: {
     display: "flex",
     alignItems: "center",
     flexWrap: "wrap",

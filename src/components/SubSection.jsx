@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     color: theme.palette.primary.light,
+    padding: theme.spacing(2)
   },
   pic: {
     width: "80%",
@@ -63,6 +64,8 @@ const SubSection = (props) => {
               className={classes.description}
               component="body1"
               variant="body1"
+              align="justify"
+              display="block"
             >
               {description}
             </Typography>
