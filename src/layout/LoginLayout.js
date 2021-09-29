@@ -2,6 +2,7 @@ import { Box, Container, makeStyles } from '@material-ui/core';
 import React from 'react';
 import Footer from '../containers/Footer';
 import { Route } from 'react-router';
+import TSParticile from '../components/TSParticle';
 
 const LoginLayout = props => {
 	const classes = useStyles();

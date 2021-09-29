@@ -16,6 +16,7 @@ import { userReceived, userRequested, userRequestFailed, userTokenReceived, user
 import { useSelector } from "react-redux";
 import { getToken } from './../../store/slices/auth';
 import { toast, ToastContainer } from "react-toastify";
+import TSParticile from "../../components/TSParticle";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -103,7 +104,8 @@ const Login = () => {
 
         <Grid item sm={12} md={5}>
           <Container component="main" maxWidth="xs">
-            <div className={classes.paper}>
+            <TSParticile />
+            <div className={classes.paper} style={{ zIndex: 2 }}>
               <Typography component="h1" variant="h5">
                 User Login
               </Typography>
