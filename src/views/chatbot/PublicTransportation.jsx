@@ -52,7 +52,7 @@ const PublicTransportation = () => {
             <Typography variant="h3" className={clsx(classes.row, classes.title)}>Public Transportation</Typography>
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
-            <Chatbot finish={() => updateDisplayFeedback(true)} />
+            <Chatbot finish={() => updateDisplayFeedback(true)} domain='transport' />
           </Grid>
         </Grid>
 

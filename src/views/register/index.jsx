@@ -76,6 +76,7 @@ const Register = () => {
         toast.success("Registration success")
       } catch (err) {
         toast.error("Registration failed")
+        Object.values(err.response.data)[0].map((error) => toast.error(error))
         console.log(err.response.data)
       }
     }
