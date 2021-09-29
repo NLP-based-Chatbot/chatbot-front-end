@@ -1,13 +1,11 @@
 import React from "react";
 import {
-  Card,
   Grid,
   makeStyles,
   Paper,
   Typography,
   useMediaQuery,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import { Parallax } from "react-scroll-parallax";
 
 const useStyles = makeStyles((theme) => ({

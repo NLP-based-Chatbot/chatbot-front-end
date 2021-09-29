@@ -6,6 +6,9 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PhoneIcon from '@material-ui/icons/Phone';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser, getUserSignedIn, userSignedOut } from './../store/slices/auth';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,12 +24,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3)
   },
   corner: {
-    marginLeft: 'auto'
-  },
-  navList: {
     display: "flex",
-    justifyContent: "center",
-    width: '100%'
+    alignItems: "center",
+    marginLeft: 'auto',
   },
   navItem: {
     width: "fit-content"
@@ -48,63 +48,86 @@ const useStyles = makeStyles((theme) => ({
   sideNavLink: {
     textDecoration: "none",
     color: theme.palette.secondary.contrastText
+  },
+  name: {
+    display: "inline",
+    width: "100%"
   }
 }));
 
 const NavPanel = () => {
   const classes = useStyles();
   const [open, toggleOpen] = useState(false)
+  const dispatch = useDispatch()
+  const displayName = useSelector(getUser)
+  const userSignedIn = useSelector(getUserSignedIn)
+  const history = useHistory()
+
+  const toggleLogin = () => {
+    if (userSignedIn) {
+      setTimeout(() => {
+        dispatch(userSignedOut())
+      }, 500)
+    } else {
+      history.push("/")
+    }
+  }
 
   return (
     <>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => toggleOpen(!open)}>
+          {userSignedIn && <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => toggleOpen(!open)}>
             <MenuIcon />
-          </IconButton>
-          <Grid container className={classes.navList}>
-            <Grid item xs={3} md={2}>
-              <Link to="/home" className={classes.link}>
-                <Typography variant="h6" className={classes.title}>
-                  Home
-                </Typography>
-              </Link>
+          </IconButton>}
+          <Grid container alignItems="center">
+            <Grid container xs={8} md={10} alignItems="center">
+              <Grid item xs={2} md={3}>
+                <Link to="/home" className={classes.link}>
+                  <Typography variant="h6" className={classes.title}>
+                    Home
+                  </Typography>
+                </Link>
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <Link to="/product" className={classes.link}>
+                  <Typography variant="h6" className={classes.title}>
+                    Product
+                  </Typography>
+                </Link>
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <Link to="/aboutus" className={classes.link}>
+                  <Typography variant="h6" className={classes.title}>
+                    About Us
+                  </Typography>
+                </Link>
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <Link to="/contactus" className={classes.link}>
+                  <Typography variant="h6" className={classes.title}>
+                    Contact
+                  </Typography>
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={3} md={2}>
-              <Link to="/product" className={classes.link}>
-                <Typography variant="h6" className={classes.title}>
-                  Product
-                </Typography>
-              </Link>
-            </Grid>
-            <Grid item xs={3} md={2}>
-              <Link to="/aboutus" className={classes.link}>
-                <Typography variant="h6" className={classes.title}>
-                  About Us
-                </Typography>
-              </Link>
-            </Grid>
-            <Grid item xs={3} md={2}>
-              <Link to="/contactus" className={classes.link}>
-                <Typography variant="h6" className={classes.title}>
-                  Contact
-                </Typography>
-              </Link>
-            </Grid>
+            {userSignedIn && <Grid item xs={3} md={2} className={classes.corner}>
+              <Typography variant="h6" className={classes.title}>
+                Hi, {displayName.first_name}
+              </Typography>
+            </Grid>}
           </Grid>
           <div className={classes.corner}>
-            <ListItem button alignItems="center">
-              <Link to="/" className={classes.link}>
-                <Typography variant="h6">
-                  Login
-                </Typography>
-              </Link>
+            <ListItem button alignItems="center" onClick={() => toggleLogin()}>
+              <Typography variant="h6">
+                {userSignedIn ? "Logout" : "Login"}
+              </Typography>
             </ListItem>
           </div>
         </Toolbar>
       </AppBar>
 
-      <Drawer
+      {userSignedIn && <Drawer
         variant="persistent"
         anchor="left"
         open={open}
@@ -144,7 +167,7 @@ const NavPanel = () => {
             <ArrowLeftIcon />
           </IconButton>
         </Box>
-      </Drawer>
+      </Drawer>}
     </>
   );
 };

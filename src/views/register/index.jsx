@@ -10,7 +10,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import * as Yup from 'yup'
-// import axios from "axios";
+import api from './../../api/index';
+import { toast, ToastContainer } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,14 +47,18 @@ const Register = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
-      repassword: ""
+      re_password: ""
     },
     validationSchema: Yup.object().shape({
-      username: Yup.string()
-        .min(4, 'Enter a longer username')
+      first_name: Yup.string()
+        .min(1, 'Enter a longer first name')
+        .required('Required Field'),
+      last_name: Yup.string()
+        .min(1, 'Enter a longer last name')
         .required('Required Field'),
       email: Yup.string()
         .email('Invalid Type')
@@ -61,11 +66,19 @@ const Register = () => {
       password: Yup.string()
         .min(6, 'Minimum of 6 Characters Needed')
         .required('Required Field'),
-      repassword: Yup.string()
+      re_password: Yup.string()
         .min(6, 'Minimum of 6 Characters Needed')
         .required('Required Field'),
     }),
-    onSubmit: async (username, email, password, repassword) => console.log(username, email, password, repassword)
+    onSubmit: async ({ first_name, last_name, email, password, re_password }) => {
+      try {
+        await api.user.POST.signUp(first_name, last_name, email, password, re_password)
+        toast.success("Registration success")
+      } catch (err) {
+        toast.error("Registration failed")
+        console.log(err.response.data)
+      }
+    }
   })
 
   // const submit = async (username, email, password, repassword) => {
@@ -87,6 +100,7 @@ const Register = () => {
 
   return (
     <div>
+      <ToastContainer />
       <Grid container alignItems="center" justifyContent="space-around">
         <Grid item sm={12} md={5}>
           <div className={classes.logo}>
@@ -104,17 +118,30 @@ const Register = () => {
                   <Grid item xs={12}>
                     <CustomTextField
                       autoComplete="name"
-                      name="username"
+                      name="first_name"
                       variant="outlined"
                       required
                       fullWidth
-                      id="firstName"
+                      id="first_name"
                       label="First Name"
                       inputProps={{ className: classes.inputtext }}
-                      autoFocus
-                      {...formik.getFieldProps('username')}
+                      {...formik.getFieldProps('first_name')}
                     />
-                    {formik.touched.username && formik.errors.username && <div className={classes.error}>{formik.errors.username}</div>}
+                    {formik.touched.first_name && formik.errors.first_name && <div className={classes.error}>{formik.errors.first_name}</div>}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CustomTextField
+                      autoComplete="name"
+                      name="last_name"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="last_name"
+                      label="Last Name"
+                      inputProps={{ className: classes.inputtext }}
+                      {...formik.getFieldProps('last_name')}
+                    />
+                    {formik.touched.last_name && formik.errors.last_name && <div className={classes.error}>{formik.errors.last_name}</div>}
                   </Grid>
                   <Grid item xs={12}>
                     <CustomTextField
@@ -150,15 +177,15 @@ const Register = () => {
                       variant="outlined"
                       required
                       fullWidth
-                      name="password"
+                      name="re_password"
                       label="Confirm Password"
                       type="password"
-                      id="password"
+                      id="re_password"
                       autoComplete="current-password"
                       inputProps={{ className: classes.inputtext }}
-                      {...formik.getFieldProps('repassword')}
+                      {...formik.getFieldProps('re_password')}
                     />
-                    {formik.touched.repassword && formik.errors.repassword && <div className={classes.error}>{formik.errors.repassword}</div>}
+                    {formik.touched.re_password && formik.errors.re_password && <div className={classes.error}>{formik.errors.re_password}</div>}
                   </Grid>
                 </Grid>
                 <Button

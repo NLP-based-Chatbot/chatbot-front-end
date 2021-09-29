@@ -6,11 +6,16 @@ import {
   Grid,
   Button,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
-import axios from "axios";
+import api from './../../api/index';
+import { useDispatch } from 'react-redux';
+import { userReceived, userRequested, userRequestFailed, userTokenReceived, userTokenRequested, userTokenRequestFailed } from "../../store/slices/auth";
+import { useSelector } from "react-redux";
+import { getToken } from './../../store/slices/auth';
+import { toast, ToastContainer } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const token = useSelector(getToken)
+  const history = useHistory()
 
   const formik = useFormik({
     initialValues: {
@@ -58,27 +66,34 @@ const Login = () => {
         .required('Required Field')
     }),
     onSubmit: async ({ email, password }) => {
-      axios({
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: "/auth/jwt/create/",
-        data: {
-          email: email,
-          password: password
-        },
-      }).then((res) => {
-        console.log("Success", res)
-      }).catch((err) => {
-        console.log("Failure", err)
-      })
+      try {
+        dispatch(userTokenRequested())
+        const res = await api.user.POST.signIn(email, password)
+        dispatch(userTokenReceived(res.data))
+
+        try {
+          dispatch(userRequested())
+          const user = await api.user.GET.getUser(token.access)
+          dispatch(userReceived(user.data))
+          toast.success("Successful login")
+          setTimeout(() => {
+            history.push("/home")
+          }, 500)
+        } catch (err) {
+          dispatch(userRequestFailed())
+          toast.error("Login failed")
+        }
+
+      } catch (err) {
+        dispatch(userTokenRequestFailed())
+        toast.error("Login failed")
+      }
     }
   })
 
   return (
     <div>
+      <ToastContainer />
       <Grid container alignItems="center" justifyContent="space-around">
         <Grid item sm={12} md={5}>
           <div className={classes.logo}>
@@ -133,7 +148,12 @@ const Login = () => {
                 >
                   Login
                 </Button>
-                <Grid container justifyContent="center">
+                <Grid container justifyContent="center" spacing="2">
+                  <Grid item>
+                    <Link style={{ color: "white", textDecoration: "none" }} to="/forget_password" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
                   <Grid item>
                     <Link style={{ color: "white", textDecoration: "none" }} to="/register" variant="body2">
                       Not yet registered? Register from here
