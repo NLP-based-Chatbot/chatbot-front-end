@@ -5,8 +5,10 @@ import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
 import { useSelector } from 'react-redux';
 import { getChat } from './../../store/slices/chatbot';
-import { getUserSignedIn } from './../../store/slices/auth';
+import { getUserSignedIn, getUser } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
+import api from './../../api/index';
+import { toast, ToastContainer } from 'react-toastify';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +31,7 @@ const HealthCare = () => {
   const classes = useStyles()
   const chat = useSelector(getChat)
   const signedIn = useSelector(getUserSignedIn)
+  const user = useSelector(getUser)
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
@@ -36,12 +39,17 @@ const HealthCare = () => {
 
   const [displayFeedback, updateDisplayFeedback] = useState(false)
 
-  const submit = (feedback) => {
+  const submit = async (feedback) => {
     updateDisplayFeedback(false)
     if (feedback) {
-      console.log(`Feedback: ${feedback}, Chat: ${chat}`)
-    } else {
-      console.log("No feedback provided")
+      const chatJSON = JSON.stringify(chat)
+      try {
+        await api.feedback.POST.feedback(user.id, 'health care', 3, chatJSON)
+        toast.success('Feedback added')
+      } catch (err) {
+        console.log(err.response.message)
+        toast.error('Something went wrong')
+      }
     }
   }
 
@@ -50,6 +58,7 @@ const HealthCare = () => {
   return (
     <div className={classes.root}>
       <Container>
+        <ToastContainer />
         <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"}>
           <Grid item alignItems="center" sm={12} md={3}>
             {bk_3 && <img

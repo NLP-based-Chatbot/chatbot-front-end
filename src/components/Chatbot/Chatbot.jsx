@@ -54,9 +54,10 @@ const Chatbot = ({ finish, domain }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
+  const displayName = useSelector(getUser)
+
   const [chatMessages, updateChatMessages] = useState([
-    { sender: "Yasith", message: "Hi" },
-    { sender: "bot", message: "Hi, Yasith" },
+    { sender: "bot", message: `Hi, ${displayName.first_name}` },
   ])
 
   const {
@@ -64,8 +65,6 @@ const Chatbot = ({ finish, domain }) => {
     listening,
     resetTranscript,
   } = useSpeechRecognition()
-
-  const displayName = useSelector(getUser)
 
   const updateChatBox = async (message) => {
     if (!message) return
