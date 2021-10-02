@@ -48,7 +48,7 @@ const Dashboard = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <Grid container justifyContent="space-around">
+      <Grid container justifyContent="space-around" alignItems="center">
         <Grid container sm={12} md={6} xl={4}>
           <Grid item xs={12} md={6} className={classes.box}>
             <CountBox title="Active Users" subtitle="(last 24h)" count={20} />
