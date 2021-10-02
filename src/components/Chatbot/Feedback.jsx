@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import SendIcon from '@material-ui/icons/Send';
+import { useDispatch } from 'react-redux';
+import { updateRating } from '../../store/slices/chatbot';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 const Feedback = ({ submit }) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [selected, updateSelected] = useState([0, 0, 0, 0, 0])
   const [feedbackDisplay, setFeedbackDisplay] = useState(false)
   const [feedback, updateFeedback] = useState("")
@@ -52,14 +55,14 @@ const Feedback = ({ submit }) => {
       tempList[i] = 1
     }
     updateSelected(tempList)
-
+    dispatch(updateRating(index + 1))
     if (index < 3) {
       setTimeout(() => {
         setFeedbackDisplay(true)
       }, 1000)
     } else {
       setTimeout(() => {
-        submit()
+        submit(null)
       }, 1000)
     }
   }

@@ -4,7 +4,7 @@ import Chatbot from '../../components/Chatbot/Chatbot';
 import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
 import { useSelector } from 'react-redux';
-import { getChat } from './../../store/slices/chatbot';
+import { getChat, getRating } from './../../store/slices/chatbot';
 import { getUserSignedIn, getUser } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
 import api from './../../api/index';
@@ -32,6 +32,7 @@ const HealthCare = () => {
   const chat = useSelector(getChat)
   const signedIn = useSelector(getUserSignedIn)
   const user = useSelector(getUser)
+  const rating = useSelector(getRating)
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
@@ -41,15 +42,13 @@ const HealthCare = () => {
 
   const submit = async (feedback) => {
     updateDisplayFeedback(false)
-    if (feedback) {
-      const chatJSON = JSON.stringify(chat)
-      try {
-        await api.feedback.POST.feedback(user.id, 'health care', 3, chatJSON)
-        toast.success('Feedback added')
-      } catch (err) {
-        console.log(err.response.message)
-        toast.error('Something went wrong')
-      }
+    const chatJSON = JSON.stringify(chat)
+    try {
+      await api.feedback.POST.feedback(user.id, 'health care', rating, feedback, chatJSON)
+      toast.success('Feedback added')
+    } catch (err) {
+      console.log(err.response.message)
+      toast.error('Something went wrong')
     }
   }
 

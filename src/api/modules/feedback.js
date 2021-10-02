@@ -2,7 +2,7 @@ import AxiosInstance from './../../helpers/AxiosInstance';
 
 const feedback = {
 	POST: {
-		async feedback(user_id, domain, rating, chatsession) {
+		async feedback(user_id, domain, rating, feedback, chatsession) {
 			return AxiosInstance({
 				method: 'POST',
 				headers: {
@@ -12,9 +12,18 @@ const feedback = {
 				data: {
 					user_id: user_id,
 					rating: rating,
+					feedback: feedback,
 					domain: domain,
 					chatsession: chatsession
 				}
+			});
+		}
+	},
+	GET: {
+		async sessions() {
+			return AxiosInstance({
+				method: 'GET',
+				url: '/feedback/'
 			});
 		}
 	}

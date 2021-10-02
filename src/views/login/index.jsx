@@ -70,7 +70,7 @@ const Login = () => {
       try {
         dispatch(userTokenRequested())
         const res = await api.user.POST.signIn(email, password)
-        dispatch(userTokenReceived(res.data))
+        await dispatch(userTokenReceived(res.data))
 
         try {
           dispatch(userRequested())
@@ -83,11 +83,13 @@ const Login = () => {
         } catch (err) {
           dispatch(userRequestFailed())
           toast.error("Login failed")
+          console.log('Inner')
         }
 
       } catch (err) {
         dispatch(userTokenRequestFailed())
         toast.error("Login failed")
+        console.log("Outer")
       }
     }
   })
