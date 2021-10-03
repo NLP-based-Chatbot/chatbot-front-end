@@ -72,8 +72,8 @@ const Login = () => {
         const res = await api.user.POST.signIn(email, password)
         await dispatch(userTokenReceived(res.data))
 
+        dispatch(userRequested())
         try {
-          dispatch(userRequested())
           const user = await api.user.GET.getUser(token.access)
           dispatch(userReceived(user.data))
           toast.success("Successful login")
@@ -82,14 +82,12 @@ const Login = () => {
           }, 2000)
         } catch (err) {
           dispatch(userRequestFailed())
-          toast.error("Login failed")
-          console.log('Inner')
         }
 
       } catch (err) {
+
         dispatch(userTokenRequestFailed())
         toast.error("Login failed")
-        console.log("Outer")
       }
     }
   })

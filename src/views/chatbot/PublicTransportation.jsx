@@ -4,8 +4,11 @@ import Chatbot from '../../components/Chatbot/Chatbot';
 import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
 import { useSelector } from 'react-redux';
-import { getUserSignedIn } from './../../store/slices/auth';
+import { getUserSignedIn, getUser } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
+import { toast, ToastContainer } from 'react-toastify';
+import api from './../../api/index';
+import { getChat, getRating } from './../../store/slices/chatbot';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,6 +30,9 @@ const useStyles = makeStyles(theme => ({
 const PublicTransportation = () => {
   const classes = useStyles()
   const signedIn = useSelector(getUserSignedIn)
+  const chat = useSelector(getChat)
+  const user = useSelector(getUser)
+  const rating = useSelector(getRating)
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
@@ -34,12 +40,15 @@ const PublicTransportation = () => {
 
   const [displayFeedback, updateDisplayFeedback] = useState(false)
 
-  const submit = (feedback) => {
+  const submit = async (feedback) => {
     updateDisplayFeedback(false)
-    if (feedback) {
-      console.log(feedback)
-    } else {
-      console.log("No feedback provided")
+    const chatJSON = JSON.stringify(chat)
+    try {
+      await api.feedback.POST.feedback(user.id, 'transport', rating, feedback, chatJSON)
+      toast.success('Feedback added')
+    } catch (err) {
+      console.log(err.response.message)
+      toast.error('Something went wrong')
     }
   }
 
@@ -48,6 +57,7 @@ const PublicTransportation = () => {
   return (
     <div className={classes.root}>
       <Container>
+        <ToastContainer />
         <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"}>
           <Grid item alignItems="center" sm={12} md={3}>
             {bk_3 && <img

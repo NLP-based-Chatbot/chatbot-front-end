@@ -72,7 +72,11 @@ const Chatbot = ({ finish, domain }) => {
       updateChatMessages([...chatMessages, { sender: displayName, message: message }])
       const reply = await api.chatbot.POST.chat(displayName.first_name, message, domain)
       //console.log(reply.data)
-      updateChatMessages([...chatMessages, { sender: displayName, message: message }, { sender: "bot", message: reply.data[0].text }])
+      let temp = []
+      for (let r of reply.data) {
+        temp = [...temp, { sender: "bot", message: r.text }]
+      }
+      updateChatMessages([...chatMessages, { sender: displayName, message: message }, ...temp])
     } catch (err) {
       toast.error("Message send failed")
       return

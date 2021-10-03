@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import * as Yup from 'yup'
 import api from './../../api/index';
@@ -106,6 +106,8 @@ const Register = () => {
   //     console.log(err.message)
   //   }
   // }
+
+  if (signedIn) return <Redirect to="/home" />
 
   return (
     <div>

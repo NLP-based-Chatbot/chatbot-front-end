@@ -83,6 +83,13 @@ const user = {
 				},
 				url: '/auth/users/me'
 			});
+		},
+		async getUsers(token) {
+			return AxiosInstance({
+				method: 'GET',
+				headers: {},
+				url: '/auth/users/'
+			});
 		}
 	}
 };

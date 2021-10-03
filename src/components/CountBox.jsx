@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const CountBox = ({ title, subtitle, count, changeGraph }) => {
+const CountBox = ({ title, subtitle, count, changeGraph, disableGraph = false }) => {
   const classes = useStyles()
   return (
     <Card className={classes.box}>
@@ -30,7 +30,7 @@ const CountBox = ({ title, subtitle, count, changeGraph }) => {
       <Typography variant="h3" className={clsx(classes.weighted, classes.row)}>
         {count}
       </Typography>
-      <Box className={classes.row}>
+      {!disableGraph && <Box className={classes.row}>
         <Button
           variant="outlined"
           color="secondary"
@@ -39,7 +39,7 @@ const CountBox = ({ title, subtitle, count, changeGraph }) => {
         >
           View Graph
         </Button>
-      </Box>
+      </Box>}
     </Card>
   )
 }
