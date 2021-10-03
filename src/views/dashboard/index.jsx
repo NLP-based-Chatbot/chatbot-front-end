@@ -72,20 +72,30 @@ const Dashboard = () => {
     <div className={classes.root}>
       <Grid container justifyContent="space-around" alignItems="center">
         <Grid container sm={12} md={6} xl={4}>
-          {/* <Grid item xs={12} md={6} className={classes.box}>
-            <CountBox title="Active Users" subtitle="(last 24h)" count={20} />
+          <Grid item xs={12} md={6} className={classes.box}>
+            <CountBox
+              title="Active Users"
+              subtitle="(last 24h)"
+              count={20}
+              disableGraph={true}
+            />
           </Grid>
           <Grid item xs={12} md={6} className={classes.box}>
-            <CountBox title="Registered Users" subtitle="(last month)" count={10} />
-          </Grid> */}
+            <CountBox
+              title="Registered Users"
+              subtitle="(last month)"
+              count={10}
+              disableGraph={true}
+            />
+          </Grid>
 
-          <Grid item xs={12} md={12} className={classes.box}>
+          {/* <Grid item xs={12} md={12} className={classes.box}>
             <CountBox
               title="Registered users"
               count={20}
               disableGraph={true}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={6} className={classes.box}>
             <CountBox
