@@ -15,7 +15,14 @@ const user = {
 				}
 			});
 		},
-		async signUp(first_name, last_name, email, password, re_password) {
+		async signUp(
+			first_name,
+			last_name,
+			email,
+			user_type,
+			password,
+			re_password
+		) {
 			return AxiosInstance({
 				method: 'POST',
 				headers: {
@@ -26,6 +33,7 @@ const user = {
 					first_name: first_name,
 					last_name: last_name,
 					email: email,
+					user_type: user_type,
 					password: password,
 					re_password: re_password
 				}
@@ -74,6 +82,13 @@ const user = {
 					Authorization: `JWT ${token}`
 				},
 				url: '/auth/users/me'
+			});
+		},
+		async getUsers(token) {
+			return AxiosInstance({
+				method: 'GET',
+				headers: {},
+				url: '/auth/users/'
 			});
 		}
 	}

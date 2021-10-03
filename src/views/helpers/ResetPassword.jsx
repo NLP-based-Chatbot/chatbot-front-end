@@ -5,7 +5,7 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import React from 'react'
 import { useFormik } from 'formik';
@@ -47,6 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 const ResetPassword = () => {
   const classes = useStyles()
+  const history = useHistory()
   const { uid, token } = useParams()
 
   const formik = useFormik({
@@ -70,6 +71,9 @@ const ResetPassword = () => {
       try {
         await api.user.POST.resetPassword(uid, token, password, re_password)
         toast.success('Password reset successful')
+        setTimeout(() => {
+          history.push("/")
+        }, 4000)
       } catch (err) {
         console.log(err)
         toast.error('Password reset failed')

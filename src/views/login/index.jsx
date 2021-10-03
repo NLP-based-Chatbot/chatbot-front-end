@@ -6,7 +6,7 @@ import {
   Grid,
   Button,
 } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
@@ -14,7 +14,7 @@ import api from './../../api/index';
 import { useDispatch } from 'react-redux';
 import { userReceived, userRequested, userRequestFailed, userTokenReceived, userTokenRequested, userTokenRequestFailed } from "../../store/slices/auth";
 import { useSelector } from "react-redux";
-import { getToken } from './../../store/slices/auth';
+import { getToken, getUserSignedIn } from './../../store/slices/auth';
 import { toast, ToastContainer } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const signedIn = useSelector(getUserSignedIn)
   const dispatch = useDispatch()
   const token = useSelector(getToken)
   const history = useHistory()
@@ -69,27 +70,29 @@ const Login = () => {
       try {
         dispatch(userTokenRequested())
         const res = await api.user.POST.signIn(email, password)
-        dispatch(userTokenReceived(res.data))
+        await dispatch(userTokenReceived(res.data))
 
+        dispatch(userRequested())
         try {
-          dispatch(userRequested())
           const user = await api.user.GET.getUser(token.access)
           dispatch(userReceived(user.data))
           toast.success("Successful login")
           setTimeout(() => {
             history.push("/home")
-          }, 500)
+          }, 2000)
         } catch (err) {
           dispatch(userRequestFailed())
-          toast.error("Login failed")
         }
 
       } catch (err) {
+
         dispatch(userTokenRequestFailed())
         toast.error("Login failed")
       }
     }
   })
+
+  if (signedIn) return <Redirect to="/home" />
 
   return (
     <div>

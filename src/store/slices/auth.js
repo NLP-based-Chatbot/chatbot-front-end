@@ -40,6 +40,7 @@ const slice = createSlice({
 		userSignedOut: (user, action) => {
 			user.signedIn = false;
 			user.userDetails = {};
+			user.token = {};
 			user.loading_user = false;
 		}
 	}

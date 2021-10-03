@@ -7,11 +7,13 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import CustomTextField from "../../components/CustomTextField";
 import * as Yup from 'yup'
 import api from './../../api/index';
 import { toast, ToastContainer } from "react-toastify";
+import { useSelector } from 'react-redux';
+import { getUserSignedIn } from './../../store/slices/auth';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
+  const history = useHistory()
+  const signedIn = useSelector(getUserSignedIn)
 
   const formik = useFormik({
     initialValues: {
@@ -71,11 +75,16 @@ const Register = () => {
         .required('Required Field'),
     }),
     onSubmit: async ({ first_name, last_name, email, password, re_password }) => {
+      let user_type = "user"
       try {
-        await api.user.POST.signUp(first_name, last_name, email, password, re_password)
-        toast.success("Registration success")
+        await api.user.POST.signUp(first_name, last_name, email, user_type, password, re_password)
+        toast.success("Registration success, Check your email for activation")
+        setTimeout(() => {
+          history.push('/')
+        }, 5000)
       } catch (err) {
         toast.error("Registration failed")
+        Object.values(err.response.data)[0].map((error) => toast.error(error))
         console.log(err.response.data)
       }
     }
@@ -97,6 +106,8 @@ const Register = () => {
   //     console.log(err.message)
   //   }
   // }
+
+  if (signedIn) return <Redirect to="/home" />
 
   return (
     <div>
