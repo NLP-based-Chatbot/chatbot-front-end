@@ -4,7 +4,7 @@ import Chatbot from '../../components/Chatbot/Chatbot';
 import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
 import { useSelector } from 'react-redux';
-import { getUserSignedIn, getUser } from './../../store/slices/auth';
+import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
 import { getChat, getRating } from './../../store/slices/chatbot';
 import api from './../../api/index';
@@ -33,6 +33,7 @@ const Telecommunication = () => {
   const chat = useSelector(getChat)
   const user = useSelector(getUser)
   const rating = useSelector(getRating)
+  const token = useSelector(getToken)
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
   const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
@@ -44,7 +45,7 @@ const Telecommunication = () => {
     updateDisplayFeedback(false)
     const chatJSON = JSON.stringify(chat)
     try {
-      await api.feedback.POST.feedback(user.id, 'telecommunication', rating, feedback, chatJSON)
+      await api.feedback.POST.feedback(token.access , user.id, 'telecommunication', rating, feedback, chatJSON)
       toast.success('Feedback added')
     } catch (err) {
       console.log(err.response.message)

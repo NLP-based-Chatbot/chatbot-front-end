@@ -87,7 +87,9 @@ const user = {
 		async getUsers(token) {
 			return AxiosInstance({
 				method: 'GET',
-				headers: {},
+				headers: {
+					Authorization: `JWT ${token}`
+				},
 				url: '/auth/users/'
 			});
 		}

@@ -2,11 +2,12 @@ import AxiosInstance from './../../helpers/AxiosInstance';
 
 const chatbot = {
 	POST: {
-		async chat(sender, message, domain) {
+		async chat(token, sender, message, domain) {
 			return AxiosInstance({
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					'Authorization': `JWT ${token}`
 				},
 				url: `/assistant/${domain}/`,
 				data: {

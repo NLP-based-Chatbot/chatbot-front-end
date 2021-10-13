@@ -2,11 +2,12 @@ import AxiosInstance from './../../helpers/AxiosInstance';
 
 const feedback = {
 	POST: {
-		async feedback(user_id, domain, rating, feedback, chatsession) {
+		async feedback(token, user_id, domain, rating, feedback, chatsession) {
 			return AxiosInstance({
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: `JWT ${token}`
 				},
 				url: `/feedback/`,
 				data: {
@@ -20,9 +21,12 @@ const feedback = {
 		}
 	},
 	GET: {
-		async sessions() {
+		async sessions(token) {
 			return AxiosInstance({
 				method: 'GET',
+				headers: {
+					'Authorization': `JWT ${token}`
+				},
 				url: '/feedback/'
 			});
 		}
