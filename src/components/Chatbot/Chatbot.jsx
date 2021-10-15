@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { Typography } from '@material-ui/core';
 import StopIcon from '@material-ui/icons/Stop';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUser } from '../../store/slices/auth';
+import { getToken, getUser } from '../../store/slices/auth';
 import { updateChat } from '../../store/slices/chatbot';
 import api from '../../api';
 import { toast } from 'react-toastify';
@@ -55,6 +55,7 @@ const Chatbot = ({ finish, domain }) => {
   const dispatch = useDispatch()
 
   const displayName = useSelector(getUser)
+  const token = useSelector(getToken)
 
   const [chatMessages, updateChatMessages] = useState([
     { sender: "bot", message: `Hi, ${displayName.first_name}` },
@@ -70,7 +71,7 @@ const Chatbot = ({ finish, domain }) => {
     if (!message) return
     try {
       updateChatMessages([...chatMessages, { sender: displayName, message: message }])
-      const reply = await api.chatbot.POST.chat(displayName.first_name, message, domain)
+      const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
       //console.log(reply.data)
       let temp = []
       for (let r of reply.data) {
