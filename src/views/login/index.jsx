@@ -50,7 +50,6 @@ const Login = () => {
   const classes = useStyles();
   const signedIn = useSelector(getUserSignedIn)
   const dispatch = useDispatch()
-  const token = useSelector(getToken)
   const history = useHistory()
 
   const formik = useFormik({
@@ -74,7 +73,7 @@ const Login = () => {
 
         dispatch(userRequested())
         try {
-          const user = await api.user.GET.getUser(token.access)
+          const user = await api.user.GET.getUser(res.data.access)
           dispatch(userReceived(user.data))
           toast.success("Successful login")
           if (user.is_admin) {
