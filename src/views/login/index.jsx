@@ -14,7 +14,7 @@ import api from './../../api/index';
 import { useDispatch } from 'react-redux';
 import { userReceived, userRequested, userRequestFailed, userTokenReceived, userTokenRequested, userTokenRequestFailed } from "../../store/slices/auth";
 import { useSelector } from "react-redux";
-import { getToken, getUserSignedIn } from './../../store/slices/auth';
+import { getUserSignedIn } from './../../store/slices/auth';
 import { toast, ToastContainer } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
