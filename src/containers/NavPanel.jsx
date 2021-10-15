@@ -59,7 +59,7 @@ const NavPanel = () => {
   const classes = useStyles();
   const [open, toggleOpen] = useState(false)
   const dispatch = useDispatch()
-  const displayName = useSelector(getUser)
+  const user = useSelector(getUser)
   const userSignedIn = useSelector(getUserSignedIn)
   const history = useHistory()
 
@@ -81,29 +81,36 @@ const NavPanel = () => {
             <MenuIcon />
           </IconButton>}
           <Grid container alignItems="center">
-            <Grid container xs={8} md={10} alignItems="center">
-              <Grid item xs={2} md={3}>
+            <Grid container xs={8} md={10} alignItems="center" justifyContent="space-between">
+              {user.is_admin && <Grid item xs={2} md={2}>
+                <Link to="/admin/dashboard" className={classes.link}>
+                  <Typography variant="h6" className={classes.title}>
+                    Dashboard
+                  </Typography>
+                </Link>
+              </Grid>}
+              <Grid item xs={2} md={2}>
                 <Link to="/home" className={classes.link}>
                   <Typography variant="h6" className={classes.title}>
                     Home
                   </Typography>
                 </Link>
               </Grid>
-              <Grid item xs={2} md={3}>
+              <Grid item xs={2} md={2}>
                 <Link to="/product" className={classes.link}>
                   <Typography variant="h6" className={classes.title}>
                     Product
                   </Typography>
                 </Link>
               </Grid>
-              <Grid item xs={2} md={3}>
+              <Grid item xs={2} md={2}>
                 <Link to="/aboutus" className={classes.link}>
                   <Typography variant="h6" className={classes.title}>
                     About Us
                   </Typography>
                 </Link>
               </Grid>
-              <Grid item xs={2} md={3}>
+              <Grid item xs={2} md={2}>
                 <Link to="/contactus" className={classes.link}>
                   <Typography variant="h6" className={classes.title}>
                     Contact
@@ -113,7 +120,7 @@ const NavPanel = () => {
             </Grid>
             {userSignedIn && <Grid item xs={3} md={2} className={classes.corner}>
               <Typography variant="h6" className={classes.title}>
-                Hi, {displayName.first_name}
+                Hi, {user.first_name}
               </Typography>
             </Grid>}
           </Grid>

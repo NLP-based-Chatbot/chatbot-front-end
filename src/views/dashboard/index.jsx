@@ -4,6 +4,9 @@ import CountBox from './../../components/CountBox';
 import Graph from '../../components/Graph';
 import api from './../../api/index';
 import { MonthDivider } from './../../helpers/GraphDivider';
+import { useSelector } from 'react-redux';
+import { getUser } from './../../store/slices/auth';
+import { Redirect } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +34,7 @@ const Dashboard = () => {
   })
   const [session_count, update_session_count] = useState([0, 0, 0, 0, 0])
   const [feedback_count, update_feedback_count] = useState([0, 0, 0, 0, 0])
+  const user = useSelector(getUser)
 
   useEffect(() => {
     async function loadData() {
@@ -67,6 +71,8 @@ const Dashboard = () => {
       data: data
     })
   }
+
+  if (!user.is_admin) return <Redirect to="/home" />
 
   return (
     <div className={classes.root}>

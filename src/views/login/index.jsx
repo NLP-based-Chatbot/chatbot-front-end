@@ -77,9 +77,16 @@ const Login = () => {
           const user = await api.user.GET.getUser(token.access)
           dispatch(userReceived(user.data))
           toast.success("Successful login")
-          setTimeout(() => {
-            history.push("/home")
-          }, 2000)
+          if (user.is_admin) {
+            setTimeout(() => {
+              history.push("/admin/dashboard")
+            }, 2000)
+          } else {
+            setTimeout(() => {
+              history.push("/home")
+            }, 2000)
+          }
+
         } catch (err) {
           dispatch(userRequestFailed())
         }
