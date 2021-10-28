@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot test 1`] = `
+<div
+  className="MuiPaper-root MuiCard-root makeStyles-box-9 MuiPaper-elevation1 MuiPaper-rounded"
+>
+  <h6
+    className="MuiTypography-root makeStyles-weighted-10 makeStyles-row-11 MuiTypography-subtitle1"
+    data-testid="title"
+  />
+  <h6
+    className="MuiTypography-root makeStyles-weighted-10 MuiTypography-subtitle2"
+    data-testid="subtitle"
+  />
+  <h3
+    className="MuiTypography-root makeStyles-weighted-10 makeStyles-row-11 MuiTypography-h3"
+    data-testid="count"
+  />
+  <div
+    className="MuiBox-root MuiBox-root-12 makeStyles-row-11"
+  >
+    <button
+      className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-weighted-10 MuiButton-outlinedSecondary"
+      data-testid="grp-btn"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      type="button"
+    >
+      <span
+        className="MuiButton-label"
+      >
+        View Graph
+      </span>
+    </button>
+  </div>
+</div>
+`;

@@ -34,11 +34,11 @@ const ChatMessage = ({ sender, message }) => {
   return (
     <Box className={classes.root}>
       {sender === 'bot' ?
-        <Box className={classes.container_bot}>
+        <Box data-testid = 'bot' className={classes.container_bot}>
           <Typography variant="body1" className={classes.font}>{message}</Typography>
         </Box>
         :
-        <Box className={classes.container_user}>
+        <Box data-testid = 'user' className={classes.container_user}>
           <Typography variant="body1" className={classes.font}>{message}</Typography>
         </Box>
       }
