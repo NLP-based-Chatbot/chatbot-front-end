@@ -6,7 +6,7 @@ import Feedback from './../../components/Chatbot/Feedback';
 import { useSelector } from 'react-redux';
 import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
-import { getChat, getRating } from './../../store/slices/chatbot';
+import { getChat  } from './../../store/slices/chatbot';
 import api from './../../api/index';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -32,7 +32,6 @@ const Telecommunication = () => {
   const signedIn = useSelector(getUserSignedIn)
   const chat = useSelector(getChat)
   const user = useSelector(getUser)
-  const rating = useSelector(getRating)
   const token = useSelector(getToken)
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
@@ -41,17 +40,18 @@ const Telecommunication = () => {
 
   const [displayFeedback, updateDisplayFeedback] = useState(false)
 
-  const submit = async (feedback) => {
+  const submit = async (index, feedback) => {
     updateDisplayFeedback(false)
     const chatJSON = JSON.stringify(chat)
     try {
-      await api.feedback.POST.feedback(token.access , user.id, 'telecommunication', rating, feedback, chatJSON)
+      await api.feedback.POST.feedback(token.access, user.id, 'telecom', index, feedback, chatJSON)
       toast.success('Feedback added')
     } catch (err) {
-      console.log(err.response.message)
+      console.log(err.response)
       toast.error('Something went wrong')
     }
   }
+
 
   if (!signedIn) return <Redirect to="/home" />
 
@@ -79,7 +79,7 @@ const Telecommunication = () => {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
-          <Feedback submit={(feedback) => submit(feedback)} />
+          <Feedback submit={(index, feedback) => submit(index, feedback)} />
         </Modal>
       </Container>
     </div>

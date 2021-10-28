@@ -4,8 +4,6 @@ import clsx from 'clsx';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import SendIcon from '@material-ui/icons/Send';
-import { useDispatch } from 'react-redux';
-import { updateRating } from '../../store/slices/chatbot';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 
 const Feedback = ({ submit }) => {
   const classes = useStyles()
-  const dispatch = useDispatch()
+  const [index, setIndex] = useState(0)
   const [selected, updateSelected] = useState([0, 0, 0, 0, 0])
   const [feedbackDisplay, setFeedbackDisplay] = useState(false)
   const [feedback, updateFeedback] = useState("")
@@ -55,14 +53,14 @@ const Feedback = ({ submit }) => {
       tempList[i] = 1
     }
     updateSelected(tempList)
-    dispatch(updateRating(index + 1))
     if (index < 3) {
+      setIndex(index)
       setTimeout(() => {
         setFeedbackDisplay(true)
       }, 1000)
     } else {
       setTimeout(() => {
-        submit(null)
+        submit(index+1, 'none')
       }, 1000)
     }
   }
@@ -74,14 +72,14 @@ const Feedback = ({ submit }) => {
         <ButtonGroup className={classes.icon_group}>
           {selected.map((select, index) => {
             return (
-              <IconButton key={index} onClick={() => click(index)}>
+              <IconButton key={index} data-testid = {`star-${index+1}`} onClick={() => click(index)}>
                 {select ? <StarIcon style={{ color: "#EAED15" }} /> : <StarBorderIcon />}
               </IconButton>
             )
           })}
         </ButtonGroup>
         {feedbackDisplay &&
-          <div className={classes.feedback}>
+          <div data-testid='feedback-form' className={classes.feedback}>
             <Typography variant="h6" className={classes.text_style}>Please provide some feedback<br /> on what went wrong</Typography>
             <div className={classes.text_area}>
               <TextField
@@ -90,9 +88,9 @@ const Feedback = ({ submit }) => {
                 maxRows={1}
                 value={feedback}
                 onChange={e => updateFeedback(e.target.value)}
-                InputProps={{ disableUnderline: true }}
+                InputProps={{ 'data-testid':'feedback-text', disableUnderline: true }}
               />
-              <IconButton onClick={() => submit(feedback)}>
+              <IconButton data-testid='submit-btn' onClick={() => submit(index+1, feedback)}>
                 <SendIcon />
               </IconButton>
             </div>

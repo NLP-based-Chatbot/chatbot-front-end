@@ -31,15 +31,15 @@ const CustomTextArea = ({ sendMessage, toggleRecord }) => {
         maxRows={1}
         value={message}
         onChange={e => updateMessage(e.target.value)}
-        InputProps={{ disableUnderline: true }}
+        InputProps={{ 'data-testid': 'message', disableUnderline: true }}
       />
       <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-        <IconButton onClick={() => {
+        <IconButton data-testid='voice-btn' onClick={() => {
           toggleRecord()
         }}>
           {listening ? <MicIcon color="error" /> : <MicIcon />}
         </IconButton>
-        <IconButton onClick={() => {
+        <IconButton data-testid='send-btn' onClick={() => {
           sendMessage(message)
           updateMessage("")
         }}>

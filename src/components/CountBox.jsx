@@ -21,17 +21,18 @@ const CountBox = ({ title, subtitle, count, changeGraph, disableGraph = false })
   const classes = useStyles()
   return (
     <Card className={classes.box}>
-      <Typography variant="subtitle1" className={clsx(classes.weighted, classes.row)}>
+      <Typography data-testid='title' variant="subtitle1" className={clsx(classes.weighted, classes.row)}>
         {title}
       </Typography>
-      <Typography variant="subtitle2" className={classes.weighted}>
+      <Typography data-testid='subtitle' variant="subtitle2" className={classes.weighted}>
         {subtitle}
       </Typography>
-      <Typography variant="h3" className={clsx(classes.weighted, classes.row)}>
+      <Typography data-testid='count' variant="h3" className={clsx(classes.weighted, classes.row)}>
         {count}
       </Typography>
       {!disableGraph && <Box className={classes.row}>
         <Button
+          data-testid='grp-btn'
           variant="outlined"
           color="secondary"
           className={classes.weighted}
