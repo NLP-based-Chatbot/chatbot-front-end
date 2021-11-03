@@ -8,12 +8,13 @@ import "@babel/polyfill";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import AuthReducer from '../store/slices/auth';
+import EntitiesReducer from '../store/reducers/entities';
 
 const customRender = (
   ui,
   {
     preloadedState,
-    store = configureStore({ reducer: { auth: AuthReducer }, preloadedState }),
+    store = configureStore({ reducer: { auth: AuthReducer, entities: EntitiesReducer }, preloadedState }),
     ...renderOptions
   } = {}
 ) => {

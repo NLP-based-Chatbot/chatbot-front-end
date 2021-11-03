@@ -7,13 +7,7 @@ const config = {
       "default",
       "jest-html-reporters"
     ],
-    coveragePathIgnorePatterns: ["helpers/GraphDivider.js",
-                                  "api/modules/feedback.js",
-                                  "api/modules/user.js",
-                                  "views/helpers",
-                                  "views/chatbot",
-                                  "views/dashboard",
-                                  "views/register"]
+    coveragePathIgnorePatterns: []
   };
   
 module.exports = config;
