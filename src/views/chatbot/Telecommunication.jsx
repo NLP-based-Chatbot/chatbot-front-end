@@ -15,7 +15,9 @@ const useStyles = makeStyles(theme => ({
     background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
     minHeight: "calc(100vh - 115px)",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop:"20px",
+    paddingBottom:"20px"
   },
   row: {
     marginTop: theme.spacing(5)
@@ -59,7 +61,7 @@ const Telecommunication = () => {
     <div className={classes.root}>
       <Container>
         <ToastContainer />
-        <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"}>
+        <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"} spacing={4}>
           <Grid item alignItems="center" sm={12} md={3}>
             {bk_3 && <img
               src="/Telecommunication_1.svg"

@@ -35,11 +35,11 @@ theme.typography.h6 = {
     fontWeight: 500
   },
   [theme.breakpoints.down('sm')]: {
-    fontSize: "0.8rem",
+    fontSize: "1.0rem",
     fontWeight: 500
   },
   [theme.breakpoints.down('xs')]: {
-    fontSize: "0.6rem",
+    fontSize: "0.8rem",
     fontWeight: 500
   },
 }
@@ -97,6 +97,27 @@ theme.typography.body1 = {
   },
   [theme.breakpoints.down('xs')]: {
     fontSize: "0.7rem",
+    fontWeight: 500
+  },
+
+  
+}
+
+theme.typography.subtitle2 = {
+  [theme.breakpoints.up('md')]: {
+    fontSize: "0.9rem",
+    fontWeight: 500
+  },
+  [theme.breakpoints.down('md')]: {
+    fontSize: "0.8rem",
+    fontWeight: 500
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: "0.7rem",
+    fontWeight: 500
+  },
+  [theme.breakpoints.down('xs')]: {
+    fontSize: "0.6rem",
     fontWeight: 500
   },
 }
