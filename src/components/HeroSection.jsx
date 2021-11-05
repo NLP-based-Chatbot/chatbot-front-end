@@ -1,4 +1,4 @@
-import { makeStyles, Paper, useMediaQuery } from "@material-ui/core";
+import { Box, makeStyles, Paper, useMediaQuery } from "@material-ui/core";
 import React from "react";
 import { Parallax } from "react-scroll-parallax";
 import Carousel from "react-material-ui-carousel";
@@ -36,14 +36,14 @@ const HeroSection = () => {
   ];
   function Item(props) {
     return (
-      <Paper className={classes.body} square elevation={5}>
+      <Box className={classes.body} square elevation={5}>
         <img src={props.item.imgSrc} height="auto" width="100%" alt="" />
-      </Paper>
+      </Box>
     );
   }
 
   return (
-      <Carousel animation="fade" duration={1000} swipe={true}>
+      <Carousel animation="fade" duration={1000} swipe={true} indicators={true}>
         {(bk_1)? (items1.map((item, i) => (
           <Item key={i} item={item} />
         ))):
@@ -59,7 +59,7 @@ const HeroSection = () => {
 const useStyles = makeStyles((theme) => ({
   body: {
     [theme.breakpoints.up("md")]: {
-marginTop:"8px"
+      marginTop:"8px",
     },
     [theme.breakpoints.down("md")]: {
       marginTop:"0px"
