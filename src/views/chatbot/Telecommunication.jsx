@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
-import { Container, Grid, makeStyles, Modal, Typography, useMediaQuery } from '@material-ui/core';
+import { Container, Grid, makeStyles, Modal, useMediaQuery } from '@material-ui/core';
 import Chatbot from '../../components/Chatbot/Chatbot';
-import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
+
 import { useSelector } from 'react-redux';
 import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
 import { getChat  } from './../../store/slices/chatbot';
 import api from './../../api/index';
 import { toast, ToastContainer } from 'react-toastify';
+import Newsfeed from "../../components/Chatbot/Newsfeed";
 
 const useStyles = makeStyles(theme => ({
   root: {
     background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
     minHeight: "calc(100vh - 115px)",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop:"20px",
+    paddingBottom:"20px"
   },
   row: {
     marginTop: theme.spacing(5)
@@ -35,8 +38,6 @@ const Telecommunication = () => {
   const token = useSelector(getToken)
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
-  const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
-  const bk_3 = useMediaQuery(theme => theme.breakpoints.up('sm'))
 
   const [displayFeedback, updateDisplayFeedback] = useState(false)
 
@@ -59,15 +60,32 @@ const Telecommunication = () => {
     <div className={classes.root}>
       <Container>
         <ToastContainer />
-        <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"}>
-          <Grid item alignItems="center" sm={12} md={3}>
-            {bk_3 && <img
-              src="/Telecommunication_1.svg"
-              height="auto"
-              width={bk_2 ? "80%" : "60%"}
-              alt=""
-            />}
-            <Typography variant="h3" className={clsx(classes.row, classes.title)}>Telecommunication</Typography>
+        <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"} spacing={4}>
+          <Grid item alignItems="center" sm={12} md={6}>
+          <Newsfeed
+              domain="Telecommunication"
+              domainImg="/Telecommunication_1.svg"
+              posts={[
+                {
+                  img: "/telecom_launch.jpg",
+                  title: "We are now LIVE",
+                  body: "Check this out",
+                  date: "26th September 2021"
+                },
+              ]}
+
+              instructions={[
+                {
+                  label: "Genaral Questions",
+                  content: "Ask me genaral type of questions like check account balance, how to get a loan, recharge, etc. related to any service provider.",
+                },
+                {
+                  label: "Broadband connection",
+                  content: "You can ask about new broadband connection, details of routers, etc.",
+                },
+               
+              ]}
+            />
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
             <Chatbot finish={() => updateDisplayFeedback(true)} domain='telecom' />
