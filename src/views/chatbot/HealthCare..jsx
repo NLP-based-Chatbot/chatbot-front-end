@@ -43,8 +43,6 @@ const HealthCare = () => {
   const token = useSelector(getToken);
 
   const bk_1 = useMediaQuery((theme) => theme.breakpoints.up("lg"));
-  const bk_2 = useMediaQuery((theme) => theme.breakpoints.up("md"));
-  const bk_3 = useMediaQuery((theme) => theme.breakpoints.up("sm"));
 
   const [displayFeedback, updateDisplayFeedback] = useState(false);
 
@@ -81,14 +79,14 @@ const HealthCare = () => {
           justifyContent={bk_1 ? "space-between" : "space-around"}
           spacing={4}
         >
-          <Grid item alignItems="center" sm={12} md={5}>
+          <Grid item alignItems="center" sm={12} md={6}>
             <Newsfeed
               domain="Health Care"
               domainImg="/healthcare_1.svg"
               posts={[
                 {
-                  img: "/newsfeed.svg",
-                  title: "Version 5 is out",
+                  img: "/healthcare_launch.jpg",
+                  title: "We are now LIVE",
                   body: "Check this out",
                   date: "26th September 2021"
                 },
@@ -96,11 +94,11 @@ const HealthCare = () => {
 
               instructions={[
                 {
-                  label: "/newsfeed.svg",
+                  label: "title 1",
                   content: "Version 5 is out",
                 },
                 {
-                  label: "/newsfeed.svg",
+                  label: "title 2",
                   content: "Version 5 is out",
                 },
               ]}
