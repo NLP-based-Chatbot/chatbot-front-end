@@ -12,7 +12,7 @@ import { Parallax } from "react-scroll-parallax";
 const useStyles = makeStyles((theme) => ({
   body: {
     [theme.breakpoints.up("md")]: {
-      margin: "40px 80px",
+      margin: "10px 80px",
       padding: "40px",
     },
     [theme.breakpoints.down("md")]: {
@@ -47,8 +47,8 @@ const SubSection = (props) => {
   const classes = useStyles();
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
-    <Parallax className={classes.parallax} y={[-10, 10]} tagOuter="figure">
-      <Paper className={classes.body}>
+    <Parallax className={classes.parallax} y={[10, -20]} tagOuter="figure">
+      <Paper className={classes.body} elevation={5}>
         <Grid container justifyContent="center" spacing={2}>
           {align === "left" || isSmallScreen ? (
             <Grid item sm={12} md={4}>

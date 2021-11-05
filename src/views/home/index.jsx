@@ -1,3 +1,4 @@
+import { Box } from "@material-ui/core";
 import React from "react";
 import HeroSection from "../../components/HeroSection";
 import SubSection from "../../components/SubSection";
@@ -24,6 +25,9 @@ const Home = () => {
         imageSrc="./Telecommunication.svg"
         align='left'
       />
+      <Box marginTop='50px'>
+      <img src="./banner.png" height="auto" width="100%" alt="" />
+      </Box>
     </div>
   );
 };
