@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Container, Grid, makeStyles, Modal, Typography, useMediaQuery } from '@material-ui/core';
+import { Container, Grid, makeStyles, Modal, useMediaQuery } from '@material-ui/core';
 import Chatbot from '../../components/Chatbot/Chatbot';
-import clsx from 'clsx';
 import Feedback from './../../components/Chatbot/Feedback';
 import { useSelector } from 'react-redux';
 import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
@@ -9,6 +8,7 @@ import { Redirect } from 'react-router';
 import { toast, ToastContainer } from 'react-toastify';
 import api from './../../api/index';
 import { getChat } from './../../store/slices/chatbot';
+import Newsfeed from '../../components/Chatbot/Newsfeed';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,8 +37,6 @@ const PublicTransportation = () => {
   const token = useSelector(getToken)
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
-  const bk_2 = useMediaQuery(theme => theme.breakpoints.up('md'))
-  const bk_3 = useMediaQuery(theme => theme.breakpoints.up('sm'))
 
   const [displayFeedback, updateDisplayFeedback] = useState(false)
 
@@ -62,14 +60,30 @@ const PublicTransportation = () => {
       <Container>
         <ToastContainer />
         <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"} spacing={4}>
-          <Grid item alignItems="center" sm={12} md={3}>
-            {bk_3 && <img
-              src="/Bus_1.svg"
-              height="auto"
-              width={bk_2 ? "80%" : "60%"}
-              alt=""
-            />}
-            <Typography variant="h3" className={clsx(classes.row, classes.title)}>Public Transportation</Typography>
+        <Grid item alignItems="center" sm={12} md={6}>
+            <Newsfeed
+              domain="Public Transport"
+              domainImg="/bus_1.svg"
+              posts={[
+                {
+                  img: "/transport_launch.jpg",
+                  title: "We are now LIVE",
+                  body: "Check this out",
+                  date: "26th September 2021"
+                },
+              ]}
+
+              instructions={[
+                {
+                  label: "title 1",
+                  content: "Version 5 is out",
+                },
+                {
+                  label: "title 2",
+                  content: "Version 5 is out",
+                },
+              ]}
+            />
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
             <Chatbot finish={() => updateDisplayFeedback(true)} domain='transport' />

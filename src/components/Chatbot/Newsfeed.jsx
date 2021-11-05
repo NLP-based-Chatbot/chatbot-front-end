@@ -77,6 +77,13 @@ const useStyles = makeStyles((theme) => ({
   newsfeed_post_body: {
     padding: "20px",
   },
+  body: {
+      paddingTop: "5px",
+      paddingLeft:"5px"
+  },
+  askme:{
+    marginLeft:"15px"
+  }
 }));
 
 const Newsfeed = ({ domain, domainImg, posts, instructions }) => {
@@ -124,7 +131,7 @@ const Newsfeed = ({ domain, domainImg, posts, instructions }) => {
                     <img src={message.img} height="auto" width="100%" alt="" />
                     <CardHeader
                       avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
+                        <Avatar aria-label="recipe" src="/logo.svg" className={classes.avatar}>
                           Wingman Development team
                         </Avatar>
                       }
@@ -150,10 +157,11 @@ const Newsfeed = ({ domain, domainImg, posts, instructions }) => {
                 ))}
               </TabPanel>
               <TabPanel value={value} index={1} classes={classes}>
+              <Typography className={classes.askme} variant='h4'>Ask ME</Typography>
               {instructions.map((inst, index) => (
-                <Box marginTop='10px'>
-                  <Chip size="small" label={inst.label} color="secondary" />
-                  <Typography>{inst.content}</Typography>
+                <Box marginTop='10px' padding="10px">
+                  <Chip size="medium" label={inst.label} color="primary"/>
+                  <Typography className={classes.body} variant='body1' >{inst.content}</Typography>
                 </Box>
               ))}
             </TabPanel>
