@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
       padding: "40px",
     },
     [theme.breakpoints.down("md")]: {
-      margin: "50px 20px",
+      margin: "30px 20px",
       padding: "20px",
     },
   },
@@ -47,7 +47,7 @@ const SubSection = (props) => {
   const classes = useStyles();
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
-    <Parallax className={classes.parallax} y={[10, -20]} tagOuter="figure">
+    <Parallax className={classes.parallax} y={[10 ,-10]}>
       <Paper className={classes.body} elevation={5}>
         <Grid container justifyContent="center" spacing={2}>
           {align === "left" || isSmallScreen ? (

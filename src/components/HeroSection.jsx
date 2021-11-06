@@ -1,6 +1,5 @@
-import { Box, makeStyles, Paper, useMediaQuery } from "@material-ui/core";
+import { Box, makeStyles, useMediaQuery } from "@material-ui/core";
 import React from "react";
-import { Parallax } from "react-scroll-parallax";
 import Carousel from "react-material-ui-carousel";
 
 const HeroSection = () => {
@@ -43,27 +42,31 @@ const HeroSection = () => {
   }
 
   return (
-      <Carousel animation="fade" duration={1000} swipe={true} indicators={true}>
-        {(bk_1)? (items1.map((item, i) => (
-          <Item key={i} item={item} />
-        ))):
-        (items2.map((item, i) => (
-          <Item key={i} item={item} />
-        )))
-        }
-      </Carousel>
-
+      <Box>
+        <Carousel
+          animation="fade"
+          duration={1000}
+          swipe={true}
+          indicators={false}
+        >
+          {bk_1
+            ? items1.map((item, i) => <Item key={i} item={item} />)
+            : items2.map((item, i) => <Item key={i} item={item} />)}
+        </Carousel>
+      </Box>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
+
   body: {
     [theme.breakpoints.up("md")]: {
-      marginTop:"8px",
+      marginTop: "8px",
     },
     [theme.breakpoints.down("md")]: {
-      marginTop:"0px"
-    } },
+      marginTop: "0px",
+    },
+  },
 }));
 
 export default HeroSection;
