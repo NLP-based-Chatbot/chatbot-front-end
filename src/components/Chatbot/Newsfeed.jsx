@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   newsfeed_post: {
     padding: "0px",
-    width: "80%",
+    width: "100%",
   },
   newsfeed_scroll: {
     height: "20rem",
