@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, Dialog, DialogContent, Grid, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Dialog, DialogContent, Grid, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
 import CountBox from './../../components/CountBox';
 import Graph from '../../components/Graph';
 import api from './../../api/index';
@@ -9,7 +9,9 @@ import { getUser } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
 import { useFormik } from 'formik';
 import * as Yup from "yup"
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import moment from "moment"
+import clsx from 'clsx';
+import Instruction from './../../components/Chatbot/Instruction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,7 +35,11 @@ const useStyles = makeStyles(theme => ({
   },
   dialog_body: {
     height: "50vh",
-    aspectRatio: "16 / 10"
+    aspectRatio: "16 / 10",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: theme.spacing(3, 0)
   },
   row: {
     marginBottom: theme.spacing(3),
@@ -43,9 +49,18 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "center",
     fontWeight: 600
+  },
+  submit: {
+    marginTop: "auto"
+  },
+  instruction_container: {
+    padding: theme.spacing(2, 1),
+    borderRadius: "10px",
+    backgroundColor: "#ededed",
+    maxHeight: "55%",
+    overflowY: "auto"
   }
 }))
-
 
 const Dashboard = () => {
   const classes = useStyles()
@@ -63,9 +78,26 @@ const Dashboard = () => {
 
   const [news, setNews] = useState({
     title: "",
-    date: "",
+    date: moment().format("YYYY-MM-DD"),
+    body: "",
+    imageUrl: "/healthcare_launch.jpg"
+  })
+
+  const [instruction, setInstruction] = useState({
+    label: "",
     body: ""
   })
+
+  const [instructions, updateInstructions] = useState([
+    {
+      label: "Feature 1",
+      body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam quidem possimus, modi fugit ex, enim hic iusto quasi facilis cupiditate voluptas tempora placeat nostrum, beatae obcaecati est illum at perspiciatis."
+    },
+    {
+      label: "Feature 2",
+      body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam quidem possimus, modi fugit ex, enim hic iusto quasi facilis cupiditate voluptas tempora placeat nostrum, beatae obcaecati est illum at perspiciatis."
+    }
+  ])
 
   const user = useSelector(getUser)
 
@@ -95,6 +127,15 @@ const Dashboard = () => {
       body: Yup.string().required("This field is required")
     })
   })
+
+  const deleteIns = (index) => {
+    let new_instructions = [...instructions.slice(0, index), ...instructions.slice(index + 1, instructions.length)]
+    updateInstructions(new_instructions)
+  }
+
+  const addInstruction = () => {
+    updateInstructions([...instructions, instruction])
+  }
 
   const changeGraph = (title, format, data) => {
     updateData({
@@ -177,11 +218,22 @@ const Dashboard = () => {
 
       <Dialog
         open={openDialog}
-        onClose={() => toggleOpen(false)}
+        onClose={() => {
+          toggleOpen(false)
+          setNews({
+            title: "",
+            date: moment().format("YYYY-MM-DD"),
+            body: ""
+          })
+          setInstruction({
+            label: "",
+            body: ""
+          })
+        }}
       >
         <DialogContent className={classes.dialog_body}>
-          <Grid container>
-            <Grid item sm={6}>
+          <Grid container justifyContent="space-evenly" style={{ minHeight: "90%" }}>
+            <Grid item sm={6} style={{ minHeight: "100%" }}>
               <TextField
                 className={classes.row}
                 select
@@ -192,42 +244,57 @@ const Dashboard = () => {
                 <MenuItem value="news">
                   <Typography variant="body2">News</Typography>
                 </MenuItem>
-                <MenuItem value="instruction">
+                <MenuItem value="instructions">
                   <Typography variant="body2">Instructions</Typography>
+                </MenuItem>
+              </TextField>
+
+              <TextField
+                className={classes.row}
+                select
+                label="Domain"
+                value={domain}
+                onChange={e => setDomain(e.target.value)}
+              >
+                <MenuItem value="healthcare">
+                  <Typography variant="body2">Health Care</Typography>
+                </MenuItem>
+                <MenuItem value="telecom">
+                  <Typography variant="body2">Telecommunication</Typography>
+                </MenuItem>
+                <MenuItem value="transport">
+                  <Typography variant="body2">Public Transportation</Typography>
                 </MenuItem>
               </TextField>
 
               {infoType === "news" &&
                 <div>
                   <TextField
-                    className={classes.row}
-                    select
-                    label="Domain"
-                    value={domain}
-                    onChange={e => setDomain(e.target.value)}
-                  >
-                    <MenuItem value="healthcare">
-                      <Typography variant="body2">Health Care</Typography>
-                    </MenuItem>
-                    <MenuItem value="telecom">
-                      <Typography variant="body2">Telecommunication</Typography>
-                    </MenuItem>
-                    <MenuItem value="transport">
-                      <Typography variant="body2">Public Transportation</Typography>
-                    </MenuItem>
-                  </TextField>
-
-                  <TextField
                     name="title"
                     className={classes.row}
                     value={news.title}
                     label="Title"
                     onChange={e => setNews({ ...news, title: e.target.value })}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    multiline
                   />
 
-                  <MuiPickersUtilsProvider>
-
-                  </MuiPickersUtilsProvider>
+                  <TextField
+                    name="date"
+                    type="date"
+                    value={news.date}
+                    label="Date"
+                    className={classes.row}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    onChange={e => {
+                      setNews({ ...news, date: e.target.value })
+                      console.log(e.target.value)
+                    }}
+                  />
 
                   <TextField
                     name="body"
@@ -235,17 +302,101 @@ const Dashboard = () => {
                     value={news.body}
                     label="Body"
                     onChange={e => setNews({ ...news, body: e.target.value })}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    multiline
                   />
                 </div>
               }
+
+              {infoType === "instructions" && instructions &&
+                <Box
+                  className={classes.instruction_container}
+                >
+                  {instructions.map((instruction, index) => <Instruction key={index} deleteIns={() => deleteIns(index)} {...instruction} />)}
+                </Box>
+              }
             </Grid>
 
-            <Grid item sm={6} direction="column" alignItems="center">
-              <Typography variant="h5" className={classes.title}>
+            <Grid item sm={5} direction="column" alignItems="center" style={{ minHeight: "100%" }}>
+              <Typography variant="h5" className={clsx(classes.title, classes.row)}>
                 {infoType === "news" ? "Add to Newsfeed" : "Add Instruction"}
               </Typography>
+
+              {infoType === "news" &&
+                <div>
+                  <TextField
+                    className={classes.row}
+                    select
+                    label="Select Image"
+                    value={news.imageUrl}
+                    onChange={e => setNews({ ...news, imageUrl: e.target.value })}
+                  >
+                    <MenuItem value={`/${domain}_launch.jpg`}>
+                      <Typography variant="body2">Launch</Typography>
+                    </MenuItem>
+                  </TextField>
+                  <img
+                    src={news.imageUrl}
+                    height="auto"
+                    width="100%"
+                    alt="image"
+                  />
+                </div>
+              }
+
+              {infoType === "instructions" &&
+                <div>
+                  <TextField
+                    name="label"
+                    className={classes.row}
+                    label="Label"
+                    value={instruction.label}
+                    onChange={e => setInstruction({ ...instruction, label: e.target.value })}
+                    multiline
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+
+                  <TextField
+                    name="body"
+                    className={classes.row}
+                    label="Body"
+                    value={instruction.body}
+                    onChange={e => setInstruction({ ...instruction, body: e.target.value })}
+                    multiline
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={() => {
+                      addInstruction()
+                      setInstruction({
+                        label: "",
+                        body: ""
+                      })
+                    }}
+                  >
+                    Add
+                  </Button>
+                </div>
+              }
             </Grid>
           </Grid>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+          >
+            Submit
+          </Button>
         </DialogContent>
       </Dialog>
     </div>
