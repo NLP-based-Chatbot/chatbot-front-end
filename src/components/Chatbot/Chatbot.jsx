@@ -72,10 +72,20 @@ const Chatbot = ({ finish, domain }) => {
     try {
       updateChatMessages([...chatMessages, { sender: displayName, message: message }])
       const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
-      //console.log(reply.data)
       let temp = []
+
       for (let r of reply.data) {
-        temp = [...temp, { sender: "bot", message: r.text }]
+        let tempbuttons =[]
+        if (r.hasOwnProperty("buttons")){
+          for (let b in r.buttons){
+            tempbuttons = [...tempbuttons,{title: b.title , payload: b.payload}]
+          }
+          temp = [...temp, { sender: "bot", message: r.text , buttons: tempbuttons }]
+        }else{
+          temp = [...temp, { sender: "bot", message: r.text }]
+        }
+        
+      
       }
       updateChatMessages([...chatMessages, { sender: displayName, message: message }, ...temp])
     } catch (err) {
