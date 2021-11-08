@@ -47,13 +47,13 @@ return (
     {sender === 'bot' ?
         <Box data-testid = 'bot' className={classes.container_bot_button}>
         <Button onClick={() => {
-            sendMessage(payload)
+            sendMessage({message:message,payload:payload})
         }}>{message}</Button>
         </Box>
         :
         <Box data-testid = 'user' className={classes.container_bot_button}>
         <Button onClick={() => {
-            sendMessage(payload)
+            sendMessage({message:message,payload:payload})
         }}>{message}</Button>
         </Box>
     }

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles, IconButton } from '@material-ui/core';
 import ChatMessage from './ChatMessage';
 import ButtonMessage from './ButtonMessage';
+// import PayloadMessage from './PayloadMessage';
 import CustomTextArea from './CustomTextArea';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import clsx from 'clsx';
@@ -70,10 +71,26 @@ const Chatbot = ({ finish, domain }) => {
 
   const updateChatBox = async (message) => {
     if (!message) return
-    try {
-      updateChatMessages([...chatMessages, { sender: displayName, message: message }])
-      const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
 
+    let reply = null;
+    if(message.hasOwnProperty("payload")){
+      try{
+        updateChatMessages([...chatMessages, { sender: displayName, message: message.message }])
+        reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message.payload, domain)
+      }catch (err) {
+        toast.error("Message send failed")
+        return
+      }
+    }else{
+      try{
+        updateChatMessages([...chatMessages, { sender: displayName, message: message }])
+        reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
+      }catch (err) {
+        toast.error("Message send failed")
+        return
+      }
+    }
+  
       let temp = []
 
       for (let r of reply.data) {
@@ -87,11 +104,13 @@ const Chatbot = ({ finish, domain }) => {
         }
 
       }
-      updateChatMessages([...chatMessages, { sender: displayName, message: message }, ...temp])
-    } catch (err) {
-      toast.error("Message send failed")
-      return
-    }
+
+      
+      if(message.hasOwnProperty("payload")){
+        updateChatMessages([...chatMessages, { sender: displayName, message: message.message }, ...temp])
+      }else{
+        updateChatMessages([...chatMessages, { sender: displayName, message: message } , ...temp])
+      }
   }
 
   const toggleRecord = () => {
@@ -113,8 +132,13 @@ const Chatbot = ({ finish, domain }) => {
 
   for (let msg of chatMessages){
     if (msg.hasOwnProperty("payload")){
-      console.log("this is button")
-      MessageList.push(<ButtonMessage sendMessage= {updateChatBox} {...msg} key={msg.payload} />)
+      // if (msg.sender === "user"){
+      //   console.log("this is pyload message")
+      //   MessageList.push(<PayloadMessage sendMessage= {updateChatBox} {...msg} key={msg.payload} />)
+      // }else{
+        console.log("this is button")
+        MessageList.push(<ButtonMessage sendMessage= {updateChatBox} {...msg} key={msg.payload} />)
+      // }
     }else{
       MessageList.push(<ChatMessage {...msg} key={msg.message} />)
     }
