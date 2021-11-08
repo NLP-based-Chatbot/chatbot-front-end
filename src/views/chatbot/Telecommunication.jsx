@@ -66,11 +66,18 @@ const Telecommunication = () => {
               domain="Telecommunication"
               domainImg="/Telecommunication_1.svg"
               posts={[
+                
+                {
+                  img: "/feature_update.png",
+                  title: "New features are added",
+                  body: "Now you can make complaints reagarding issues in your connections. Those complaint will be send to relevent authorities and they will fix your issues within 24 hours.",
+                  date: "5th November 2021"
+                },
                 {
                   img: "/telecom_launch.jpg",
                   title: "We are now LIVE",
-                  body: "Check this out",
-                  date: "26th September 2021"
+                  body: "We are pleased to announce the launch of our brand new Telecommunication Chatbot.",
+                  date: "29th October 2021"
                 },
               ]}
 
@@ -81,8 +88,18 @@ const Telecommunication = () => {
                 },
                 {
                   label: "Broadband connection",
-                  content: "You can ask about new broadband connection, details of routers, etc.",
+                  content: "You can ask about new broadband connection, details of routers, etc. Ex:-'How to get a new broadband connection'",
                 },
+                {
+                  label: "Package details",
+                  content: "Ask me about data package details. It doesn't matter what your service provider is. Ex:-'Can I get dialog data package details'",
+                },
+               
+                {
+                  label: "Television connection",
+                  content: "Do you prefer Dialog TV or Peo Tv? Ask me how to get a television connection",
+                },
+               
                
               ]}
             />
