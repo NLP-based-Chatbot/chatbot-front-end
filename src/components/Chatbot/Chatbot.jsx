@@ -2,6 +2,7 @@ import { Box, Card } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { makeStyles, IconButton } from '@material-ui/core';
 import ChatMessage from './ChatMessage';
+import ButtonMessage from './ButtonMessage';
 import CustomTextArea from './CustomTextArea';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import clsx from 'clsx';
@@ -72,20 +73,19 @@ const Chatbot = ({ finish, domain }) => {
     try {
       updateChatMessages([...chatMessages, { sender: displayName, message: message }])
       const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
+
       let temp = []
 
       for (let r of reply.data) {
-        let tempbuttons =[]
         if (r.hasOwnProperty("buttons")){
-          for (let b in r.buttons){
-            tempbuttons = [...tempbuttons,{title: b.title , payload: b.payload}]
+          for (let b of r.buttons){
+            console.log(b.title,b.payload)
+            temp = [...temp, { sender: "bot", message: b.title, payload: b.payload }]
           }
-          temp = [...temp, { sender: "bot", message: r.text , buttons: tempbuttons }]
         }else{
           temp = [...temp, { sender: "bot", message: r.text }]
         }
-        
-      
+
       }
       updateChatMessages([...chatMessages, { sender: displayName, message: message }, ...temp])
     } catch (err) {
@@ -109,10 +109,21 @@ const Chatbot = ({ finish, domain }) => {
 
   }, [updateChatMessages])
 
+  const MessageList = []
+
+  for (let msg of chatMessages){
+    if (msg.hasOwnProperty("payload")){
+      console.log("this is button")
+      MessageList.push(<ButtonMessage sendMessage= {updateChatBox} {...msg} key={msg.payload} />)
+    }else{
+      MessageList.push(<ChatMessage {...msg} key={msg.message} />)
+    }
+  }
+
   return (
     <Card className={classes.root}>
       <Card className={classes.body}>
-        {chatMessages.map((message, index) => <ChatMessage {...message} key={`${index}`} />)}
+        <ul>{MessageList}</ul>
       </Card>
       <div className={clsx(classes.textArea, classes.flexColumn, classes.flexRow)}>
         <CustomTextArea sendMessage={updateChatBox} toggleRecord={() => toggleRecord()} />

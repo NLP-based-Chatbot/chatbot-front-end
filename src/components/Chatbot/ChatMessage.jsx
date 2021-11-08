@@ -16,14 +16,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 3),
     marginLeft: theme.spacing(2)
   },
-  container_bot_button: {
-    maxWidth: "70%",
-    borderRadius: "1.0rem 1.0rem 1.0rem 1.0rem",
-    width: "fit-content",
-    backgroundColor: theme.palette.primary.contrastText,
-    padding: theme.spacing(1, 1),
-    marginLeft: theme.spacing(2)
-  },
   container_user: {
     maxWidth: "70%",
     borderRadius: "1.2rem 1.2rem 0 1.2rem",
@@ -38,22 +30,14 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const ChatMessage = ({ sender, message, buttons }) => {
+const ChatMessage = ({ sender, message}) => {
   const classes = useStyles()
-  if (buttons){
-    const Btns = buttons
-  }
+
   return (
     <Box className={classes.root}>
       {sender === 'bot' ?
         <Box data-testid = 'bot' className={classes.container_bot}>
           <Typography variant="body1" className={classes.font}>{message}</Typography>
-            <ButtonGroup>
-              {buttons.map((title,payload) => <Button title={title} onClick={() => {
-          sendMessage({payload})
-          updateMessage("")
-        }}></Button>)}
-            </ButtonGroup>
         </Box>
         :
         <Box data-testid = 'user' className={classes.container_user}>
@@ -64,4 +48,7 @@ const ChatMessage = ({ sender, message, buttons }) => {
   )
 }
 
+
+
 export default ChatMessage
+
