@@ -32,19 +32,14 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const ChatMessage = ({ sender, message, link = "" }) => {
+const ChatMessage = ({ sender, type, message = "", mapLink = "", image = "", button = "" }) => {
   const classes = useStyles()
   return (
     <Box className={classes.root}>
       {sender === 'bot' ?
         <Box data-testid='bot' className={classes.container_bot}>
-          {!link && <Typography variant="body1" className={classes.font}>{message}</Typography>}
-          {link &&
-            <div>
-              <Typography variant="body1" className={classes.font}>{message}</Typography>
-              <Link className={classes.link} href={`${link}`}>Link</Link>
-            </div>
-          }
+          {message && <Typography variant="body1" className={classes.font}>{message}</Typography>}
+          {image && <Link className={classes.link} href={`${image}`}>{image}</Link>}
         </Box>
         :
         <Box data-testid='user' className={classes.container_user}>
