@@ -75,10 +75,15 @@ const Chatbot = ({ finish, domain }) => {
       //console.log(reply.data)
       let temp = []
       for (let r of reply.data) {
-        temp = [...temp, { sender: "bot", message: r.text }]
+        if (r.image) {
+          temp = [...temp, { sender: "bot", message: r.text, link: r.image }]
+        } else {
+          temp = [...temp, { sender: "bot", message: r.text }]
+        }
       }
       updateChatMessages([...chatMessages, { sender: displayName, message: message }, ...temp])
     } catch (err) {
+      console.log(err.message)
       toast.error("Message send failed")
       return
     }
