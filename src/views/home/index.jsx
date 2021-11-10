@@ -26,7 +26,16 @@ const Home = () => {
         imageSrc="./Telecommunication.svg"
         align='left'
       />
+
+     
       <Banner />
+      <iframe
+        title="Introductory video"
+        style={{ margin: "20px 0" }}
+        width="1280"
+        height="720"
+        src="https://youtube.com/embed/aJEjc-Is2OA"
+      />
      
     </div>
   );
