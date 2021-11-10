@@ -1,6 +1,8 @@
 import React from "react";
+import Banner from "../../components/Banner";
 import HeroSection from "../../components/HeroSection";
 import SubSection from "../../components/SubSection";
+
 
 const Home = () => {
   return (
@@ -25,12 +27,16 @@ const Home = () => {
         align='left'
       />
 
+     
+      <Banner />
       <iframe
+        title="Introductory video"
         style={{ margin: "20px 0" }}
         width="1280"
         height="720"
         src="https://youtube.com/embed/aJEjc-Is2OA"
       />
+     
     </div>
   );
 };
