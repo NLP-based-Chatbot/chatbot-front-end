@@ -1,6 +1,8 @@
 import React from "react";
+import Banner from "../../components/Banner";
 import HeroSection from "../../components/HeroSection";
 import SubSection from "../../components/SubSection";
+
 
 const Home = () => {
   return (
@@ -24,6 +26,8 @@ const Home = () => {
         imageSrc="./Telecommunication.svg"
         align='left'
       />
+      <Banner />
+     
     </div>
   );
 };

@@ -70,15 +70,24 @@ const Chatbot = ({ finish, domain }) => {
   const updateChatBox = async (message) => {
     if (!message) return
     try {
-      updateChatMessages([...chatMessages, { sender: displayName, message: message }])
+      updateChatMessages([...chatMessages, { sender: displayName, type: "text", message: message }])
       const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
       //console.log(reply.data)
       let temp = []
       for (let r of reply.data) {
-        temp = [...temp, { sender: "bot", message: r.text }]
+        if (r.text) {
+          temp = [...temp, { sender: "bot", type: "text", message: r.text }]
+        } else if (r.custom) {
+          temp = [...temp, { sender: "bot", type: "map", mapLink: r.custom.content.mapLink }]
+        } else if (r.image) {
+          temp = [...temp, { sender: "bot", type: "image", image: r.image }]
+        } else if (r.button) {
+          temp = [...temp, { sender: "bot", type: "button", button: r.button }]
+        }
       }
-      updateChatMessages([...chatMessages, { sender: displayName, message: message }, ...temp])
+      updateChatMessages([...chatMessages, { sender: displayName, type: "text", message: message }, ...temp])
     } catch (err) {
+      console.log(err.message)
       toast.error("Message send failed")
       return
     }

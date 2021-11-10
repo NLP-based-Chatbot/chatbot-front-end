@@ -1,59 +1,71 @@
-import { Box, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Box, makeStyles, useMediaQuery } from "@material-ui/core";
 import React from "react";
-import { Parallax } from "react-scroll-parallax";
+import Carousel from "react-material-ui-carousel";
 
 const HeroSection = () => {
+  const bk_1 = useMediaQuery((theme) => theme.breakpoints.up("md"));
   const classes = useStyles();
+  var items1 = [
+    {
+      imgSrc: "./banner_4.png",
+    },
+    {
+      imgSrc: "./banner_1.png",
+    },
+    {
+      imgSrc: "./banner_2.png",
+    },
+    {
+      imgSrc: "./banner_3.png",
+    },
+  ];
+  var items2 = [
+    {
+      imgSrc: "./banner_4_mob.png",
+    },
+    {
+      imgSrc: "./banner_1_mob.png",
+    },
+    {
+      imgSrc: "./banner_2_mob.png",
+    },
+    {
+      imgSrc: "./banner_3_mob.png",
+    },
+  ];
+  function Item(props) {
+    return (
+      <Box className={classes.body} square elevation={5}>
+        <img src={props.item.imgSrc} height="auto" width="100%" alt="" />
+      </Box>
+    );
+  }
+
   return (
-    <Parallax className={classes.parallax} y={[-40, 20]} tagOuter="figure">
-      <Paper className={classes.body} square elevation={3}>
-        <Grid container spacing={0} justifyContent="center">
-          <Grid item md={6}>
-            <img className={classes.logo} src="./Hero Section.svg" alt="Logo" />
-          </Grid>
-          <Grid item ms={6}>
-            <Box className={classes.paper}>
-              <Typography className={classes.name} component="h1" variant="h1">
-                Wingman
-              </Typography>
-              <Typography
-                className={classes.subtitle}
-                component="h3"
-                variant="h3"
-              >
-                Your Personal Assistant
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Parallax>
+      <Box>
+        <Carousel
+          animation="fade"
+          duration={1000}
+          swipe={true}
+          indicators={false}
+        >
+          {bk_1
+            ? items1.map((item, i) => <Item key={i} item={item} />)
+            : items2.map((item, i) => <Item key={i} item={item} />)}
+        </Carousel>
+      </Box>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
+
   body: {
-    background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
-    paddingTop: "120px",
-    paddingBottom: "50px",
-  },
-  paper: {
-    marginTop: "40px",
-    textAlign: "center",
-    padding: "10px",
-  },
-  name: {
-    color: theme.palette.primary.light,
-  },
-  parallax: {
-    margin: "0px",
-  },
-  subtitle: {
-    color: theme.palette.secondary.light,
-  },
-  logo: {
-    width: '80%',
-    height: 'auto'
+    [theme.breakpoints.up("md")]: {
+      marginTop: "8px",
+    },
+    [theme.breakpoints.down("md")]: {
+      marginTop: "0px",
+    },
   },
 }));
 

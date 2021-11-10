@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
     minHeight: "calc(100vh - 115px)",
     display: "flex",
     alignItems: "center",
-    paddingTop:"20px",
-    paddingBottom:"20px"
+    paddingTop: "20px",
+    paddingBottom: "20px"
   },
   row: {
     marginTop: theme.spacing(5)
@@ -60,7 +60,7 @@ const PublicTransportation = () => {
       <Container>
         <ToastContainer />
         <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"} spacing={4}>
-        <Grid item alignItems="center" sm={12} md={6}>
+          <Grid item alignItems="center" sm={12} md={6}>
             <Newsfeed
               domain="Public Transport"
               domainImg="/bus_1.svg"
@@ -75,13 +75,21 @@ const PublicTransportation = () => {
 
               instructions={[
                 {
-                  label: "title 1",
-                  content: "Version 5 is out",
+                  label: "Travelling Schedules",
+                  content: "You can get information about the travelling schedules through our Public Transportation Chatbot. Currently Bus, and Train schedules are available. Keywords: schedule",
                 },
                 {
-                  label: "title 2",
-                  content: "Version 5 is out",
+                  label: "Seat Bookings",
+                  content: "You can book seats through the Public Transportation Chatbot. Currently seat bookings are available for Bus services. Keywords: book, bookings",
                 },
+                {
+                  label: "Route Finder",
+                  content: "Our Public Transportation Chatbot uses Google Map Services to provide you routing services. Keywords: route, path"
+                },
+                {
+                  label: "Complaint Service",
+                  content: "Not everytime you get the services as you intended in Public Transportation. You can make a complaints in such occasions using our Public Transportation Chatbot. We will handle and send your complaints to the relavent authorities. Keywords: complaint"
+                }
               ]}
             />
           </Grid>

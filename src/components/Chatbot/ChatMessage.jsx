@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, Box, Typography } from '@material-ui/core';
+import { makeStyles, Box, Typography, Link } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,19 +26,23 @@ const useStyles = makeStyles(theme => ({
   },
   font: {
     fontWeight: "600"
+  },
+  link: {
+    fontWeight: 600
   }
 }))
 
-const ChatMessage = ({ sender, message }) => {
+const ChatMessage = ({ sender, type, message = "", mapLink = "", image = "", button = "" }) => {
   const classes = useStyles()
   return (
     <Box className={classes.root}>
       {sender === 'bot' ?
-        <Box data-testid = 'bot' className={classes.container_bot}>
-          <Typography variant="body1" className={classes.font}>{message}</Typography>
+        <Box data-testid='bot' className={classes.container_bot}>
+          {message && <Typography variant="body1" className={classes.font}>{message}</Typography>}
+          {image && <Link className={classes.link} href={`${image}`}>{image}</Link>}
         </Box>
         :
-        <Box data-testid = 'user' className={classes.container_user}>
+        <Box data-testid='user' className={classes.container_user}>
           <Typography variant="body1" className={classes.font}>{message}</Typography>
         </Box>
       }
