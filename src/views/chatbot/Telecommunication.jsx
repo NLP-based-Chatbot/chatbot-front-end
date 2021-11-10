@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Grid, makeStyles, Modal, useMediaQuery } from '@material-ui/core';
 import Chatbot from '../../components/Chatbot/Chatbot';
 import Feedback from './../../components/Chatbot/Feedback';
-
 import { useSelector } from 'react-redux';
 import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
@@ -36,6 +35,7 @@ const Telecommunication = () => {
   const chat = useSelector(getChat)
   const user = useSelector(getUser)
   const token = useSelector(getToken)
+  const [newsfeed, setNewsfeed] = useState({"posts":[], "instructions":[]})
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
 
@@ -53,6 +53,20 @@ const Telecommunication = () => {
     }
   }
 
+  const getNewsfeedContent = async ()=>{
+    try{
+      let posts = await api.newsfeed.GET.getNews(token.access, "telecom")
+      let instructions = await api.newsfeed.GET.getInstructions(token.access, "telecom")
+      setNewsfeed({"posts":posts.data, "instructions": instructions.data})
+    }
+    catch(err){
+      toast.error("Data fetch failed");
+    }
+  }
+
+  useEffect(() => {
+    getNewsfeedContent()
+  },[])
 
   if (!signedIn) return <Redirect to="/home" />
 
@@ -65,43 +79,8 @@ const Telecommunication = () => {
           <Newsfeed
               domain="Telecommunication"
               domainImg="/Telecommunication_1.svg"
-              posts={[
-                
-                {
-                  img: "/feature_update.png",
-                  title: "New features are added",
-                  body: "Now you can make complaints reagarding issues in your connections. Those complaint will be send to relevent authorities and they will fix your issues within 24 hours.",
-                  date: "5th November 2021"
-                },
-                {
-                  img: "/telecom_launch.jpg",
-                  title: "We are now LIVE",
-                  body: "We are pleased to announce the launch of our brand new Telecommunication Chatbot.",
-                  date: "29th October 2021"
-                },
-              ]}
-
-              instructions={[
-                {
-                  label: "Genaral Questions",
-                  content: "Ask me genaral type of questions like check account balance, how to get a loan, recharge, etc. related to any service provider.",
-                },
-                {
-                  label: "Broadband connection",
-                  content: "You can ask about new broadband connection, details of routers, etc. Ex:-'How to get a new broadband connection'",
-                },
-                {
-                  label: "Package details",
-                  content: "Ask me about data package details. It doesn't matter what your service provider is. Ex:-'Can I get dialog data package details'",
-                },
-               
-                {
-                  label: "Television connection",
-                  content: "Do you prefer Dialog TV or Peo Tv? Ask me how to get a television connection",
-                },
-               
-               
-              ]}
+              posts={newsfeed.posts}
+              instructions={newsfeed.instructions}
             />
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
