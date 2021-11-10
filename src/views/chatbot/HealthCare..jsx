@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Grid,
@@ -15,6 +15,7 @@ import { Redirect } from "react-router";
 import api from "./../../api/index";
 import { toast, ToastContainer } from "react-toastify";
 import Newsfeed from "../../components/Chatbot/Newsfeed";
+import newsfeed from "../../api/modules/newsfeed";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +42,7 @@ const HealthCare = () => {
   const signedIn = useSelector(getUserSignedIn);
   const user = useSelector(getUser);
   const token = useSelector(getToken);
+  const [newsfeed, setNewsfeed] = useState({"posts":[], "instructions":[]})
 
   const bk_1 = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
@@ -67,6 +69,22 @@ const HealthCare = () => {
     }
   };
 
+  const getNewsfeedContent = async ()=>{
+    try{
+      let posts = await api.newsfeed.GET.getNews(token.access, "healthcare")
+      let instructions = await api.newsfeed.GET.getInstructions(token.access, "healthcare")
+      setNewsfeed({"posts":posts.data, "instructions": instructions.data})
+    }
+    catch(err){
+      toast.error("Data fetch failed");
+    }
+  }
+
+  useEffect(() => {
+    getNewsfeedContent()
+  },[])
+
+
   if (!signedIn) return <Redirect to="/home" />;
 
   return (
@@ -83,25 +101,8 @@ const HealthCare = () => {
             <Newsfeed
               domain="Health Care"
               domainImg="/healthcare_1.svg"
-              posts={[
-                {
-                  img: "/healthcare_launch.jpg",
-                  title: "We are now LIVE",
-                  body: "Check this out",
-                  date: "26th September 2021"
-                },
-              ]}
-
-              instructions={[
-                {
-                  label: "title 1",
-                  content: "Version 5 is out",
-                },
-                {
-                  label: "title 2",
-                  content: "Version 5 is out",
-                },
-              ]}
+              posts={newsfeed.posts}
+              instructions={newsfeed.instructions}
             />
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>
