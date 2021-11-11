@@ -10,7 +10,7 @@ import Chatbot from "../../components/Chatbot/Chatbot";
 import Feedback from "./../../components/Chatbot/Feedback";
 import { useSelector } from "react-redux";
 import { getUserSignedIn, getUser, getToken } from "./../../store/slices/auth";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import api from "./../../api/index";
 import { getChat } from "./../../store/slices/chatbot";
@@ -42,6 +42,7 @@ const PublicTransportation = () => {
   const user = useSelector(getUser);
   const token = useSelector(getToken);
   const [newsfeed, setNewsfeed] = useState({"posts":[], "instructions":[]})
+  const history = useHistory();
 
   const bk_1 = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
@@ -60,6 +61,9 @@ const PublicTransportation = () => {
         chatJSON
       );
       toast.success("Feedback added");
+      setTimeout(() => {
+        history.push("/home");
+      }, 2000);
     } catch (err) {
       console.log(err.response.message);
       toast.error("Something went wrong");

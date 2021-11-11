@@ -13,6 +13,7 @@ import { updateChat } from '../../store/slices/chatbot';
 import api from '../../api';
 import { toast } from 'react-toastify';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { useHistory } from 'react-router';
 
 
 const useStyles = makeStyles(theme => ({

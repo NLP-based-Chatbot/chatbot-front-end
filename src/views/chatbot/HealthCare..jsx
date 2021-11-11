@@ -11,7 +11,7 @@ import Feedback from "./../../components/Chatbot/Feedback";
 import { useSelector } from "react-redux";
 import { getChat } from "./../../store/slices/chatbot";
 import { getUserSignedIn, getUser, getToken } from "./../../store/slices/auth";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import api from "./../../api/index";
 import { toast, ToastContainer } from "react-toastify";
 import Newsfeed from "../../components/Chatbot/Newsfeed";
@@ -42,6 +42,7 @@ const HealthCare = () => {
   const user = useSelector(getUser);
   const token = useSelector(getToken);
   const [newsfeed, setNewsfeed] = useState({"posts":[], "instructions":[]})
+  const history = useHistory();
 
   const bk_1 = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
@@ -62,6 +63,9 @@ const HealthCare = () => {
         chatJSON
       );
       toast.success("Feedback added");
+      setTimeout(() => {
+        history.push("/home");
+      }, 2000);
     } catch (err) {
       console.log(err.response);
       toast.error("Something went wrong");
