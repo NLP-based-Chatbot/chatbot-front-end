@@ -74,9 +74,9 @@ const Chatbot = ({ finish, domain }) => {
     if (!message) return
     try {
       if (displayMessage){
-        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }])
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }, { sender: "bot", type: "loading", text: "" }])
       }else{
-        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }])
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }, { sender: "bot", type: "loading", text: "" }])
       }
         
       const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
