@@ -58,7 +58,7 @@ const Chatbot = ({ finish, domain }) => {
   const token = useSelector(getToken)
 
   const [chatMessages, updateChatMessages] = useState([
-    { sender: "bot", message: `Hi, ${displayName.first_name}` },
+    { sender: "bot", type: "text", text: `Hi, ${displayName.first_name}` },
   ])
 
   const {
@@ -67,25 +67,49 @@ const Chatbot = ({ finish, domain }) => {
     resetTranscript,
   } = useSpeechRecognition()
 
-  const updateChatBox = async (message) => {
+  const updateChatBox = async (message, displayMessage='') => {
     if (!message) return
     try {
-      updateChatMessages([...chatMessages, { sender: displayName, type: "text", message: message }])
+      if (displayMessage){
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }])
+      }else{
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }])
+      }
+        
       const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
-      //console.log(reply.data)
       let temp = []
       for (let r of reply.data) {
         if (r.text) {
-          temp = [...temp, { sender: "bot", type: "text", message: r.text }]
-        } else if (r.custom) {
-          temp = [...temp, { sender: "bot", type: "map", mapLink: r.custom.content.mapLink }]
-        } else if (r.image) {
+          temp = [...temp, { sender: "bot", type: "text", text: r.text }]
+        } 
+        if (r.image) {
           temp = [...temp, { sender: "bot", type: "image", image: r.image }]
-        } else if (r.button) {
-          temp = [...temp, { sender: "bot", type: "button", button: r.button }]
-        }
+        } 
+        if (r.buttons) {
+          temp = [...temp, { sender: "bot", type: "buttons", buttons: r.buttons }]
+        } 
+        if (r.custom) {
+            if(r.custom.mapLink){
+              temp = [...temp, { sender: "bot", type: "map", map: r.custom.mapLink }]
+            }
+            else if (r.custom.packages){
+              temp = [...temp, { sender: "bot", type: "table", table: r.custom.packages }]
+            }
+            else if (r.custom.complaint){
+              temp = [...temp, { sender: "bot", type: "complaint", complaint: r.custom.complaint }]
+            }
+            else if (r.custom.button){
+              
+              temp = [...temp, { sender: "bot", type: "button", button: r.custom.button }]
+            }
+        } 
       }
-      updateChatMessages([...chatMessages, { sender: displayName, type: "text", message: message }, ...temp])
+      if (displayMessage){
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }, ...temp])
+      }else{
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }, ...temp])
+      }
+      
     } catch (err) {
       console.log(err.message)
       toast.error("Message send failed")
@@ -111,7 +135,7 @@ const Chatbot = ({ finish, domain }) => {
   return (
     <Card className={classes.root}>
       <Card className={classes.body}>
-        {chatMessages.map((message, index) => <ChatMessage {...message} key={`${index}`} />)}
+        {chatMessages.map((message, index) => <ChatMessage sendMessage={updateChatBox} {...message} key={`${index}`} />)}
       </Card>
       <div className={clsx(classes.textArea, classes.flexColumn, classes.flexRow)}>
         <CustomTextArea sendMessage={updateChatBox} toggleRecord={() => toggleRecord()} />

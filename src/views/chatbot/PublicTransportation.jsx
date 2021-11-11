@@ -15,7 +15,6 @@ import { toast, ToastContainer } from "react-toastify";
 import api from "./../../api/index";
 import { getChat } from "./../../store/slices/chatbot";
 import Newsfeed from "../../components/Chatbot/Newsfeed";
-import newsfeed from "../../api/modules/newsfeed";
 
 const useStyles = makeStyles((theme) => ({
   root: {
