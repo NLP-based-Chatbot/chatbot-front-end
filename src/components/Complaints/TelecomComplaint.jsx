@@ -1,4 +1,11 @@
 import {
+  DataTableCell,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+} from "@david.kucsai/react-pdf-table";
+import {
   Document,
   Image,
   Page,
@@ -39,16 +46,47 @@ const TelecomComplaint = ({ issue, description, name, phone, email }) => (
       />
       <Text style={styles.heading}>Complaint Form Preview</Text>
       <View style={{ margin: "50px" }}>
-        <Text style={styles.sub_heading}>Issue</Text>
-        <Text style={styles.content}>{issue}</Text>
-        <Text style={styles.sub_heading}>Description</Text>
-        <Text style={styles.content}>{description}</Text>
-        <Text style={styles.sub_heading}>Name of the complainer</Text>
-        <Text style={styles.content}>{name}</Text>
-        <Text style={styles.sub_heading}>Phone number of the complainer</Text>
-        <Text style={styles.content}>{phone}</Text>
-        <Text style={styles.sub_heading}>Email address of the complainer</Text>
-        <Text style={styles.content}>{email}</Text>
+        <Table
+          data={[
+            {
+              field: "Issue",
+              content: issue,
+            },
+            {
+              field: "Description",
+              content: description,
+            },
+            {
+              field: "Name of the complainer",
+              content: name,
+            },
+            {
+              field: "Name of the complainer",
+              content: name,
+            },
+            {
+              field: "Phone number of the complainer",
+              content: phone,
+            },
+            {
+              field: "Email address of the complainer",
+              content: email,
+            },
+          ]}
+        >
+            <TableHeader>
+              <TableCell weighting={0.6}>
+                  Field
+              </TableCell>
+              <TableCell>
+                  Content
+              </TableCell>
+            </TableHeader>
+            <TableBody>
+            <DataTableCell weighting={0.6} getContent={(r) => r.field} />
+            <DataTableCell getContent={(r) => r.content} />
+          </TableBody>
+        </Table>
       </View>
       <Image
         src="/complaint_footer.png"

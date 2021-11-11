@@ -12,6 +12,7 @@ import { getToken, getUser } from '../../store/slices/auth';
 import { updateChat } from '../../store/slices/chatbot';
 import api from '../../api';
 import { toast } from 'react-toastify';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,10 +24,13 @@ const useStyles = makeStyles(theme => ({
   },
   body: {
     backgroundColor: theme.palette.secondary.light,
-    height: "75%",
-    overflowY: "auto",
-    padding: theme.spacing(2, 0)
+    height:"75%", 
+    padding: theme.spacing(2, 0),
   },
+  body_scroll:{
+    height: "100%",
+  },
+
   flexRow: {
     display: "flex",
     alignItems: "center",
@@ -60,7 +64,6 @@ const Chatbot = ({ finish, domain }) => {
   const [chatMessages, updateChatMessages] = useState([
     { sender: "bot", type: "text", text: `Hi, ${displayName.first_name}` },
   ])
-
   const {
     transcript,
     listening,
@@ -134,9 +137,11 @@ const Chatbot = ({ finish, domain }) => {
 
   return (
     <Card className={classes.root}>
-      <Card className={classes.body}>
-        {chatMessages.map((message, index) => <ChatMessage sendMessage={updateChatBox} {...message} key={`${index}`} />)}
-      </Card>
+        <Card className={classes.body}>
+          <ScrollToBottom className={classes.body_scroll}>
+            {chatMessages.map((message, index) => <ChatMessage sendMessage={updateChatBox} {...message} key={`${index}`} />)}
+          </ScrollToBottom>
+        </Card>
       <div className={clsx(classes.textArea, classes.flexColumn, classes.flexRow)}>
         <CustomTextArea sendMessage={updateChatBox} toggleRecord={() => toggleRecord()} />
         <Box className={classes.row}>

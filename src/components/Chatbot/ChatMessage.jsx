@@ -7,6 +7,7 @@ import TelecomComplaint from '../Complaints/TelecomComplaint';
 import { GetAppRounded } from '@material-ui/icons';
 import { useSelector} from 'react-redux';
 import { getUser } from '../../store/slices/auth';
+import HealthcareComplaint from '../Complaints/HealthcareComplaint';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -128,7 +129,7 @@ const ChatMessage = ({ sender, sendMessage, type, text = "", image = "",  button
       {sender === 'bot' ?
         <Box data-testid='bot'>
           {type === "text" && 
-          <Box data-testid='bot' className={classes.container_bot_text}>
+          <Box className={classes.container_bot_text}>
             <Typography variant="body1" className={classes.font}>{text}</Typography>
           </Box>
           }
@@ -171,21 +172,41 @@ const ChatMessage = ({ sender, sendMessage, type, text = "", image = "",  button
           }
           {type === "complaint" && 
           <Box  className={classes.container_bot_complaint} >
-            <PDFDownloadLink document={<TelecomComplaint issue={complaint.title} description={complaint.description} name={complaint.fullname} phone={complaint.contactnum} email={complaint.email} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
-              {({ blob, url, loading, error }) =>
-                loading ? 
-                <>
-                  <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
-                  <CircularProgress />
-                </> : 
-                <>
-                <Typography variant="body1" className={classes.font}>Download</Typography>
-                <IconButton aria-label="download">
-                  <GetAppRounded />
-                </IconButton>
-                </>
-              }
-            </PDFDownloadLink>
+            {complaint.domain === "telecom" && 
+              <PDFDownloadLink document={<TelecomComplaint issue={complaint.title} description={complaint.description} name={complaint.fullname} phone={complaint.contactnum} email={complaint.email} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
+                {({ blob, url, loading, error }) =>
+                  loading ? 
+                  <>
+                    <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
+                    <CircularProgress />
+                  </> : 
+                  <>
+                  <Typography variant="body1" className={classes.font}>Download</Typography>
+                  <IconButton aria-label="download">
+                    <GetAppRounded />
+                  </IconButton>
+                  </>
+                }
+              </PDFDownloadLink>
+            }
+            {complaint.domain === "healthcare" && 
+              <PDFDownloadLink document={<HealthcareComplaint issue={complaint.title} description={complaint.description} name={complaint.fullname} phone={complaint.contactnum} email={complaint.email} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
+                {({ blob, url, loading, error }) =>
+                  loading ? 
+                  <>
+                    <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
+                    <CircularProgress />
+                  </> : 
+                  <>
+                  <Typography variant="body1" className={classes.font}>Download</Typography>
+                  <IconButton aria-label="download">
+                    <GetAppRounded />
+                  </IconButton>
+                  </>
+                }
+              </PDFDownloadLink>
+            }
+            
           </Box>
           }
      
