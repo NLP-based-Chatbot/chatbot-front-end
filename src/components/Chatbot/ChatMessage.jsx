@@ -8,6 +8,7 @@ import { GetAppRounded } from '@material-ui/icons';
 import { useSelector} from 'react-redux';
 import { getUser } from '../../store/slices/auth';
 import HealthcareComplaint from '../Complaints/HealthcareComplaint';
+import Loader from 'react-loader-spinner';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -207,6 +208,11 @@ const ChatMessage = ({ sender, sendMessage, type, text = "", image = "",  button
               </PDFDownloadLink>
             }
             
+          </Box>
+          }
+          {type === "loading" && 
+          <Box  className={classes.container_bot_text} >
+            <Loader type="ThreeDots" color="#3A637E" height={25} width={25} />
           </Box>
           }
      
