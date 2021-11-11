@@ -15,7 +15,6 @@ import { Redirect } from "react-router";
 import api from "./../../api/index";
 import { toast, ToastContainer } from "react-toastify";
 import Newsfeed from "../../components/Chatbot/Newsfeed";
-import newsfeed from "../../api/modules/newsfeed";
 
 const useStyles = makeStyles((theme) => ({
   root: {
