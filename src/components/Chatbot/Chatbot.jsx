@@ -13,7 +13,6 @@ import { updateChat } from '../../store/slices/chatbot';
 import api from '../../api';
 import { toast } from 'react-toastify';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import { useHistory } from 'react-router';
 
 
 const useStyles = makeStyles(theme => ({
@@ -75,9 +74,9 @@ const Chatbot = ({ finish, domain }) => {
     if (!message) return
     try {
       if (displayMessage){
-        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }, { sender: "bot", type: "loading", text: "" }])
+        updateChatMessages([...chatMessages, { sender: displayName.first_name, type: "text", text: displayMessage }, { sender: "bot", type: "loading", text: "" }])
       }else{
-        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }, { sender: "bot", type: "loading", text: "" }])
+        updateChatMessages([...chatMessages, { sender: displayName.first_name, type: "text", text: message }, { sender: "bot", type: "loading", text: "" }])
       }
         
       const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
@@ -109,9 +108,9 @@ const Chatbot = ({ finish, domain }) => {
         } 
       }
       if (displayMessage){
-        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }, ...temp])
+        updateChatMessages([...chatMessages, { sender: displayName.first_name, type: "text", text: displayMessage }, ...temp])
       }else{
-        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }, ...temp])
+        updateChatMessages([...chatMessages, { sender: displayName.first_name, type: "text", text: message }, ...temp])
       }
       
     } catch (err) {

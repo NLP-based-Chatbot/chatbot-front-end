@@ -122,7 +122,7 @@ function Row(props) {
   );
 }
 
-const ChatMessage = ({ sender, sendMessage, type, text = "", image = "",  buttons = [], map = "", table = [], complaint = {}, button = {}}) => {
+const ChatMessage = ({ sender, sendMessage= "", type, text = "", image = "",  buttons = [], map = "", table = [], complaint = {}, button = {}}) => {
   const displayName = useSelector(getUser)
   const classes = useStyles()
   return (
@@ -138,8 +138,11 @@ const ChatMessage = ({ sender, sendMessage, type, text = "", image = "",  button
           {type === "buttons" && 
           <Box  className={classes.container_bot_buttons} >
             <ButtonGroup size="small" disableElevation variant="contained" color="primary" aria-label="contained primary button group">
-              {buttons && buttons.map((button, index) => (
+              {buttons && sendMessage && buttons.map((button, index) => (
                 <Button onClick={() => sendMessage(button.payload, button.title)} key={`${index}`}>{button.title}</Button>
+              ))}
+              {buttons && !sendMessage && buttons.map((button, index) => (
+                <Button key={`${index}`}>{button.title}</Button>
               ))}
               
             </ButtonGroup>

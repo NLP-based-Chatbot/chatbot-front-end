@@ -156,18 +156,18 @@ const Feedback = () => {
                     <Grid container>
                       <Grid item md={3}>
                         <Typography variant="h6" style={{ fontWeight: 600 }}>Domain</Typography>
-                        {selected && selected_feedback && <Typography variant="h6">{selected_feedback.domain.toUpperCase()}</Typography>}
+                        {selected && selected_feedback && <Typography variant="body1">{selected_feedback.domain.toUpperCase()}</Typography>}
                       </Grid>
                       <Grid item md={6}>
                         <Typography variant="h6" style={{ fontWeight: 600 }}>Resolve Status</Typography>
-                        {selected && selected_feedback && <Typography variant="h6">{selected_feedback.resolved ? 'Resolved' : 'Unresolved'}</Typography>}
+                        {selected && selected_feedback && <Typography variant="body1">{selected_feedback.resolved ? 'Resolved' : 'Unresolved'}</Typography>}
                       </Grid>
                       <Grid item md={3}>
                         <Typography variant="h6" style={{ fontWeight: 600 }}>Rating</Typography>
-                        {selected && selected_feedback && <Typography variant="h6">{selected_feedback.rating}</Typography>}
+                        {selected && selected_feedback && <Typography variant="body1">{selected_feedback.rating}</Typography>}
                       </Grid>
                     </Grid>
-                    <ChatDisplay />
+                    {selected && selected_feedback && <ChatDisplay feedback={selected_feedback.feedback} chatsession={selected_feedback.chatsession}  />}
                     {selected && selected_feedback && !selected_feedback.resolved &&
                       <Button
                         variant='contained'
