@@ -4,12 +4,14 @@ import Chatbot from '../../components/Chatbot/Chatbot';
 import Feedback from './../../components/Chatbot/Feedback';
 
 import { useSelector } from 'react-redux';
-import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
+import { getUserSignedIn, getUser, getToken, refreshToken } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
-import { getChat  } from './../../store/slices/chatbot';
+import { getChat } from './../../store/slices/chatbot';
 import api from './../../api/index';
 import { toast, ToastContainer } from 'react-toastify';
 import Newsfeed from "../../components/Chatbot/Newsfeed";
+import { useDispatch } from 'react-redux';
+import TokenGenerator from './../../helpers/TokenRefresh';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,8 +19,8 @@ const useStyles = makeStyles(theme => ({
     minHeight: "calc(100vh - 115px)",
     display: "flex",
     alignItems: "center",
-    paddingTop:"20px",
-    paddingBottom:"20px"
+    paddingTop: "20px",
+    paddingBottom: "20px"
   },
   row: {
     marginTop: theme.spacing(5)
@@ -37,6 +39,8 @@ const Telecommunication = () => {
   const user = useSelector(getUser)
   const token = useSelector(getToken)
 
+  const dispatch = useDispatch()
+
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
 
   const [displayFeedback, updateDisplayFeedback] = useState(false)
@@ -45,6 +49,7 @@ const Telecommunication = () => {
     updateDisplayFeedback(false)
     const chatJSON = JSON.stringify(chat)
     try {
+      await TokenGenerator(token)
       await api.feedback.POST.feedback(token.access, user.id, 'telecom', index, feedback, chatJSON)
       toast.success('Feedback added')
     } catch (err) {
@@ -62,7 +67,7 @@ const Telecommunication = () => {
         <ToastContainer />
         <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"} spacing={4}>
           <Grid item alignItems="center" sm={12} md={6}>
-          <Newsfeed
+            <Newsfeed
               domain="Telecommunication"
               domainImg="/Telecommunication_1.svg"
               posts={[
@@ -83,7 +88,7 @@ const Telecommunication = () => {
                   label: "Broadband connection",
                   content: "You can ask about new broadband connection, details of routers, etc.",
                 },
-               
+
               ]}
             />
           </Grid>

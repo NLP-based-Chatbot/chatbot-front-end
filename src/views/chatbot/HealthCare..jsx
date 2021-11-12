@@ -15,6 +15,7 @@ import { Redirect } from "react-router";
 import api from "./../../api/index";
 import { toast, ToastContainer } from "react-toastify";
 import Newsfeed from "../../components/Chatbot/Newsfeed";
+import TokenGenerator from './../../helpers/TokenRefresh';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "calc(100vh - 115px)",
     display: "flex",
     alignItems: "center",
-    paddingTop:"20px",
-    paddingBottom:"20px"
+    paddingTop: "20px",
+    paddingBottom: "20px"
   },
   row: {
     marginTop: theme.spacing(5),
@@ -52,6 +53,7 @@ const HealthCare = () => {
     console.log(feedback);
     const chatJSON = JSON.stringify(chat);
     try {
+      await TokenGenerator(token)
       await api.feedback.POST.feedback(
         token.access,
         user.id,

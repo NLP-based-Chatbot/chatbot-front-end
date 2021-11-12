@@ -9,6 +9,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import api from './../../api/index';
 import { getChat } from './../../store/slices/chatbot';
 import Newsfeed from '../../components/Chatbot/Newsfeed';
+import TokenGenerator from './../../helpers/TokenRefresh';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,6 +45,7 @@ const PublicTransportation = () => {
     updateDisplayFeedback(false)
     const chatJSON = JSON.stringify(chat)
     try {
+      await TokenGenerator(token)
       await api.feedback.POST.feedback(token.access, user.id, 'transport', index, feedback, chatJSON)
       toast.success('Feedback added')
     } catch (err) {

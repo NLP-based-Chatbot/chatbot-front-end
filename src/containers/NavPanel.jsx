@@ -67,6 +67,7 @@ const NavPanel = () => {
     if (userSignedIn) {
       setTimeout(() => {
         dispatch(userSignedOut())
+        history.push("/home")
       }, 500)
     } else {
       history.push("/")
@@ -82,7 +83,7 @@ const NavPanel = () => {
           </IconButton>}
           <Grid container alignItems="center">
             <Grid container xs={8} md={10} alignItems="center" justifyContent="space-between">
-              {user.is_admin && <Grid item xs={2} md={2}>
+              {userSignedIn && user.is_superuser && <Grid item xs={2} md={2}>
                 <Link to="/admin/dashboard" className={classes.link}>
                   <Typography variant="h6" className={classes.title}>
                     Dashboard

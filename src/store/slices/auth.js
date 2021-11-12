@@ -42,6 +42,9 @@ const slice = createSlice({
 			user.userDetails = {};
 			user.token = {};
 			user.loading_user = false;
+		},
+		refreshToken: (user, action) => {
+			user.token.access = action.payload;
 		}
 	}
 });
@@ -55,7 +58,8 @@ export const {
 	userReceived,
 	userSignOutRequested,
 	userSignOutRequestFailed,
-	userSignedOut
+	userSignedOut,
+	refreshToken
 } = slice.actions;
 
 export default slice.reducer;

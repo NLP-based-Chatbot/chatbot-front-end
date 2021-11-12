@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Button, Dialog, DialogContent, Grid, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Box, Button, ButtonGroup, Dialog, DialogContent, Grid, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
 import CountBox from './../../components/CountBox';
 import Graph from '../../components/Graph';
 import api from './../../api/index';
 import { MonthDivider } from './../../helpers/GraphDivider';
-import { useSelector } from 'react-redux';
-import { getUser } from './../../store/slices/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser, getToken, refreshToken, getUserSignedIn } from './../../store/slices/auth';
 import { Redirect } from 'react-router';
 import { useFormik } from 'formik';
 import * as Yup from "yup"
 import moment from "moment"
 import clsx from 'clsx';
 import Instruction from './../../components/Chatbot/Instruction';
+import TokenGenerator from './../../helpers/TokenRefresh';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,11 +29,14 @@ const useStyles = makeStyles(theme => ({
   graph: {
     height: "100%"
   },
-  button: {
+  button_group: {
     width: "fit-content",
     fontSize: "1rem",
-    marginLeft: "auto",
-    marginTop: theme.spacing(5)
+    margin: theme.spacing(3, 0),
+    marginLeft: "auto"
+  },
+  button: {
+    margin: theme.spacing(0, 2)
   },
   dialog_body: {
     height: "50vh",
@@ -64,6 +69,10 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const signedIn = useSelector(getUserSignedIn)
+  const history = useHistory()
+
   const [data, updateData] = useState({
     title: "",
     format: "month",
@@ -75,6 +84,10 @@ const Dashboard = () => {
   const [openDialog, toggleOpen] = useState(false)
   const [infoType, changeInfoType] = useState("news")
   const [domain, setDomain] = useState("healthcare")
+
+  const [users, setUsers] = useState([])
+  const [activeUsers, setActiveUsers] = useState(0)
+  const [registeredUsers, setRegisteredUsers] = useState(0)
 
   const [news, setNews] = useState({
     title: "",
@@ -100,21 +113,56 @@ const Dashboard = () => {
   ])
 
   const user = useSelector(getUser)
+  const token = useSelector(getToken)
 
   useEffect(() => {
     async function loadData() {
       try {
-        const sessions = await api.feedback.GET.sessions()
+        const access = await TokenGenerator(token)
+        if (access) dispatch(refreshToken(access))
+
+        const sessions = await api.feedback.GET.sessions(token.access)
         const feedback = sessions.data.filter(s => s.feedback !== null)
 
         update_session_count(MonthDivider(sessions.data))
         update_feedback_count(MonthDivider(feedback))
       } catch (err) {
-        console.log(err)
+        console.log(err.message)
       }
     }
 
     loadData()
+  }, [])
+
+  useEffect(() => {
+    async function loadUsers() {
+      try {
+        const access = await TokenGenerator(token)
+        if (access) dispatch(refreshToken(access))
+
+        setActiveUsers(0)
+        setRegisteredUsers(0)
+
+        const user_data = await api.user.GET.getUsers(token.access)
+        setUsers(user_data.data)
+
+        for (let u of user_data.data) {
+          const last_login = moment(u.last_login)
+          const registered = moment(u.user_created)
+          if (moment().diff(last_login, 'hours') < 24) {
+            setActiveUsers(activeUsers => activeUsers + 1)
+          }
+          if (moment().diff(registered, 'days') < 30) {
+            setRegisteredUsers(registeredUsers => registeredUsers + 1)
+          }
+        }
+
+      } catch (err) {
+        console.log(err.message)
+      }
+    }
+
+    loadUsers()
   }, [])
 
   const formik_news = useFormik({
@@ -145,7 +193,7 @@ const Dashboard = () => {
     })
   }
 
-  // if (!user.is_admin) return <Redirect to="/home" />
+  if (!signedIn || !user.is_superuser) return <Redirect to="/home" />
 
   return (
     <div className={classes.root}>
@@ -155,7 +203,7 @@ const Dashboard = () => {
             <CountBox
               title="Active Users"
               subtitle="(last 24h)"
-              count={20}
+              count={activeUsers}
               disableGraph={true}
             />
           </Grid>
@@ -163,7 +211,7 @@ const Dashboard = () => {
             <CountBox
               title="Registered Users"
               subtitle="(last month)"
-              count={10}
+              count={registeredUsers}
               disableGraph={true}
             />
           </Grid>
@@ -203,18 +251,28 @@ const Dashboard = () => {
         </Grid>
         <Grid container direction="column" sm={12} md={8} xl={6} className={classes.graph}>
           <Graph title={data.title} format={data.format} data={data.data} />
-          <Button
+
+          <ButtonGroup
             color="secondary"
             size="medium"
             variant="contained"
-            className={classes.button}
-            onClick={() => toggleOpen(true)}
+            className={classes.button_group}
           >
-            Add Updates
-          </Button>
+            <Button
+              className={classes.button}
+              onClick={() => history.push('/admin/dashboard/feedback')}
+            >
+              View Feedback
+            </Button>
+            <Button
+              className={classes.button}
+              onClick={() => toggleOpen(true)}
+            >
+              Add Updates
+            </Button>
+          </ButtonGroup>
         </Grid>
       </Grid>
-
 
       <Dialog
         open={openDialog}
