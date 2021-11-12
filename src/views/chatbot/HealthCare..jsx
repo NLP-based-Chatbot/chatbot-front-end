@@ -42,7 +42,7 @@ const HealthCare = () => {
   const signedIn = useSelector(getUserSignedIn);
   const user = useSelector(getUser);
   const token = useSelector(getToken);
-  const [newsfeed, setNewsfeed] = useState({"posts":[], "instructions":[]})
+  const [newsfeed, setNewsfeed] = useState({ "posts": [], "instructions": [] })
   const history = useHistory();
 
   const bk_1 = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -74,20 +74,20 @@ const HealthCare = () => {
     }
   };
 
-  const getNewsfeedContent = async ()=>{
-    try{
+  const getNewsfeedContent = async () => {
+    try {
       let posts = await api.newsfeed.GET.getNews(token.access, "healthcare")
       let instructions = await api.newsfeed.GET.getInstructions(token.access, "healthcare")
-      setNewsfeed({"posts":posts.data, "instructions": instructions.data})
+      setNewsfeed({ "posts": posts.data, "instructions": instructions.data })
     }
-    catch(err){
+    catch (err) {
       toast.error("Data fetch failed");
     }
   }
 
   useEffect(() => {
     getNewsfeedContent()
-  },[])
+  }, [])
 
 
   if (!signedIn) return <Redirect to="/home" />;
@@ -105,7 +105,7 @@ const HealthCare = () => {
           <Grid item alignItems="center" sm={12} md={6}>
             <Newsfeed
               domain="Health Care"
-              domainImg="/healthcare_1.svg"
+              domainImg="/Healthcare_1.svg"
               posts={newsfeed.posts}
               instructions={newsfeed.instructions}
             />

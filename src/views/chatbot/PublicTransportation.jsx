@@ -99,7 +99,7 @@ const PublicTransportation = () => {
           <Grid item alignItems="center" sm={12} md={6}>
             <Newsfeed
               domain="Public Transport"
-              domainImg="/bus_1.svg"
+              domainImg="/Bus_1.svg"
               posts={newsfeed.posts}
               instructions={newsfeed.instructions}
             />
