@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Grid, makeStyles, Modal, useMediaQuery } from '@material-ui/core';
 import Chatbot from '../../components/Chatbot/Chatbot';
 import Feedback from './../../components/Chatbot/Feedback';
-
 import { useSelector } from 'react-redux';
-import { getUserSignedIn, getUser, getToken, refreshToken } from './../../store/slices/auth';
-import { Redirect } from 'react-router';
+import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
+import { Redirect, useHistory } from 'react-router';
 import { getChat } from './../../store/slices/chatbot';
 import api from './../../api/index';
 import { toast, ToastContainer } from 'react-toastify';
@@ -38,6 +37,8 @@ const Telecommunication = () => {
   const chat = useSelector(getChat)
   const user = useSelector(getUser)
   const token = useSelector(getToken)
+  const [newsfeed, setNewsfeed] = useState({ "posts": [], "instructions": [] })
+  const history = useHistory();
 
   const dispatch = useDispatch()
 
@@ -52,12 +53,29 @@ const Telecommunication = () => {
       await TokenGenerator(token)
       await api.feedback.POST.feedback(token.access, user.id, 'telecom', index, feedback, chatJSON)
       toast.success('Feedback added')
+      setTimeout(() => {
+        history.push("/home");
+      }, 2000);
     } catch (err) {
       console.log(err.response)
       toast.error('Something went wrong')
     }
   }
 
+  const getNewsfeedContent = async () => {
+    try {
+      let posts = await api.newsfeed.GET.getNews(token.access, "telecom")
+      let instructions = await api.newsfeed.GET.getInstructions(token.access, "telecom")
+      setNewsfeed({ "posts": posts.data, "instructions": instructions.data })
+    }
+    catch (err) {
+      toast.error("Data fetch failed");
+    }
+  }
+
+  useEffect(() => {
+    getNewsfeedContent()
+  }, [])
 
   if (!signedIn) return <Redirect to="/home" />
 
@@ -70,26 +88,8 @@ const Telecommunication = () => {
             <Newsfeed
               domain="Telecommunication"
               domainImg="/Telecommunication_1.svg"
-              posts={[
-                {
-                  img: "/telecom_launch.jpg",
-                  title: "We are now LIVE",
-                  body: "Check this out",
-                  date: "26th September 2021"
-                },
-              ]}
-
-              instructions={[
-                {
-                  label: "Genaral Questions",
-                  content: "Ask me genaral type of questions like check account balance, how to get a loan, recharge, etc. related to any service provider.",
-                },
-                {
-                  label: "Broadband connection",
-                  content: "You can ask about new broadband connection, details of routers, etc.",
-                },
-
-              ]}
+              posts={newsfeed.posts}
+              instructions={newsfeed.instructions}
             />
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>

@@ -26,7 +26,7 @@ test("full app rendering/navigating", () => {
   expect(screen.getByText(/User Login/i)).toBeInTheDocument();
   //Go to the home page
   history.push("/home");
-  expect(screen.getByText(/your personal assistant/i)).toBeInTheDocument();
+  expect(screen.getByText(/cutting edge technologies/i)).toBeInTheDocument();
 
   //Got to the product page
   userEvent.click(screen.getByText(/product/i));

@@ -12,6 +12,8 @@ import { getToken, getUser } from '../../store/slices/auth';
 import { updateChat } from '../../store/slices/chatbot';
 import api from '../../api';
 import { toast } from 'react-toastify';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import { useHistory } from 'react-router';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,10 +25,13 @@ const useStyles = makeStyles(theme => ({
   },
   body: {
     backgroundColor: theme.palette.secondary.light,
-    height: "75%",
-    overflowY: "auto",
-    padding: theme.spacing(2, 0)
+    height:"75%", 
+    padding: theme.spacing(2, 0),
   },
+  body_scroll:{
+    height: "100%",
+  },
+
   flexRow: {
     display: "flex",
     alignItems: "center",
@@ -58,34 +63,57 @@ const Chatbot = ({ finish, domain }) => {
   const token = useSelector(getToken)
 
   const [chatMessages, updateChatMessages] = useState([
-    { sender: "bot", message: `Hi, ${displayName.first_name}` },
+    { sender: "bot", type: "text", text: `Hi, ${displayName.first_name}` },
   ])
-
   const {
     transcript,
     listening,
     resetTranscript,
   } = useSpeechRecognition()
 
-  const updateChatBox = async (message) => {
+  const updateChatBox = async (message, displayMessage='') => {
     if (!message) return
     try {
-      updateChatMessages([...chatMessages, { sender: displayName, type: "text", message: message }])
+      if (displayMessage){
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }, { sender: "bot", type: "loading", text: "" }])
+      }else{
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }, { sender: "bot", type: "loading", text: "" }])
+      }
+        
       const reply = await api.chatbot.POST.chat(token.access, displayName.first_name, message, domain)
-      //console.log(reply.data)
       let temp = []
       for (let r of reply.data) {
         if (r.text) {
-          temp = [...temp, { sender: "bot", type: "text", message: r.text }]
-        } else if (r.custom) {
-          temp = [...temp, { sender: "bot", type: "map", mapLink: r.custom.content.mapLink }]
-        } else if (r.image) {
+          temp = [...temp, { sender: "bot", type: "text", text: r.text }]
+        } 
+        if (r.image) {
           temp = [...temp, { sender: "bot", type: "image", image: r.image }]
-        } else if (r.button) {
-          temp = [...temp, { sender: "bot", type: "button", button: r.button }]
-        }
+        } 
+        if (r.buttons) {
+          temp = [...temp, { sender: "bot", type: "buttons", buttons: r.buttons }]
+        } 
+        if (r.custom) {
+            if(r.custom.mapLink){
+              temp = [...temp, { sender: "bot", type: "map", map: r.custom.mapLink }]
+            }
+            else if (r.custom.packages){
+              temp = [...temp, { sender: "bot", type: "table", table: r.custom.packages }]
+            }
+            else if (r.custom.complaint){
+              temp = [...temp, { sender: "bot", type: "complaint", complaint: r.custom.complaint }]
+            }
+            else if (r.custom.button){
+              
+              temp = [...temp, { sender: "bot", type: "button", button: r.custom.button }]
+            }
+        } 
       }
-      updateChatMessages([...chatMessages, { sender: displayName, type: "text", message: message }, ...temp])
+      if (displayMessage){
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: displayMessage }, ...temp])
+      }else{
+        updateChatMessages([...chatMessages, { sender: displayName, type: "text", text: message }, ...temp])
+      }
+      
     } catch (err) {
       console.log(err.message)
       toast.error("Message send failed")
@@ -110,9 +138,11 @@ const Chatbot = ({ finish, domain }) => {
 
   return (
     <Card className={classes.root}>
-      <Card className={classes.body}>
-        {chatMessages.map((message, index) => <ChatMessage {...message} key={`${index}`} />)}
-      </Card>
+        <Card className={classes.body}>
+          <ScrollToBottom className={classes.body_scroll}>
+            {chatMessages.map((message, index) => <ChatMessage sendMessage={updateChatBox} {...message} key={`${index}`} />)}
+          </ScrollToBottom>
+        </Card>
       <div className={clsx(classes.textArea, classes.flexColumn, classes.flexRow)}>
         <CustomTextArea sendMessage={updateChatBox} toggleRecord={() => toggleRecord()} />
         <Box className={classes.row}>
