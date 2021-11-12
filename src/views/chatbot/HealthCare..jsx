@@ -105,7 +105,7 @@ const HealthCare = () => {
           <Grid item alignItems="center" sm={12} md={6}>
             <Newsfeed
               domain="Health Care"
-              domainImg="/Healthcare_1.svg"
+              domainImg="/healthcare_1.svg"
               posts={newsfeed.posts}
               instructions={newsfeed.instructions}
             />

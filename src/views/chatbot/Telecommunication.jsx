@@ -87,7 +87,7 @@ const Telecommunication = () => {
           <Grid item alignItems="center" sm={12} md={6}>
             <Newsfeed
               domain="Telecommunication"
-              domainImg="/Telecommunication_1.svg"
+              domainImg="/telecommunication_1.svg"
               posts={newsfeed.posts}
               instructions={newsfeed.instructions}
             />

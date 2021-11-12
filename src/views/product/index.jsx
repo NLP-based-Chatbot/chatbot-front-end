@@ -78,7 +78,7 @@ const Product = () => {
         >
           <Grid item sm={12} md={4} className={classes.img}>
             <img
-              src="/Hero Section.svg"
+              src="/herosection.svg"
               height="auto"
               width={bk ? "100%" : "70%"}
               alt=""

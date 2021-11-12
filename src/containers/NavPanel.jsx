@@ -142,7 +142,7 @@ const NavPanel = () => {
       >
         <Link to="/home" className={classes.list}>
           <img
-            src="/Logo-robot-only.svg"
+            src="/logo-robot-only.svg"
             height="auto"
             width="50px"
             alt=""

@@ -66,7 +66,7 @@ const Login = () => {
       <Grid container alignItems="center" justifyContent="space-around">
         <Grid item sm={12} md={5}>
           <div className={classes.logo}>
-            <img src="./Logo.svg" width="400px" alt="logo" />
+            <img src="./logo.svg" width="400px" alt="logo" />
           </div>
         </Grid>
         <Grid item sm={12} md={5}>
