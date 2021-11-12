@@ -45,7 +45,7 @@ const Register = () => {
   const classes = useStyles();
   const signedIn = useSelector(getUserSignedIn)
   const history = useHistory()
-  
+
   const handleSubmit = async ({ first_name, last_name, email, password, re_password }) => {
     let user_type = "user"
     try {
@@ -86,11 +86,11 @@ const Register = () => {
       <Grid container alignItems="center" justifyContent="space-around">
         <Grid item sm={12} md={5}>
           <div className={classes.logo}>
-            <img src="./logo.svg" width="400px" alt="logo" />
+            <img src="./Logo.svg" width="400px" alt="logo" />
           </div>
         </Grid>
         <Grid item sm={12} md={5}>
-          <RegisterForm onSubmit={handleSubmit}/>
+          <RegisterForm onSubmit={handleSubmit} />
         </Grid>
       </Grid>
     </div>

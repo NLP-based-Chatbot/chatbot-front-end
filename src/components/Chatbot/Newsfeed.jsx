@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   newsfeed_post: {
     padding: "0px",
     width: "100%",
-    marginBottom:"20px"
+    marginBottom: "20px"
   },
   newsfeed_scroll: {
     height: "20rem",
@@ -131,7 +131,7 @@ const Newsfeed = ({ domain, domainImg, posts, instructions }) => {
                     <img src={message.img_url} height="auto" width="100%" alt="" />
                     <CardHeader
                       avatar={
-                        <Avatar aria-label="recipe" src="/logo.svg" className={classes.avatar}>
+                        <Avatar aria-label="recipe" src="/Logo.svg" className={classes.avatar}>
                           Wingman Development team
                         </Avatar>
                       }
