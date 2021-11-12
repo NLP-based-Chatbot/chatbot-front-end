@@ -61,10 +61,6 @@ const TelecomComplaint = ({ issue, description, name, phone, email }) => (
               content: name,
             },
             {
-              field: "Name of the complainer",
-              content: name,
-            },
-            {
               field: "Phone number of the complainer",
               content: phone,
             },

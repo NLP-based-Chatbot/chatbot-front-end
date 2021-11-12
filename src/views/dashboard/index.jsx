@@ -14,6 +14,7 @@ import clsx from 'clsx';
 import Instruction from './../../components/Chatbot/Instruction';
 import TokenGenerator from './../../helpers/TokenRefresh';
 import { useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -116,6 +117,25 @@ const Dashboard = () => {
   const token = useSelector(getToken)
 
   useEffect(() => {
+    async function loadFeatures() {
+      try {
+        const access = await TokenGenerator(token)
+        if (access) dispatch(refreshToken(access))
+
+        const ins = await api.newsfeed.GET.getInstructions(token.access, domain)
+        
+        updateInstructions(ins.data)
+        console.log(ins)
+      } catch (err) {
+        console.log(err.message)
+      }
+    }
+
+    loadFeatures()
+  }, [domain, infoType])
+
+
+  useEffect(() => {
     async function loadData() {
       try {
         const access = await TokenGenerator(token)
@@ -165,24 +185,61 @@ const Dashboard = () => {
     loadUsers()
   }, [])
 
-  const formik_news = useFormik({
-    initialValues: {
-      title: "",
-      body: ""
-    },
-    validationSchema: Yup.object().shape({
-      title: Yup.string().required("This field is required"),
-      body: Yup.string().required("This field is required")
-    })
-  })
-
-  const deleteIns = (index) => {
-    let new_instructions = [...instructions.slice(0, index), ...instructions.slice(index + 1, instructions.length)]
-    updateInstructions(new_instructions)
+  const handleSubmit = async () => {
+    try {
+      const access = await TokenGenerator(token)
+      if (access) dispatch(refreshToken(access))
+      
+      await api.newsfeed.POST.addNews(token.access, domain, news.title, news.body, news.date, news.imageUrl)
+      toast.success("News added successfully")
+    } catch (err) {
+      toast.error("Network error")
+    }
   }
 
-  const addInstruction = () => {
-    updateInstructions([...instructions, instruction])
+  // const formik_news = useFormik({
+  //   initialValues: {
+  //     title: "",
+  //     body: ""
+  //   },
+  //   validationSchema: Yup.object().shape({
+  //     title: Yup.string().required("This field is required"),
+  //     body: Yup.string().required("This field is required")
+  //   }),
+  //   onSubmit: handleSubmit
+  // })
+
+  const deleteIns = async (index, id) => {
+
+    try {
+      const access = await TokenGenerator(token)
+      if (access) dispatch(refreshToken(access))
+
+      await api.newsfeed.DELETE.deleteInstructions(token.access, id)
+      
+      let new_instructions = [...instructions.slice(0, index), ...instructions.slice(index + 1, instructions.length)]
+      updateInstructions(new_instructions)
+    } catch (err) {
+      console.log(err.message)
+      toast.error("Network error")
+    }
+
+
+  }
+
+  const addInstruction = async () => {
+    try {
+      const access = await TokenGenerator(token)
+      if (access) dispatch(refreshToken(access))
+
+      await api.newsfeed.POST.addInstructions(token.access, domain, instruction.label, instruction.body)
+      
+      updateInstructions([...instructions, instruction])
+    } catch (err) {
+      console.log(err.message)
+      toast.error("Network error")
+    }
+    
   }
 
   const changeGraph = (title, format, data) => {
@@ -197,6 +254,7 @@ const Dashboard = () => {
 
   return (
     <div className={classes.root}>
+    <ToastContainer />
       <Grid container justifyContent="space-around" alignItems="center">
         <Grid container sm={12} md={6} xl={4}>
           <Grid item xs={12} md={6} className={classes.box}>
@@ -257,7 +315,12 @@ const Dashboard = () => {
             size="medium"
             variant="contained"
             className={classes.button_group}
-          >
+          > <Button
+              className={classes.button}
+              href="http://20.185.23.148:8000/admin"
+            >
+              Django Admin
+            </Button>
             <Button
               className={classes.button}
               onClick={() => history.push('/admin/dashboard/feedback')}
@@ -372,7 +435,7 @@ const Dashboard = () => {
                 <Box
                   className={classes.instruction_container}
                 >
-                  {instructions.map((instruction, index) => <Instruction key={index} deleteIns={() => deleteIns(index)} {...instruction} />)}
+                  {instructions.map((instruction, index) => <Instruction key={index} deleteIns={() => deleteIns(index, instruction.id)} {...instruction} />)}
                 </Box>
               }
             </Grid>
@@ -394,12 +457,18 @@ const Dashboard = () => {
                     <MenuItem value={`/${domain}_launch.jpg`}>
                       <Typography variant="body2">Launch</Typography>
                     </MenuItem>
+                    <MenuItem value='/version_update.png'>
+                      <Typography variant="body2">Version Update</Typography>
+                    </MenuItem>
+                    <MenuItem value='/feature_update.png'>
+                      <Typography variant="body2">Feature Update</Typography>
+                    </MenuItem>
                   </TextField>
                   <img
                     src={news.imageUrl}
                     height="auto"
                     width="100%"
-                    alt="image"
+                    alt="images"
                   />
                 </div>
               }
@@ -448,13 +517,14 @@ const Dashboard = () => {
               }
             </Grid>
           </Grid>
-          <Button
+          {infoType==="news" && <Button
             variant="contained"
             color="secondary"
             className={classes.submit}
+            onClick={()=>handleSubmit()}
           >
             Submit
-          </Button>
+          </Button>}
         </DialogContent>
       </Dialog>
     </div>
