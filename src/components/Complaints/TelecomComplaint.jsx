@@ -4,7 +4,7 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@david.kucsai/react-pdf-table";
+} from "@david.kucsai/react-pdf-table"
 import {
   Document,
   Image,
@@ -74,15 +74,15 @@ const TelecomComplaint = ({ issue, description, name, phone, email }) => (
             },
           ]}
         >
-            <TableHeader>
-              <TableCell weighting={0.6}>
-                  Field
-              </TableCell>
-              <TableCell>
-                  Content
-              </TableCell>
-            </TableHeader>
-            <TableBody>
+          <TableHeader>
+            <TableCell weighting={0.6}>
+              Field
+            </TableCell>
+            <TableCell>
+              Content
+            </TableCell>
+          </TableHeader>
+          <TableBody>
             <DataTableCell weighting={0.6} getContent={(r) => r.field} />
             <DataTableCell getContent={(r) => r.content} />
           </TableBody>
