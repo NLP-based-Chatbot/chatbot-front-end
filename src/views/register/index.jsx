@@ -45,7 +45,7 @@ const Register = () => {
   const classes = useStyles();
   const signedIn = useSelector(getUserSignedIn)
   const history = useHistory()
-  
+
   const handleSubmit = async ({ first_name, last_name, email, password, re_password }) => {
     let user_type = "user"
     try {
@@ -90,7 +90,7 @@ const Register = () => {
           </div>
         </Grid>
         <Grid item sm={12} md={5}>
-          <RegisterForm onSubmit={handleSubmit}/>
+          <RegisterForm onSubmit={handleSubmit} />
         </Grid>
       </Grid>
     </div>

@@ -7,7 +7,7 @@ const chatbot = {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': `JWT ${token}`
+					Authorization: `JWT ${token}`
 				},
 				url: `/assistant/${domain}/`,
 				data: {
@@ -15,8 +15,8 @@ const chatbot = {
 					message: message
 				}
 			});
-		},
-    }
+		}
+	}
 };
 
 export default chatbot;

@@ -70,7 +70,7 @@ const Login = () => {
           </div>
         </Grid>
         <Grid item sm={12} md={5}>
-          <LoginForm onSubmit={handleSubmit}/>
+          <LoginForm onSubmit={handleSubmit} />
         </Grid>
       </Grid>
     </div>

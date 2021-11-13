@@ -72,6 +72,27 @@ const user = {
 					token: token
 				}
 			});
+		},
+		async refreshToken(token) {
+			return AxiosInstance({
+				method: 'POST',
+				url: '/auth/jwt/refresh/',
+				data: {
+					refresh: token
+				}
+			});
+		},
+		async verifyToken(token) {
+			return AxiosInstance({
+				method: 'POST',
+				url: '/auth/jwt/verify/',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				data: {
+					token: token
+				}
+			});
 		}
 	},
 	GET: {

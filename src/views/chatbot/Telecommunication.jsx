@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Grid, makeStyles, Modal, useMediaQuery } from '@material-ui/core';
 import Chatbot from '../../components/Chatbot/Chatbot';
 import Feedback from './../../components/Chatbot/Feedback';
-
 import { useSelector } from 'react-redux';
 import { getUserSignedIn, getUser, getToken } from './../../store/slices/auth';
-import { Redirect } from 'react-router';
-import { getChat  } from './../../store/slices/chatbot';
+import { Redirect, useHistory } from 'react-router';
+import { getChat } from './../../store/slices/chatbot';
 import api from './../../api/index';
 import { toast, ToastContainer } from 'react-toastify';
 import Newsfeed from "../../components/Chatbot/Newsfeed";
+import { useDispatch } from 'react-redux';
+import TokenGenerator from './../../helpers/TokenRefresh';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,8 +18,8 @@ const useStyles = makeStyles(theme => ({
     minHeight: "calc(100vh - 115px)",
     display: "flex",
     alignItems: "center",
-    paddingTop:"20px",
-    paddingBottom:"20px"
+    paddingTop: "20px",
+    paddingBottom: "20px"
   },
   row: {
     marginTop: theme.spacing(5)
@@ -36,6 +37,10 @@ const Telecommunication = () => {
   const chat = useSelector(getChat)
   const user = useSelector(getUser)
   const token = useSelector(getToken)
+  const [newsfeed, setNewsfeed] = useState({ "posts": [], "instructions": [] })
+  const history = useHistory();
+
+  const dispatch = useDispatch()
 
   const bk_1 = useMediaQuery(theme => theme.breakpoints.up('lg'))
 
@@ -45,14 +50,32 @@ const Telecommunication = () => {
     updateDisplayFeedback(false)
     const chatJSON = JSON.stringify(chat)
     try {
+      await TokenGenerator(token)
       await api.feedback.POST.feedback(token.access, user.id, 'telecom', index, feedback, chatJSON)
       toast.success('Feedback added')
+      setTimeout(() => {
+        history.push("/home");
+      }, 2000);
     } catch (err) {
       console.log(err.response)
       toast.error('Something went wrong')
     }
   }
 
+  const getNewsfeedContent = async () => {
+    try {
+      let posts = await api.newsfeed.GET.getNews(token.access, "telecom")
+      let instructions = await api.newsfeed.GET.getInstructions(token.access, "telecom")
+      setNewsfeed({ "posts": posts.data, "instructions": instructions.data })
+    }
+    catch (err) {
+      toast.error("Data fetch failed");
+    }
+  }
+
+  useEffect(() => {
+    getNewsfeedContent()
+  }, [])
 
   if (!signedIn) return <Redirect to="/home" />
 
@@ -62,29 +85,11 @@ const Telecommunication = () => {
         <ToastContainer />
         <Grid container alignItems="center" justifyContent={bk_1 ? "space-between" : "space-around"} spacing={4}>
           <Grid item alignItems="center" sm={12} md={6}>
-          <Newsfeed
+            <Newsfeed
               domain="Telecommunication"
-              domainImg="/Telecommunication_1.svg"
-              posts={[
-                {
-                  img: "/telecom_launch.jpg",
-                  title: "We are now LIVE",
-                  body: "Check this out",
-                  date: "26th September 2021"
-                },
-              ]}
-
-              instructions={[
-                {
-                  label: "Genaral Questions",
-                  content: "Ask me genaral type of questions like check account balance, how to get a loan, recharge, etc. related to any service provider.",
-                },
-                {
-                  label: "Broadband connection",
-                  content: "You can ask about new broadband connection, details of routers, etc.",
-                },
-               
-              ]}
+              domainImg="/telecommunication_1.svg"
+              posts={newsfeed.posts}
+              instructions={newsfeed.instructions}
             />
           </Grid>
           <Grid item alignItems="center" justifyContent="center" sm={12} md={5}>

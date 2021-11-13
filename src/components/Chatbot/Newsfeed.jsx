@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
   newsfeed_post: {
     padding: "0px",
     width: "100%",
+    marginBottom: "20px"
   },
   newsfeed_scroll: {
     height: "20rem",
@@ -78,11 +79,11 @@ const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
   body: {
-      paddingTop: "5px",
-      paddingLeft:"5px"
+    paddingTop: "5px",
+    paddingLeft: "5px"
   },
-  askme:{
-    marginLeft:"15px"
+  askme: {
+    marginLeft: "15px"
   }
 }));
 
@@ -93,7 +94,6 @@ const Newsfeed = ({ domain, domainImg, posts, instructions }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
     <div>
       <Paper className={classes.root}>
@@ -126,9 +126,9 @@ const Newsfeed = ({ domain, domainImg, posts, instructions }) => {
             </AppBar>
             <div className={classes.newsfeed_scroll}>
               <TabPanel value={value} index={0} classes={classes}>
-                {posts.map((message, index) => (
+                {posts && posts.map((message, index) => (
                   <Card className={classes.newsfeed_post} key={`${index}`}>
-                    <img src={message.img} height="auto" width="100%" alt="" />
+                    <img src={message.img_url} height="auto" width="100%" alt="" />
                     <CardHeader
                       avatar={
                         <Avatar aria-label="recipe" src="/logo.svg" className={classes.avatar}>
@@ -157,17 +157,17 @@ const Newsfeed = ({ domain, domainImg, posts, instructions }) => {
                 ))}
               </TabPanel>
               <TabPanel value={value} index={1} classes={classes}>
-              <Typography className={classes.askme} variant='h4'>Ask ME</Typography>
-              {instructions.map((inst, index) => (
-                <Box marginTop='10px' padding="10px">
-                  <Chip size="medium" label={inst.label} color="primary"/>
-                  <Typography className={classes.body} variant='body1' >{inst.content}</Typography>
-                </Box>
-              ))}
-            </TabPanel>
+                <Typography className={classes.askme} variant='h4'>Ask ME</Typography>
+                {instructions && instructions.map((inst, index) => (
+                  <Box marginTop='10px' padding="10px">
+                    <Chip size="medium" label={inst.label} color="primary" />
+                    <Typography className={classes.body} variant='body1' >{inst.body}</Typography>
+                  </Box>
+                ))}
+              </TabPanel>
             </div>
 
-            
+
           </Grid>
         </Grid>
       </Paper>

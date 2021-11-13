@@ -24,7 +24,7 @@ const ContactUs = () => {
             <Grid item xs={12} sm={12} md={6} className={classes.logoSection}>
               <img
                 className={classes.logo}
-                src="./Logo-robot-only.svg"
+                src="./logo-robot-only.svg"
                 alt="Logo"
               />
             </Grid>

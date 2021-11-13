@@ -25,9 +25,36 @@ const feedback = {
 			return AxiosInstance({
 				method: 'GET',
 				headers: {
-					'Authorization': `JWT ${token}`
+					Authorization: `JWT ${token}`
 				},
 				url: '/feedback/'
+			});
+		}
+	},
+	PUT: {
+		async updateFeedback(
+			id,
+			domain,
+			rating,
+			chatsession,
+			feedback,
+			user_id,
+			token
+		) {
+			return AxiosInstance({
+				method: 'PUT',
+				headers: {
+					Authorization: `JWT ${token}`
+				},
+				url: `/feedback/update/${id}`,
+				data: {
+					domain: domain,
+					rating: rating,
+					chatsession: chatsession,
+					feedback: feedback,
+					resolved: true,
+					user_id: user_id
+				}
 			});
 		}
 	}
