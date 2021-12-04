@@ -7,7 +7,7 @@ const config = {
       "default",
       "jest-html-reporters"
     ],
-    coveragePathIgnorePatterns: []
+    coveragePathIgnorePatterns: ["<rootDir>/src/api/modules", "<rootDir>/src/components/Complaints", "<rootDir>/src/helpers" ]
   };
   
 module.exports = config;
