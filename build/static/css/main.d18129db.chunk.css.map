@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,KACC,iBACD,CAEA,SACC,WAAY,CACZ,aAAc,CACd,YAAa,CACb,WACD","file":"main.d18129db.chunk.css","sourcesContent":[".App {\r\n\ttext-align: center;\r\n}\r\n\r\ntextarea {\r\n\tborder: none;\r\n\toverflow: auto;\r\n\toutline: none;\r\n\tresize: none;\r\n}\r\n"]}
