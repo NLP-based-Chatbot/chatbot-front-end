@@ -5,10 +5,11 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import TelecomComplaint from '../Complaints/TelecomComplaint';
 import { GetAppRounded } from '@material-ui/icons';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getUser } from '../../store/slices/auth';
 import HealthcareComplaint from '../Complaints/HealthcareComplaint';
 import Loader from 'react-loader-spinner';
+import TransportComplaint from './../Complaints/TransportComplaint';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   },
   font: {
     fontWeight: "600",
-    color:"black",
+    color: "black",
     textDecoration: 'none'
   },
   link: {
@@ -122,103 +123,119 @@ function Row(props) {
   );
 }
 
-const ChatMessage = ({ sender, sendMessage= "", type, text = "", image = "",  buttons = [], map = "", table = [], complaint = {}, button = {}}) => {
+const ChatMessage = ({ sender, sendMessage = "", type, text = "", image = "", buttons = [], map = "", table = [], complaint = {}, button = {} }) => {
   const displayName = useSelector(getUser)
   const classes = useStyles()
   return (
     <Box className={classes.root}>
       {sender === 'bot' ?
         <Box data-testid='bot'>
-          {type === "text" && 
-          <Box className={classes.container_bot_text}>
-            <Typography variant="body1" className={classes.font}>{text}</Typography>
-          </Box>
+          {type === "text" &&
+            <Box className={classes.container_bot_text}>
+              <Typography variant="body1" className={classes.font}>{text}</Typography>
+            </Box>
           }
-          {type === "image"  && <Link className={classes.link} href={`${image}`}>{image}</Link>}
-          {type === "buttons" && 
-          <Box  className={classes.container_bot_buttons} >
-            <ButtonGroup size="small" disableElevation variant="contained" color="primary" aria-label="contained primary button group">
-              {buttons && sendMessage && buttons.map((button, index) => (
-                <Button onClick={() => sendMessage(button.payload, button.title)} key={`${index}`}>{button.title}</Button>
-              ))}
-              {buttons && !sendMessage && buttons.map((button, index) => (
-                <Button key={`${index}`}>{button.title}</Button>
-              ))}
-              
-            </ButtonGroup>
-          </Box>
-          }
-          {type === "table" && 
-          <Box  className={classes.container_bot_table} >
-          <TableContainer component={Paper}>
-            <Table className={classes.table} size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Package</TableCell>
-                  <TableCell align="right">Value</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {table && table.map((row) => (
-                  <Row key={row.name} row={row} />
+          {type === "image" && <Link className={classes.link} href={`${image}`}>{image}</Link>}
+          {type === "buttons" &&
+            <Box className={classes.container_bot_buttons} >
+              <ButtonGroup size="small" disableElevation variant="contained" color="primary" aria-label="contained primary button group">
+                {buttons && sendMessage && buttons.map((button, index) => (
+                  <Button onClick={() => sendMessage(button.payload, button.title)} key={`${index}`}>{button.title}</Button>
                 ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          </Box>
+                {buttons && !sendMessage && buttons.map((button, index) => (
+                  <Button key={`${index}`}>{button.title}</Button>
+                ))}
+
+              </ButtonGroup>
+            </Box>
           }
-          {type === "button" && 
-          <Box  className={classes.container_bot_buttons} >
-            <Button disableElevation variant="contained" color="primary" size="small" href={button.url} target="_blank">
-              {button.title}
-            </Button>
-          </Box>
+          {type === "table" &&
+            <Box className={classes.container_bot_table} >
+              <TableContainer component={Paper}>
+                <Table className={classes.table} size="small" aria-label="a dense table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Package</TableCell>
+                      <TableCell align="right">Value</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {table && table.map((row) => (
+                      <Row key={row.name} row={row} />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
           }
-          {type === "complaint" && 
-          <Box  className={classes.container_bot_complaint} >
-            {complaint.domain === "telecom" && 
-              <PDFDownloadLink document={<TelecomComplaint issue={complaint.title} description={complaint.description} name={complaint.fullname} phone={complaint.contactnum} email={complaint.email} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
-                {({ blob, url, loading, error }) =>
-                  loading ? 
-                  <>
-                    <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
-                    <CircularProgress />
-                  </> : 
-                  <>
-                  <Typography variant="body1" className={classes.font}>Download</Typography>
-                  <IconButton aria-label="download">
-                    <GetAppRounded />
-                  </IconButton>
-                  </>
-                }
-              </PDFDownloadLink>
-            }
-            {complaint.domain === "healthcare" && 
-              <PDFDownloadLink document={<HealthcareComplaint issue={complaint.title} description={complaint.description} name={complaint.fullname} phone={complaint.contactnum} email={complaint.email} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
-                {({ blob, url, loading, error }) =>
-                  loading ? 
-                  <>
-                    <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
-                    <CircularProgress />
-                  </> : 
-                  <>
-                  <Typography variant="body1" className={classes.font}>Download</Typography>
-                  <IconButton aria-label="download">
-                    <GetAppRounded />
-                  </IconButton>
-                  </>
-                }
-              </PDFDownloadLink>
-            }
-            
-          </Box>
+          {type === "button" &&
+            <Box className={classes.container_bot_buttons} >
+              <Button disableElevation variant="contained" color="primary" size="small" href={button.url} target="_blank">
+                {button.title}
+              </Button>
+            </Box>
           }
-          {type === "loading" && 
-          <Box  className={classes.container_bot_text} >
-            <Loader type="ThreeDots" color="#3A637E" height={25} width={25} />
-          </Box>
+          {type === "complaint" &&
+            <Box className={classes.container_bot_complaint} >
+              {complaint.domain === "telecom" &&
+                <PDFDownloadLink document={<TelecomComplaint issue={complaint.title} description={complaint.description} name={complaint.fullname} phone={complaint.contactnum} email={complaint.email} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
+                  {({ blob, url, loading, error }) =>
+                    loading ?
+                      <>
+                        <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
+                        <CircularProgress />
+                      </> :
+                      <>
+                        <Typography variant="body1" className={classes.font}>Download</Typography>
+                        <IconButton aria-label="download">
+                          <GetAppRounded />
+                        </IconButton>
+                      </>
+                  }
+                </PDFDownloadLink>
+              }
+              {complaint.domain === "healthcare" &&
+                <PDFDownloadLink document={<HealthcareComplaint issue={complaint.title} description={complaint.description} name={complaint.fullname} phone={complaint.contactnum} email={complaint.email} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
+                  {({ blob, url, loading, error }) =>
+                    loading ?
+                      <>
+                        <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
+                        <CircularProgress />
+                      </> :
+                      <>
+                        <Typography variant="body1" className={classes.font}>Download</Typography>
+                        <IconButton aria-label="download">
+                          <GetAppRounded />
+                        </IconButton>
+                      </>
+                  }
+                </PDFDownloadLink>
+              }
+              {complaint.domain === "transport" &&
+                <PDFDownloadLink document={<TransportComplaint title={complaint.title} description={complaint.description} vehicle_no={complaint.vehicle_number} driver_id={complaint.driver_id} conductor_id={complaint.conductor_id} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
+                  {({ blob, url, loading, error }) =>
+                    loading ?
+                      <>
+                        <Typography variant="body1" className={classes.font}>Document Loading...</Typography>
+                        <CircularProgress />
+                      </> :
+                      <>
+                        <Typography variant="body1" className={classes.font}>Download</Typography>
+                        <IconButton aria-label="download">
+                          <GetAppRounded />
+                        </IconButton>
+                      </>
+                  }
+                </PDFDownloadLink>
+              }
+            </Box>
           }
-     
+          {type === "loading" &&
+            <Box className={classes.container_bot_text} >
+              <Loader type="ThreeDots" color="#3A637E" height={25} width={25} />
+            </Box>
+          }
+
         </Box>
         :
         <Box data-testid='user' className={classes.container_user}>
