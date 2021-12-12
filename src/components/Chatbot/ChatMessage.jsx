@@ -212,7 +212,7 @@ const ChatMessage = ({ sender, sendMessage = "", type, text = "", image = "", bu
                 </PDFDownloadLink>
               }
               {complaint.domain === "transport" &&
-                <PDFDownloadLink document={<TransportComplaint title={complaint.title} description={complaint.description} vehicle_no={complaint.vehicle_number} driver_id={complaint.driver_id} conductor_id={complaint.conductor_id} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
+                <PDFDownloadLink document={<TransportComplaint title={complaint.title} description={complaint.description} vehicle_no={complaint.vehical_number} driver_id={complaint.driver_id} conductor_id={complaint.conductor_id} />} fileName={`complaint_preview_${displayName.first_name}.pdf`} >
                   {({ blob, url, loading, error }) =>
                     loading ?
                       <>
